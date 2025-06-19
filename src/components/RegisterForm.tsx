@@ -3,8 +3,6 @@ import {
   Box,
   Button,
   TextField,
-  FormControlLabel,
-  Checkbox,
   Link,
   InputAdornment,
   IconButton,
@@ -29,7 +27,6 @@ interface RegisterFormProps {
 const RegisterForm = ({ language, t }: RegisterFormProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [marketingOptIn, setMarketingOptIn] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [showError, setShowError] = useState(false);
   const [formData, setFormData] = useState({
@@ -50,10 +47,7 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
       return;
     }
 
-    console.log("Registration data:", { 
-      ...formData, 
-      marketingOptIn 
-    });
+    console.log("Registration data:", formData);
     
     setShowSuccess(true);
     setTimeout(() => setShowSuccess(false), 3000);
@@ -237,24 +231,6 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
           ),
         }}
       />
-
-      <Box sx={{ pt: 1 }}>
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={marketingOptIn}
-              onChange={(e) => setMarketingOptIn(e.target.checked)}
-              size="small"
-            />
-          }
-          label={
-            <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.4 }}>
-              {t('marketingOptIn')}
-            </Typography>
-          }
-          sx={{ alignItems: 'flex-start', mt: 1 }}
-        />
-      </Box>
 
       <Button
         type="submit"
