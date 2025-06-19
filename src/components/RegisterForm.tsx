@@ -10,7 +10,6 @@ import {
   InputAdornment,
   IconButton,
   Alert,
-  Grid,
   Typography,
 } from '@mui/material';
 import {
@@ -64,63 +63,59 @@ const RegisterForm = () => {
     <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
       {showSuccess && (
         <Alert severity="success">
-          Ihr Konto wurde erfolgreich erstellt.
+          Your account has been created successfully.
         </Alert>
       )}
 
       {showError && (
         <Alert severity="error">
-          Die Passwörter stimmen nicht überein.
+          Passwords do not match.
         </Alert>
       )}
 
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            fullWidth
-            label="Vorname"
-            name="firstName"
-            value={formData.firstName}
-            onChange={handleChange}
-            placeholder="Max"
-            required
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Person color="action" />
-                </InputAdornment>
-              ),
-            }}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            fullWidth
-            label="Nachname"
-            name="lastName"
-            value={formData.lastName}
-            onChange={handleChange}
-            placeholder="Mustermann"
-            required
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Person color="action" />
-                </InputAdornment>
-              ),
-            }}
-          />
-        </Grid>
-      </Grid>
+      <Box sx={{ display: 'flex', gap: 2, flexDirection: { xs: 'column', sm: 'row' } }}>
+        <TextField
+          fullWidth
+          label="First Name"
+          name="firstName"
+          value={formData.firstName}
+          onChange={handleChange}
+          placeholder="John"
+          required
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <Person color="action" />
+              </InputAdornment>
+            ),
+          }}
+        />
+        <TextField
+          fullWidth
+          label="Last Name"
+          name="lastName"
+          value={formData.lastName}
+          onChange={handleChange}
+          placeholder="Doe"
+          required
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <Person color="action" />
+              </InputAdornment>
+            ),
+          }}
+        />
+      </Box>
 
       <TextField
         fullWidth
-        label="E-Mail-Adresse"
+        label="Email Address"
         name="email"
         type="email"
         value={formData.email}
         onChange={handleChange}
-        placeholder="max.mustermann@beispiel.de"
+        placeholder="john.doe@example.com"
         required
         InputProps={{
           startAdornment: (
@@ -133,12 +128,12 @@ const RegisterForm = () => {
 
       <TextField
         fullWidth
-        label="Passwort"
+        label="Password"
         name="password"
         type={showPassword ? "text" : "password"}
         value={formData.password}
         onChange={handleChange}
-        placeholder="Mindestens 8 Zeichen"
+        placeholder="At least 8 characters"
         required
         inputProps={{ minLength: 8 }}
         InputProps={{
@@ -162,12 +157,12 @@ const RegisterForm = () => {
 
       <TextField
         fullWidth
-        label="Passwort bestätigen"
+        label="Confirm Password"
         name="confirmPassword"
         type={showConfirmPassword ? "text" : "password"}
         value={formData.confirmPassword}
         onChange={handleChange}
-        placeholder="Passwort wiederholen"
+        placeholder="Repeat password"
         required
         InputProps={{
           startAdornment: (
@@ -199,8 +194,8 @@ const RegisterForm = () => {
           }
           label={
             <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.4 }}>
-              Ich möchte über Neuigkeiten, Angebote und Updates per E-Mail informiert werden. 
-              Diese Einwilligung kann jederzeit widerrufen werden.
+              I would like to receive news, offers and updates via email. 
+              This consent can be withdrawn at any time.
             </Typography>
           }
           sx={{ alignItems: 'flex-start', mt: 1 }}
@@ -214,16 +209,15 @@ const RegisterForm = () => {
         fullWidth
         sx={{ mt: 2, py: 1.5 }}
       >
-        Konto erstellen
+        Create Account
       </Button>
 
       <Box sx={{ textAlign: 'center', mt: 2 }}>
         <Typography variant="caption" color="text.secondary">
-          Mit der Registrierung stimmen Sie unseren{" "}
+          By registering, you agree to our{" "}
           <Link href="#" color="primary">
-            Datenschutzbestimmungen
-          </Link>{" "}
-          zu.
+            Privacy Policy
+          </Link>.
         </Typography>
       </Box>
     </Box>

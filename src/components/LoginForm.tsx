@@ -45,18 +45,18 @@ const LoginForm = () => {
     <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
       {showSuccess && (
         <Alert severity="success">
-          Sie wurden erfolgreich angemeldet.
+          You have been successfully logged in.
         </Alert>
       )}
 
       <TextField
         fullWidth
-        label="E-Mail-Adresse"
+        label="Email Address"
         name="email"
         type="email"
         value={formData.email}
         onChange={handleChange}
-        placeholder="ihre.email@beispiel.de"
+        placeholder="your.email@example.com"
         required
         InputProps={{
           startAdornment: (
@@ -69,12 +69,12 @@ const LoginForm = () => {
 
       <TextField
         fullWidth
-        label="Passwort"
+        label="Password"
         name="password"
         type={showPassword ? "text" : "password"}
         value={formData.password}
         onChange={handleChange}
-        placeholder="Ihr Passwort"
+        placeholder="Your password"
         required
         InputProps={{
           startAdornment: (
@@ -104,11 +104,11 @@ const LoginForm = () => {
               size="small"
             />
           }
-          label="Angemeldet bleiben"
+          label="Remember me"
           sx={{ '& .MuiFormControlLabel-label': { fontSize: '0.875rem' } }}
         />
         <Link href="#" variant="body2" color="primary">
-          Passwort vergessen?
+          Forgot password?
         </Link>
       </Box>
 
@@ -119,7 +119,7 @@ const LoginForm = () => {
         fullWidth
         sx={{ mt: 2, py: 1.5 }}
       >
-        Anmelden
+        Sign In
       </Button>
     </Box>
   );

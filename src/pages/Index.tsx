@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Box, Container, Typography, Paper, Tabs, Tab, Grid } from '@mui/material';
+import { Box, Container, Typography, Paper, Tabs, Tab } from '@mui/material';
 import LoginForm from "@/components/LoginForm";
 import RegisterForm from "@/components/RegisterForm";
 
@@ -66,10 +66,10 @@ const Index = () => {
             </Typography>
           </Box>
           <Typography variant="h4" sx={{ color: 'text.primary', mb: 2, fontWeight: 'bold' }}>
-            Willkommen bei unserem Service
+            Welcome to our Service
           </Typography>
           <Typography variant="h6" sx={{ color: 'text.secondary' }}>
-            Erstellen und verwalten Sie Ihre Inhalte an einem Ort
+            Create and manage your content in one place
           </Typography>
         </Box>
       </Box>
@@ -87,10 +87,10 @@ const Index = () => {
         <Container maxWidth="sm">
           <Box sx={{ textAlign: 'center', mb: 4 }}>
             <Typography variant="h4" sx={{ mb: 1, fontWeight: 'bold' }}>
-              Willkommen! 👋
+              Welcome! 👋
             </Typography>
             <Typography variant="body1" color="text.secondary">
-              Melden Sie sich an oder erstellen Sie ein neues Konto
+              Sign in or create a new account
             </Typography>
           </Box>
 
@@ -110,8 +110,8 @@ const Index = () => {
                 variant="fullWidth"
                 sx={{ mb: 2 }}
               >
-                <Tab label="Anmelden" />
-                <Tab label="Registrieren" />
+                <Tab label="Sign In" />
+                <Tab label="Register" />
               </Tabs>
             </Box>
 
