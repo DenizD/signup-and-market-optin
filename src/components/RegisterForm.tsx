@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import {
   Box,
@@ -10,7 +9,7 @@ import {
   InputAdornment,
   IconButton,
   Alert,
-  Grid,
+  Grid2 as Grid,
   Typography,
 } from '@mui/material';
 import {
@@ -75,7 +74,7 @@ const RegisterForm = () => {
       )}
 
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
+        <Grid xs={12} sm={6}>
           <TextField
             fullWidth
             label="Vorname"
@@ -93,7 +92,7 @@ const RegisterForm = () => {
             }}
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid xs={12} sm={6}>
           <TextField
             fullWidth
             label="Nachname"
