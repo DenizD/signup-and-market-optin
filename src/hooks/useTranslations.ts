@@ -12,6 +12,7 @@ export type TranslationKey =
   | 'confirmPassword'
   | 'firstName'
   | 'lastName'
+  | 'company'
   | 'rememberMe'
   | 'forgotPassword'
   | 'loginSuccess'
@@ -19,6 +20,7 @@ export type TranslationKey =
   | 'passwordMismatch'
   | 'marketingOptIn'
   | 'privacyPolicy'
+  | 'termsAndPrivacy'
   | 'serviceWelcome'
   | 'serviceSubtitle';
 
@@ -38,6 +40,7 @@ const translations: Record<'de' | 'en' | 'es', Translations> = {
     confirmPassword: 'Passwort bestätigen',
     firstName: 'Vorname',
     lastName: 'Nachname',
+    company: 'Unternehmen',
     rememberMe: 'Angemeldet bleiben',
     forgotPassword: 'Passwort vergessen?',
     loginSuccess: 'Sie wurden erfolgreich angemeldet.',
@@ -45,6 +48,7 @@ const translations: Record<'de' | 'en' | 'es', Translations> = {
     passwordMismatch: 'Passwörter stimmen nicht überein.',
     marketingOptIn: 'Ich möchte Nachrichten, Angebote und Updates per E-Mail erhalten. Diese Einwilligung kann jederzeit widerrufen werden.',
     privacyPolicy: 'Datenschutzrichtlinie',
+    termsAndPrivacy: 'Mit der Registrierung stimmen Sie unserer Nutzungsbedingungen & Datenschutzrichtlinie zu.',
     serviceWelcome: 'Willkommen bei unserem Service',
     serviceSubtitle: 'Erstellen und verwalten Sie Ihre Inhalte an einem Ort'
   },
@@ -59,6 +63,7 @@ const translations: Record<'de' | 'en' | 'es', Translations> = {
     confirmPassword: 'Confirm Password',
     firstName: 'First Name',
     lastName: 'Last Name',
+    company: 'Company',
     rememberMe: 'Remember me',
     forgotPassword: 'Forgot password?',
     loginSuccess: 'You have been successfully logged in.',
@@ -66,6 +71,7 @@ const translations: Record<'de' | 'en' | 'es', Translations> = {
     passwordMismatch: 'Passwords do not match.',
     marketingOptIn: 'I would like to receive news, offers and updates via email. This consent can be withdrawn at any time.',
     privacyPolicy: 'Privacy Policy',
+    termsAndPrivacy: 'By registering, you agree to our Terms of Service & Privacy Policy.',
     serviceWelcome: 'Welcome to our Service',
     serviceSubtitle: 'Create and manage your content in one place'
   },
@@ -80,6 +86,7 @@ const translations: Record<'de' | 'en' | 'es', Translations> = {
     confirmPassword: 'Confirmar Contraseña',
     firstName: 'Nombre',
     lastName: 'Apellido',
+    company: 'Empresa',
     rememberMe: 'Recordarme',
     forgotPassword: '¿Olvidaste la contraseña?',
     loginSuccess: 'Has iniciado sesión exitosamente.',
@@ -87,6 +94,7 @@ const translations: Record<'de' | 'en' | 'es', Translations> = {
     passwordMismatch: 'Las contraseñas no coinciden.',
     marketingOptIn: 'Me gustaría recibir noticias, ofertas y actualizaciones por correo electrónico. Este consentimiento puede retirarse en cualquier momento.',
     privacyPolicy: 'Política de Privacidad',
+    termsAndPrivacy: 'Al registrarte, aceptas nuestros Términos de Servicio y Política de Privacidad.',
     serviceWelcome: 'Bienvenido a nuestro Servicio',
     serviceSubtitle: 'Crea y gestiona tu contenido en un solo lugar'
   }

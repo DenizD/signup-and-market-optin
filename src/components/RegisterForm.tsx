@@ -18,6 +18,7 @@ import {
   Visibility,
   VisibilityOff,
   Person,
+  Business,
 } from '@mui/icons-material';
 import { TranslationKey } from "@/hooks/useTranslations";
 
@@ -35,6 +36,7 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
+    company: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -70,6 +72,7 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
       return {
         firstName: 'Max',
         lastName: 'Mustermann',
+        company: 'Musterfirma GmbH',
         email: 'max.mustermann@beispiel.de',
         password: 'Mindestens 8 Zeichen',
         confirmPassword: 'Passwort wiederholen'
@@ -78,6 +81,7 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
       return {
         firstName: 'Juan',
         lastName: 'Pérez',
+        company: 'Empresa Ejemplo S.L.',
         email: 'juan.perez@ejemplo.com',
         password: 'Al menos 8 caracteres',
         confirmPassword: 'Repetir contraseña'
@@ -86,6 +90,7 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
     return {
       firstName: 'John',
       lastName: 'Doe',
+      company: 'Example Company Inc.',
       email: 'john.doe@example.com',
       password: 'At least 8 characters',
       confirmPassword: 'Repeat password'
@@ -142,6 +147,22 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
           }}
         />
       </Box>
+
+      <TextField
+        fullWidth
+        label={t('company')}
+        name="company"
+        value={formData.company}
+        onChange={handleChange}
+        placeholder={placeholders.company}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Business color="action" />
+            </InputAdornment>
+          ),
+        }}
+      />
 
       <TextField
         fullWidth
@@ -248,15 +269,7 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
 
       <Box sx={{ textAlign: 'center', mt: 2 }}>
         <Typography variant="caption" color="text.secondary">
-          {language === 'de' 
-            ? 'Mit der Registrierung stimmen Sie unserer ' 
-            : language === 'es' 
-            ? 'Al registrarte, aceptas nuestra ' 
-            : 'By registering, you agree to our '}
-          <Link href="#" color="primary">
-            {t('privacyPolicy')}
-          </Link>
-          {language === 'de' ? ' zu.' : language === 'es' ? '.' : '.'}
+          {t('termsAndPrivacy')}
         </Typography>
       </Box>
     </Box>
