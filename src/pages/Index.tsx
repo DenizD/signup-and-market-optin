@@ -3,6 +3,8 @@ import { useState } from "react";
 import { Box, Container, Typography, Paper, Tabs, Tab } from '@mui/material';
 import LoginForm from "@/components/LoginForm";
 import RegisterForm from "@/components/RegisterForm";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { useTranslations } from "@/hooks/useTranslations";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -30,13 +32,26 @@ function TabPanel(props: TabPanelProps) {
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState(0);
+  const { language, setLanguage, t } = useTranslations();
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setActiveTab(newValue);
   };
 
+  const handleLanguageChange = (newLanguage: string) => {
+    setLanguage(newLanguage as 'de' | 'en' | 'es');
+  };
+
   return (
     <Box sx={{ minHeight: '100vh', display: 'flex' }}>
+      {/* Language Switcher - Top Right */}
+      <Box sx={{ position: 'absolute', top: 20, right: 20, zIndex: 1000 }}>
+        <LanguageSwitcher 
+          currentLanguage={language} 
+          onLanguageChange={handleLanguageChange} 
+        />
+      </Box>
+
       {/* Left side - Image */}
       <Box
         sx={{
@@ -66,10 +81,10 @@ const Index = () => {
             </Typography>
           </Box>
           <Typography variant="h4" sx={{ color: 'text.primary', mb: 2, fontWeight: 'bold' }}>
-            Welcome to our Service
+            {t('serviceWelcome')}
           </Typography>
           <Typography variant="h6" sx={{ color: 'text.secondary' }}>
-            Create and manage your content in one place
+            {t('serviceSubtitle')}
           </Typography>
         </Box>
       </Box>
@@ -87,10 +102,10 @@ const Index = () => {
         <Container maxWidth="sm">
           <Box sx={{ textAlign: 'center', mb: 4 }}>
             <Typography variant="h4" sx={{ mb: 1, fontWeight: 'bold' }}>
-              Welcome! 👋
+              {t('welcome')}
             </Typography>
             <Typography variant="body1" color="text.secondary">
-              Sign in or create a new account
+              {t('welcomeSubtitle')}
             </Typography>
           </Box>
 
@@ -110,17 +125,17 @@ const Index = () => {
                 variant="fullWidth"
                 sx={{ mb: 2 }}
               >
-                <Tab label="Sign In" />
-                <Tab label="Register" />
+                <Tab label={t('signIn')} />
+                <Tab label={t('register')} />
               </Tabs>
             </Box>
 
             <TabPanel value={activeTab} index={0}>
-              <LoginForm />
+              <LoginForm language={language} t={t} />
             </TabPanel>
 
             <TabPanel value={activeTab} index={1}>
-              <RegisterForm />
+              <RegisterForm language={language} t={t} />
             </TabPanel>
           </Paper>
         </Container>

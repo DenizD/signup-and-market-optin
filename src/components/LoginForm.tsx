@@ -17,8 +17,14 @@ import {
   Visibility,
   VisibilityOff,
 } from '@mui/icons-material';
+import { TranslationKey } from "@/hooks/useTranslations";
 
-const LoginForm = () => {
+interface LoginFormProps {
+  language: string;
+  t: (key: TranslationKey) => string;
+}
+
+const LoginForm = ({ language, t }: LoginFormProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -45,13 +51,13 @@ const LoginForm = () => {
     <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
       {showSuccess && (
         <Alert severity="success">
-          You have been successfully logged in.
+          {t('loginSuccess')}
         </Alert>
       )}
 
       <TextField
         fullWidth
-        label="Email Address"
+        label={t('emailAddress')}
         name="email"
         type="email"
         value={formData.email}
@@ -69,12 +75,12 @@ const LoginForm = () => {
 
       <TextField
         fullWidth
-        label="Password"
+        label={t('password')}
         name="password"
         type={showPassword ? "text" : "password"}
         value={formData.password}
         onChange={handleChange}
-        placeholder="Your password"
+        placeholder={language === 'de' ? 'Ihr Passwort' : language === 'es' ? 'Tu contraseña' : 'Your password'}
         required
         InputProps={{
           startAdornment: (
@@ -104,11 +110,11 @@ const LoginForm = () => {
               size="small"
             />
           }
-          label="Remember me"
+          label={t('rememberMe')}
           sx={{ '& .MuiFormControlLabel-label': { fontSize: '0.875rem' } }}
         />
         <Link href="#" variant="body2" color="primary">
-          Forgot password?
+          {t('forgotPassword')}
         </Link>
       </Box>
 
@@ -119,7 +125,7 @@ const LoginForm = () => {
         fullWidth
         sx={{ mt: 2, py: 1.5 }}
       >
-        Sign In
+        {t('signIn')}
       </Button>
     </Box>
   );

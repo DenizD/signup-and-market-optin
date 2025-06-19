@@ -19,8 +19,14 @@ import {
   VisibilityOff,
   Person,
 } from '@mui/icons-material';
+import { TranslationKey } from "@/hooks/useTranslations";
 
-const RegisterForm = () => {
+interface RegisterFormProps {
+  language: string;
+  t: (key: TranslationKey) => string;
+}
+
+const RegisterForm = ({ language, t }: RegisterFormProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [marketingOptIn, setMarketingOptIn] = useState(false);
@@ -59,28 +65,57 @@ const RegisterForm = () => {
     });
   };
 
+  const getPlaceholders = () => {
+    if (language === 'de') {
+      return {
+        firstName: 'Max',
+        lastName: 'Mustermann',
+        email: 'max.mustermann@beispiel.de',
+        password: 'Mindestens 8 Zeichen',
+        confirmPassword: 'Passwort wiederholen'
+      };
+    } else if (language === 'es') {
+      return {
+        firstName: 'Juan',
+        lastName: 'Pérez',
+        email: 'juan.perez@ejemplo.com',
+        password: 'Al menos 8 caracteres',
+        confirmPassword: 'Repetir contraseña'
+      };
+    }
+    return {
+      firstName: 'John',
+      lastName: 'Doe',
+      email: 'john.doe@example.com',
+      password: 'At least 8 characters',
+      confirmPassword: 'Repeat password'
+    };
+  };
+
+  const placeholders = getPlaceholders();
+
   return (
     <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
       {showSuccess && (
         <Alert severity="success">
-          Your account has been created successfully.
+          {t('registerSuccess')}
         </Alert>
       )}
 
       {showError && (
         <Alert severity="error">
-          Passwords do not match.
+          {t('passwordMismatch')}
         </Alert>
       )}
 
       <Box sx={{ display: 'flex', gap: 2, flexDirection: { xs: 'column', sm: 'row' } }}>
         <TextField
           fullWidth
-          label="First Name"
+          label={t('firstName')}
           name="firstName"
           value={formData.firstName}
           onChange={handleChange}
-          placeholder="John"
+          placeholder={placeholders.firstName}
           required
           InputProps={{
             startAdornment: (
@@ -92,11 +127,11 @@ const RegisterForm = () => {
         />
         <TextField
           fullWidth
-          label="Last Name"
+          label={t('lastName')}
           name="lastName"
           value={formData.lastName}
           onChange={handleChange}
-          placeholder="Doe"
+          placeholder={placeholders.lastName}
           required
           InputProps={{
             startAdornment: (
@@ -110,12 +145,12 @@ const RegisterForm = () => {
 
       <TextField
         fullWidth
-        label="Email Address"
+        label={t('emailAddress')}
         name="email"
         type="email"
         value={formData.email}
         onChange={handleChange}
-        placeholder="john.doe@example.com"
+        placeholder={placeholders.email}
         required
         InputProps={{
           startAdornment: (
@@ -128,12 +163,12 @@ const RegisterForm = () => {
 
       <TextField
         fullWidth
-        label="Password"
+        label={t('password')}
         name="password"
         type={showPassword ? "text" : "password"}
         value={formData.password}
         onChange={handleChange}
-        placeholder="At least 8 characters"
+        placeholder={placeholders.password}
         required
         inputProps={{ minLength: 8 }}
         InputProps={{
@@ -157,12 +192,12 @@ const RegisterForm = () => {
 
       <TextField
         fullWidth
-        label="Confirm Password"
+        label={t('confirmPassword')}
         name="confirmPassword"
         type={showConfirmPassword ? "text" : "password"}
         value={formData.confirmPassword}
         onChange={handleChange}
-        placeholder="Repeat password"
+        placeholder={placeholders.confirmPassword}
         required
         InputProps={{
           startAdornment: (
@@ -194,8 +229,7 @@ const RegisterForm = () => {
           }
           label={
             <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.4 }}>
-              I would like to receive news, offers and updates via email. 
-              This consent can be withdrawn at any time.
+              {t('marketingOptIn')}
             </Typography>
           }
           sx={{ alignItems: 'flex-start', mt: 1 }}
@@ -209,15 +243,20 @@ const RegisterForm = () => {
         fullWidth
         sx={{ mt: 2, py: 1.5 }}
       >
-        Create Account
+        {t('createAccount')}
       </Button>
 
       <Box sx={{ textAlign: 'center', mt: 2 }}>
         <Typography variant="caption" color="text.secondary">
-          By registering, you agree to our{" "}
+          {language === 'de' 
+            ? 'Mit der Registrierung stimmen Sie unserer ' 
+            : language === 'es' 
+            ? 'Al registrarte, aceptas nuestra ' 
+            : 'By registering, you agree to our '}
           <Link href="#" color="primary">
-            Privacy Policy
-          </Link>.
+            {t('privacyPolicy')}
+          </Link>
+          {language === 'de' ? ' zu.' : language === 'es' ? '.' : '.'}
         </Typography>
       </Box>
     </Box>
