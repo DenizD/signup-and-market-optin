@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import {
   Box,
@@ -269,7 +268,45 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
 
       <Box sx={{ textAlign: 'center', mt: 2 }}>
         <Typography variant="caption" color="text.secondary">
-          {t('termsAndPrivacy')}
+          {language === 'de' && (
+            <>
+              Mit der Registrierung stimmen Sie unserer{' '}
+              <Link href="#" underline="hover" color="primary">
+                Nutzungsbedingungen
+              </Link>
+              {' '}&{' '}
+              <Link href="#" underline="hover" color="primary">
+                Datenschutzrichtlinie
+              </Link>
+              {' '}zu.
+            </>
+          )}
+          {language === 'en' && (
+            <>
+              By registering, you agree to our{' '}
+              <Link href="#" underline="hover" color="primary">
+                Terms of Service
+              </Link>
+              {' '}&{' '}
+              <Link href="#" underline="hover" color="primary">
+                Privacy Policy
+              </Link>
+              .
+            </>
+          )}
+          {language === 'es' && (
+            <>
+              Al registrarte, aceptas nuestros{' '}
+              <Link href="#" underline="hover" color="primary">
+                Términos de Servicio
+              </Link>
+              {' '}y{' '}
+              <Link href="#" underline="hover" color="primary">
+                Política de Privacidad
+              </Link>
+              .
+            </>
+          )}
         </Typography>
       </Box>
     </Box>
