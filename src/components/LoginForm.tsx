@@ -1,14 +1,27 @@
+
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
-import { toast } from "@/hooks/use-toast";
-import { Mail, Lock, Eye, EyeOff } from "lucide-react";
+import {
+  Box,
+  Button,
+  TextField,
+  FormControlLabel,
+  Checkbox,
+  Link,
+  InputAdornment,
+  IconButton,
+  Alert,
+} from '@mui/material';
+import {
+  Email,
+  Lock,
+  Visibility,
+  VisibilityOff,
+} from '@mui/icons-material';
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -17,10 +30,8 @@ const LoginForm = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Login attempt:", { ...formData, rememberMe });
-    toast({
-      title: "Anmeldung erfolgreich",
-      description: "Sie wurden erfolgreich angemeldet.",
-    });
+    setShowSuccess(true);
+    setTimeout(() => setShowSuccess(false), 3000);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,68 +42,86 @@ const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="space-y-2">
-        <Label htmlFor="email">E-Mail-Adresse</Label>
-        <div className="relative">
-          <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-          <Input
-            id="email"
-            name="email"
-            type="email"
-            placeholder="ihre.email@beispiel.de"
-            value={formData.email}
-            onChange={handleChange}
-            className="pl-10"
-            required
-          />
-        </div>
-      </div>
+    <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+      {showSuccess && (
+        <Alert severity="success">
+          Sie wurden erfolgreich angemeldet.
+        </Alert>
+      )}
 
-      <div className="space-y-2">
-        <Label htmlFor="password">Passwort</Label>
-        <div className="relative">
-          <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-          <Input
-            id="password"
-            name="password"
-            type={showPassword ? "text" : "password"}
-            placeholder="Ihr Passwort"
-            value={formData.password}
-            onChange={handleChange}
-            className="pl-10 pr-10"
-            required
-          />
-          <button
-            type="button"
-            onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
-          >
-            {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-          </button>
-        </div>
-      </div>
+      <TextField
+        fullWidth
+        label="E-Mail-Adresse"
+        name="email"
+        type="email"
+        value={formData.email}
+        onChange={handleChange}
+        placeholder="ihre.email@beispiel.de"
+        required
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Email color="action" />
+            </InputAdornment>
+          ),
+        }}
+      />
 
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-2">
-          <Checkbox
-            id="remember"
-            checked={rememberMe}
-            onCheckedChange={(checked) => setRememberMe(checked as boolean)}
-          />
-          <Label htmlFor="remember" className="text-sm text-gray-600">
-            Angemeldet bleiben
-          </Label>
-        </div>
-        <a href="#" className="text-sm text-blue-600 hover:underline">
+      <TextField
+        fullWidth
+        label="Passwort"
+        name="password"
+        type={showPassword ? "text" : "password"}
+        value={formData.password}
+        onChange={handleChange}
+        placeholder="Ihr Passwort"
+        required
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Lock color="action" />
+            </InputAdornment>
+          ),
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton
+                onClick={() => setShowPassword(!showPassword)}
+                edge="end"
+              >
+                {showPassword ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
+      />
+
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={rememberMe}
+              onChange={(e) => setRememberMe(e.target.checked)}
+              size="small"
+            />
+          }
+          label="Angemeldet bleiben"
+          sx={{ '& .MuiFormControlLabel-label': { fontSize: '0.875rem' } }}
+        />
+        <Link href="#" variant="body2" color="primary">
           Passwort vergessen?
-        </a>
-      </div>
+        </Link>
+      </Box>
 
-      <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700">
+      <Button
+        type="submit"
+        variant="contained"
+        size="large"
+        fullWidth
+        sx={{ mt: 2, py: 1.5 }}
+      >
         Anmelden
       </Button>
-    </form>
+    </Box>
   );
 };
 

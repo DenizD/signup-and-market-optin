@@ -1,16 +1,32 @@
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
-import { toast } from "@/hooks/use-toast";
-import { Mail, Lock, Eye, EyeOff, User } from "lucide-react";
+import {
+  Box,
+  Button,
+  TextField,
+  FormControlLabel,
+  Checkbox,
+  Link,
+  InputAdornment,
+  IconButton,
+  Alert,
+  Grid,
+  Typography,
+} from '@mui/material';
+import {
+  Email,
+  Lock,
+  Visibility,
+  VisibilityOff,
+  Person,
+} from '@mui/icons-material';
 
 const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [marketingOptIn, setMarketingOptIn] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [showError, setShowError] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -23,11 +39,8 @@ const RegisterForm = () => {
     e.preventDefault();
     
     if (formData.password !== formData.confirmPassword) {
-      toast({
-        title: "Fehler",
-        description: "Die Passwörter stimmen nicht überein.",
-        variant: "destructive",
-      });
+      setShowError(true);
+      setTimeout(() => setShowError(false), 3000);
       return;
     }
 
@@ -36,10 +49,8 @@ const RegisterForm = () => {
       marketingOptIn 
     });
     
-    toast({
-      title: "Registrierung erfolgreich",
-      description: "Ihr Konto wurde erfolgreich erstellt.",
-    });
+    setShowSuccess(true);
+    setTimeout(() => setShowSuccess(false), 3000);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,138 +61,172 @@ const RegisterForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div className="space-y-2">
-          <Label htmlFor="firstName">Vorname</Label>
-          <div className="relative">
-            <User className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-            <Input
-              id="firstName"
-              name="firstName"
-              type="text"
-              placeholder="Max"
-              value={formData.firstName}
-              onChange={handleChange}
-              className="pl-10"
-              required
+    <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+      {showSuccess && (
+        <Alert severity="success">
+          Ihr Konto wurde erfolgreich erstellt.
+        </Alert>
+      )}
+
+      {showError && (
+        <Alert severity="error">
+          Die Passwörter stimmen nicht überein.
+        </Alert>
+      )}
+
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            fullWidth
+            label="Vorname"
+            name="firstName"
+            value={formData.firstName}
+            onChange={handleChange}
+            placeholder="Max"
+            required
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Person color="action" />
+                </InputAdornment>
+              ),
+            }}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            fullWidth
+            label="Nachname"
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleChange}
+            placeholder="Mustermann"
+            required
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Person color="action" />
+                </InputAdornment>
+              ),
+            }}
+          />
+        </Grid>
+      </Grid>
+
+      <TextField
+        fullWidth
+        label="E-Mail-Adresse"
+        name="email"
+        type="email"
+        value={formData.email}
+        onChange={handleChange}
+        placeholder="max.mustermann@beispiel.de"
+        required
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Email color="action" />
+            </InputAdornment>
+          ),
+        }}
+      />
+
+      <TextField
+        fullWidth
+        label="Passwort"
+        name="password"
+        type={showPassword ? "text" : "password"}
+        value={formData.password}
+        onChange={handleChange}
+        placeholder="Mindestens 8 Zeichen"
+        required
+        inputProps={{ minLength: 8 }}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Lock color="action" />
+            </InputAdornment>
+          ),
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton
+                onClick={() => setShowPassword(!showPassword)}
+                edge="end"
+              >
+                {showPassword ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
+      />
+
+      <TextField
+        fullWidth
+        label="Passwort bestätigen"
+        name="confirmPassword"
+        type={showConfirmPassword ? "text" : "password"}
+        value={formData.confirmPassword}
+        onChange={handleChange}
+        placeholder="Passwort wiederholen"
+        required
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Lock color="action" />
+            </InputAdornment>
+          ),
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                edge="end"
+              >
+                {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
+      />
+
+      <Box sx={{ pt: 1 }}>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={marketingOptIn}
+              onChange={(e) => setMarketingOptIn(e.target.checked)}
+              size="small"
             />
-          </div>
-        </div>
+          }
+          label={
+            <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.4 }}>
+              Ich möchte über Neuigkeiten, Angebote und Updates per E-Mail informiert werden. 
+              Diese Einwilligung kann jederzeit widerrufen werden.
+            </Typography>
+          }
+          sx={{ alignItems: 'flex-start', mt: 1 }}
+        />
+      </Box>
 
-        <div className="space-y-2">
-          <Label htmlFor="lastName">Nachname</Label>
-          <div className="relative">
-            <User className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-            <Input
-              id="lastName"
-              name="lastName"
-              type="text"
-              placeholder="Mustermann"
-              value={formData.lastName}
-              onChange={handleChange}
-              className="pl-10"
-              required
-            />
-          </div>
-        </div>
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="email">E-Mail-Adresse</Label>
-        <div className="relative">
-          <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-          <Input
-            id="email"
-            name="email"
-            type="email"
-            placeholder="max.mustermann@beispiel.de"
-            value={formData.email}
-            onChange={handleChange}
-            className="pl-10"
-            required
-          />
-        </div>
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="password">Passwort</Label>
-        <div className="relative">
-          <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-          <Input
-            id="password"
-            name="password"
-            type={showPassword ? "text" : "password"}
-            placeholder="Mindestens 8 Zeichen"
-            value={formData.password}
-            onChange={handleChange}
-            className="pl-10 pr-10"
-            required
-            minLength={8}
-          />
-          <button
-            type="button"
-            onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
-          >
-            {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-          </button>
-        </div>
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="confirmPassword">Passwort bestätigen</Label>
-        <div className="relative">
-          <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-          <Input
-            id="confirmPassword"
-            name="confirmPassword"
-            type={showConfirmPassword ? "text" : "password"}
-            placeholder="Passwort wiederholen"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            className="pl-10 pr-10"
-            required
-          />
-          <button
-            type="button"
-            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-            className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
-          >
-            {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-          </button>
-        </div>
-      </div>
-
-      <div className="space-y-3 pt-2">
-        <div className="flex items-start space-x-2">
-          <Checkbox
-            id="marketing"
-            checked={marketingOptIn}
-            onCheckedChange={(checked) => setMarketingOptIn(checked as boolean)}
-            className="mt-1"
-          />
-          <Label htmlFor="marketing" className="text-sm text-gray-600 leading-relaxed">
-            Ich möchte über Neuigkeiten, Angebote und Updates per E-Mail informiert werden. 
-            Diese Einwilligung kann jederzeit widerrufen werden.
-          </Label>
-        </div>
-      </div>
-
-      <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700">
+      <Button
+        type="submit"
+        variant="contained"
+        size="large"
+        fullWidth
+        sx={{ mt: 2, py: 1.5 }}
+      >
         Konto erstellen
       </Button>
 
-      <div className="text-center text-xs text-gray-500 mt-4">
-        <p>
+      <Box sx={{ textAlign: 'center', mt: 2 }}>
+        <Typography variant="caption" color="text.secondary">
           Mit der Registrierung stimmen Sie unseren{" "}
-          <a href="#" className="text-blue-600 hover:underline">
+          <Link href="#" color="primary">
             Datenschutzbestimmungen
-          </a>{" "}
+          </Link>{" "}
           zu.
-        </p>
-      </div>
-    </form>
+        </Typography>
+      </Box>
+    </Box>
   );
 };
 

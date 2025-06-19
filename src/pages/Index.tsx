@@ -1,60 +1,131 @@
 
 import { useState } from "react";
+import { Box, Container, Typography, Paper, Tabs, Tab, Grid } from '@mui/material';
 import LoginForm from "@/components/LoginForm";
 import RegisterForm from "@/components/RegisterForm";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-const Index = () => {
-  const [activeTab, setActiveTab] = useState("login");
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
+
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
 
   return (
-    <div className="min-h-screen bg-white flex">
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ pt: 3 }}>
+          {children}
+        </Box>
+      )}
+    </div>
+  );
+}
+
+const Index = () => {
+  const [activeTab, setActiveTab] = useState(0);
+
+  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setActiveTab(newValue);
+  };
+
+  return (
+    <Box sx={{ minHeight: '100vh', display: 'flex' }}>
       {/* Left side - Image */}
-      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 items-center justify-center">
-        <div className="max-w-md text-center">
-          <div className="w-64 h-64 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full mx-auto mb-8 flex items-center justify-center">
-            <div className="text-white text-6xl font-bold">Logo</div>
-          </div>
-          <h2 className="text-3xl font-bold text-gray-800 mb-4">
+      <Box
+        sx={{
+          display: { xs: 'none', lg: 'flex' },
+          width: { lg: '50%' },
+          background: 'linear-gradient(135deg, #eff6ff 0%, #e0e7ff 50%, #f3e8ff 100%)',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <Box sx={{ maxWidth: 400, textAlign: 'center', px: 4 }}>
+          <Box
+            sx={{
+              width: 256,
+              height: 256,
+              background: 'linear-gradient(135deg, #60a5fa 0%, #a855f7 100%)',
+              borderRadius: '50%',
+              mx: 'auto',
+              mb: 4,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Typography variant="h3" sx={{ color: 'white', fontWeight: 'bold' }}>
+              Logo
+            </Typography>
+          </Box>
+          <Typography variant="h4" sx={{ color: 'text.primary', mb: 2, fontWeight: 'bold' }}>
             Willkommen bei unserem Service
-          </h2>
-          <p className="text-gray-600 text-lg">
+          </Typography>
+          <Typography variant="h6" sx={{ color: 'text.secondary' }}>
             Erstellen und verwalten Sie Ihre Inhalte an einem Ort
-          </p>
-        </div>
-      </div>
+          </Typography>
+        </Box>
+      </Box>
 
       {/* Right side - Forms */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
-        <div className="w-full max-w-md">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Willkommen! 👋</h1>
-            <p className="text-gray-600">Melden Sie sich an oder erstellen Sie ein neues Konto</p>
-          </div>
-          
-          <div className="bg-white rounded-lg shadow-xl border border-gray-200 p-8">
-            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="grid w-full grid-cols-2 mb-6">
-                <TabsTrigger value="login" className="text-sm font-medium">
-                  Anmelden
-                </TabsTrigger>
-                <TabsTrigger value="register" className="text-sm font-medium">
-                  Registrieren
-                </TabsTrigger>
-              </TabsList>
-              
-              <TabsContent value="login" className="space-y-0">
-                <LoginForm />
-              </TabsContent>
-              
-              <TabsContent value="register" className="space-y-0">
-                <RegisterForm />
-              </TabsContent>
-            </Tabs>
-          </div>
-        </div>
-      </div>
-    </div>
+      <Box
+        sx={{
+          width: { xs: '100%', lg: '50%' },
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          p: 4,
+        }}
+      >
+        <Container maxWidth="sm">
+          <Box sx={{ textAlign: 'center', mb: 4 }}>
+            <Typography variant="h4" sx={{ mb: 1, fontWeight: 'bold' }}>
+              Willkommen! 👋
+            </Typography>
+            <Typography variant="body1" color="text.secondary">
+              Melden Sie sich an oder erstellen Sie ein neues Konto
+            </Typography>
+          </Box>
+
+          <Paper
+            elevation={3}
+            sx={{
+              p: 4,
+              borderRadius: 2,
+              border: '1px solid',
+              borderColor: 'divider',
+            }}
+          >
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+              <Tabs
+                value={activeTab}
+                onChange={handleTabChange}
+                variant="fullWidth"
+                sx={{ mb: 2 }}
+              >
+                <Tab label="Anmelden" />
+                <Tab label="Registrieren" />
+              </Tabs>
+            </Box>
+
+            <TabPanel value={activeTab} index={0}>
+              <LoginForm />
+            </TabPanel>
+
+            <TabPanel value={activeTab} index={1}>
+              <RegisterForm />
+            </TabPanel>
+          </Paper>
+        </Container>
+      </Box>
+    </Box>
   );
 };
 
