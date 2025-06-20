@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Box, Container, Typography, Paper, Button } from '@mui/material';
+import { Box, Container, Typography, Paper, Link, Button } from '@mui/material';
 import LoginForm from "@/components/LoginForm";
 import RegisterForm from "@/components/RegisterForm";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
@@ -68,11 +68,11 @@ const Index = () => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          p: { xs: 2, md: 4 },
+          p: 4,
         }}
       >
-        <Container maxWidth={false} sx={{ maxWidth: { xs: '100%', md: '400px' } }}>
-          <Box sx={{ textAlign: 'center', mb: 3 }}>
+        <Container maxWidth="sm">
+          <Box sx={{ textAlign: 'center', mb: 4 }}>
             <Typography variant="h4" sx={{ mb: 1, fontWeight: 'bold' }}>
               {t('welcome')}
             </Typography>
@@ -84,44 +84,34 @@ const Index = () => {
           <Paper
             elevation={3}
             sx={{
-              p: { xs: 3, md: 4 },
+              p: 4,
               borderRadius: 2,
               border: '1px solid',
               borderColor: 'divider',
-              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
             }}
           >
             {!isRegisterMode ? (
               <>
                 <LoginForm language={language} t={t} />
                 
-                <Box sx={{ 
-                  textAlign: 'center', 
-                  mt: 2.5, 
-                  pt: 2.5, 
-                  borderTop: '1px solid', 
-                  borderColor: 'divider' 
-                }}>
+                <Box sx={{ textAlign: 'center', mt: 3, pt: 3, borderTop: '1px solid', borderColor: 'divider' }}>
                   <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
                     {language === 'de' ? 'Noch kein Konto?' : 
                      language === 'es' ? '¿No tienes cuenta?' : 
                      'Don\'t have an account?'}
                   </Typography>
                   <Button
-                    variant="contained"
+                    variant="outlined"
                     onClick={() => setIsRegisterMode(true)}
-                    fullWidth
                     sx={{ 
-                      backgroundColor: 'rgb(14, 112, 144)',
-                      color: 'white',
+                      borderColor: 'rgb(14, 112, 144)',
+                      color: 'rgb(14, 112, 144)',
                       fontWeight: 600,
-                      py: 1.2,
-                      minHeight: '40px',
-                      fontSize: '0.9rem',
-                      boxShadow: '0 2px 8px rgba(14, 112, 144, 0.2)',
+                      px: 4,
+                      py: 1,
                       '&:hover': { 
-                        backgroundColor: 'rgb(10, 90, 115)',
-                        boxShadow: '0 4px 12px rgba(14, 112, 144, 0.3)'
+                        borderColor: 'rgb(10, 90, 115)',
+                        backgroundColor: 'rgba(14, 112, 144, 0.04)'
                       }
                     }}
                   >
@@ -133,40 +123,23 @@ const Index = () => {
               <>
                 <RegisterForm language={language} t={t} />
                 
-                <Box sx={{ 
-                  textAlign: 'center', 
-                  mt: 2.5, 
-                  pt: 2.5, 
-                  borderTop: '1px solid', 
-                  borderColor: 'divider' 
-                }}>
-                  <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
-                    {language === 'de' ? 'Bereits ein Konto?' : 
-                     language === 'es' ? '¿Ya tienes cuenta?' : 
-                     'Already have an account?'}
-                  </Typography>
-                  <Button
-                    variant="outlined"
-                    onClick={() => setIsRegisterMode(false)}
+                <Box sx={{ textAlign: 'center', mt: 3, pt: 3, borderTop: '1px solid', borderColor: 'divider' }}>
+                  <Link 
+                    component="button"
+                    type="button"
+                    variant="body2" 
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsRegisterMode(false);
+                    }}
                     sx={{ 
-                      borderColor: 'rgb(14, 112, 144)',
-                      color: 'rgb(14, 112, 144)',
-                      fontWeight: 600,
-                      px: 4,
-                      py: 0.8,
-                      minHeight: '36px',
-                      fontSize: '0.85rem',
-                      '&:hover': { 
-                        borderColor: 'rgb(10, 90, 115)',
-                        backgroundColor: 'rgba(14, 112, 144, 0.04)',
-                        color: 'rgb(10, 90, 115)'
-                      }
+                      textDecoration: 'none', 
+                      '&:hover': { textDecoration: 'underline' },
+                      color: 'rgb(14, 112, 144)'
                     }}
                   >
-                    {language === 'de' ? 'Zur Anmeldung' : 
-                     language === 'es' ? 'Ir a iniciar sesión' : 
-                     'Go to Sign In'}
-                  </Button>
+                    {t('haveAccount')}
+                  </Link>
                 </Box>
               </>
             )}
