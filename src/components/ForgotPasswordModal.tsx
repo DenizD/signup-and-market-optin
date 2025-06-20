@@ -53,10 +53,26 @@ const ForgotPasswordModal = ({ isOpen, onClose, t }: ForgotPasswordModalProps) =
               />
             </div>
             <div className="flex flex-col gap-2">
-              <Button type="submit" className="w-full">
+              <Button 
+                type="submit" 
+                className="w-full"
+                style={{ 
+                  backgroundColor: 'rgb(14, 112, 144)',
+                  color: 'white'
+                }}
+              >
                 Reset Password
               </Button>
-              <Button type="button" variant="outline" onClick={onClose} className="w-full">
+              <Button 
+                type="button" 
+                variant="outline" 
+                onClick={onClose} 
+                className="w-full"
+                style={{ 
+                  borderColor: 'rgb(14, 112, 144)',
+                  color: 'rgb(14, 112, 144)'
+                }}
+              >
                 Cancel
               </Button>
             </div>

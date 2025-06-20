@@ -119,10 +119,13 @@ const LoginForm = ({ language, t }: LoginFormProps) => {
           component="button" 
           type="button" 
           variant="body2" 
-          color="primary"
           onClick={(e) => {
             e.preventDefault();
             setShowForgotPassword(true);
+          }}
+          sx={{ 
+            color: 'rgb(14, 112, 144)',
+            '&:hover': { color: 'rgb(10, 90, 115)' }
           }}
         >
           {t('forgotPassword')}
@@ -134,7 +137,12 @@ const LoginForm = ({ language, t }: LoginFormProps) => {
         variant="contained"
         size="large"
         fullWidth
-        sx={{ mt: 2, py: 1.5 }}
+        sx={{ 
+          mt: 2, 
+          py: 1.5,
+          backgroundColor: 'rgb(14, 112, 144)',
+          '&:hover': { backgroundColor: 'rgb(10, 90, 115)' }
+        }}
       >
         {t('signIn')}
       </Button>

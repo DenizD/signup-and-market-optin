@@ -237,7 +237,12 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
         variant="contained"
         size="large"
         fullWidth
-        sx={{ mt: 2, py: 1.5 }}
+        sx={{ 
+          mt: 2, 
+          py: 1.5,
+          backgroundColor: 'rgb(14, 112, 144)',
+          '&:hover': { backgroundColor: 'rgb(10, 90, 115)' }
+        }}
       >
         {t('createAccount')}
       </Button>
@@ -247,11 +252,11 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
           {language === 'de' && (
             <>
               Mit der Registrierung stimmen Sie unserer{' '}
-              <Link href="#" underline="hover" color="primary">
+              <Link href="#" underline="hover" sx={{ color: 'rgb(14, 112, 144)' }}>
                 Nutzungsbedingungen
               </Link>
               {' '}&{' '}
-              <Link href="#" underline="hover" color="primary">
+              <Link href="#" underline="hover" sx={{ color: 'rgb(14, 112, 144)' }}>
                 Datenschutzrichtlinie
               </Link>
               {' '}zu.
@@ -260,11 +265,11 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
           {language === 'en' && (
             <>
               By registering, you agree to our{' '}
-              <Link href="#" underline="hover" color="primary">
+              <Link href="#" underline="hover" sx={{ color: 'rgb(14, 112, 144)' }}>
                 Terms of Service
               </Link>
               {' '}&{' '}
-              <Link href="#" underline="hover" color="primary">
+              <Link href="#" underline="hover" sx={{ color: 'rgb(14, 112, 144)' }}>
                 Privacy Policy
               </Link>
               .
@@ -273,11 +278,11 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
           {language === 'es' && (
             <>
               Al registrarte, aceptas nuestros{' '}
-              <Link href="#" underline="hover" color="primary">
+              <Link href="#" underline="hover" sx={{ color: 'rgb(14, 112, 144)' }}>
                 Términos de Servicio
               </Link>
               {' '}y{' '}
-              <Link href="#" underline="hover" color="primary">
+              <Link href="#" underline="hover" sx={{ color: 'rgb(14, 112, 144)' }}>
                 Política de Privacidad
               </Link>
               .

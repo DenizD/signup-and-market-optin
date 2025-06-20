@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Box, Container, Typography, Paper, Link } from '@mui/material';
+import { Box, Container, Typography, Paper, Link, Button } from '@mui/material';
 import LoginForm from "@/components/LoginForm";
 import RegisterForm from "@/components/RegisterForm";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
@@ -95,19 +95,28 @@ const Index = () => {
                 <LoginForm language={language} t={t} />
                 
                 <Box sx={{ textAlign: 'center', mt: 3, pt: 3, borderTop: '1px solid', borderColor: 'divider' }}>
-                  <Link 
-                    component="button"
-                    type="button"
-                    variant="body2" 
-                    color="primary"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setIsRegisterMode(true);
+                  <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                    {language === 'de' ? 'Noch kein Konto?' : 
+                     language === 'es' ? '¿No tienes cuenta?' : 
+                     'Don\'t have an account?'}
+                  </Typography>
+                  <Button
+                    variant="outlined"
+                    onClick={() => setIsRegisterMode(true)}
+                    sx={{ 
+                      borderColor: 'rgb(14, 112, 144)',
+                      color: 'rgb(14, 112, 144)',
+                      fontWeight: 600,
+                      px: 4,
+                      py: 1,
+                      '&:hover': { 
+                        borderColor: 'rgb(10, 90, 115)',
+                        backgroundColor: 'rgba(14, 112, 144, 0.04)'
+                      }
                     }}
-                    sx={{ textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}
                   >
-                    {t('noAccount')}
-                  </Link>
+                    {t('register')}
+                  </Button>
                 </Box>
               </>
             ) : (
@@ -119,12 +128,15 @@ const Index = () => {
                     component="button"
                     type="button"
                     variant="body2" 
-                    color="primary"
                     onClick={(e) => {
                       e.preventDefault();
                       setIsRegisterMode(false);
                     }}
-                    sx={{ textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}
+                    sx={{ 
+                      textDecoration: 'none', 
+                      '&:hover': { textDecoration: 'underline' },
+                      color: 'rgb(14, 112, 144)'
+                    }}
                   >
                     {t('haveAccount')}
                   </Link>
