@@ -1,42 +1,14 @@
 
 import { useState } from "react";
-import { Box, Container, Typography, Paper, Tabs, Tab } from '@mui/material';
+import { Box, Container, Typography, Paper, Link } from '@mui/material';
 import LoginForm from "@/components/LoginForm";
 import RegisterForm from "@/components/RegisterForm";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useTranslations } from "@/hooks/useTranslations";
 
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-}
-
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ pt: 3 }}>
-          {children}
-        </Box>
-      )}
-    </div>
-  );
-}
-
 const Index = () => {
-  const [activeTab, setActiveTab] = useState(0);
+  const [isRegisterMode, setIsRegisterMode] = useState(false);
   const { language, setLanguage, t } = useTranslations();
-
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-    setActiveTab(newValue);
-  };
 
   const handleLanguageChange = (newLanguage: string) => {
     setLanguage(newLanguage as 'de' | 'en' | 'es');
@@ -118,25 +90,47 @@ const Index = () => {
               borderColor: 'divider',
             }}
           >
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              <Tabs
-                value={activeTab}
-                onChange={handleTabChange}
-                variant="fullWidth"
-                sx={{ mb: 2 }}
-              >
-                <Tab label={t('signIn')} />
-                <Tab label={t('register')} />
-              </Tabs>
-            </Box>
-
-            <TabPanel value={activeTab} index={0}>
-              <LoginForm language={language} t={t} />
-            </TabPanel>
-
-            <TabPanel value={activeTab} index={1}>
-              <RegisterForm language={language} t={t} />
-            </TabPanel>
+            {!isRegisterMode ? (
+              <>
+                <LoginForm language={language} t={t} />
+                
+                <Box sx={{ textAlign: 'center', mt: 3, pt: 3, borderTop: '1px solid', borderColor: 'divider' }}>
+                  <Link 
+                    component="button"
+                    type="button"
+                    variant="body2" 
+                    color="primary"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsRegisterMode(true);
+                    }}
+                    sx={{ textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}
+                  >
+                    {t('noAccount')}
+                  </Link>
+                </Box>
+              </>
+            ) : (
+              <>
+                <RegisterForm language={language} t={t} />
+                
+                <Box sx={{ textAlign: 'center', mt: 3, pt: 3, borderTop: '1px solid', borderColor: 'divider' }}>
+                  <Link 
+                    component="button"
+                    type="button"
+                    variant="body2" 
+                    color="primary"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsRegisterMode(false);
+                    }}
+                    sx={{ textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}
+                  >
+                    {t('haveAccount')}
+                  </Link>
+                </Box>
+              </>
+            )}
           </Paper>
         </Container>
       </Box>

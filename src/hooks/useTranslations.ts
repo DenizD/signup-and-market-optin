@@ -22,7 +22,10 @@ export type TranslationKey =
   | 'privacyPolicy'
   | 'termsAndPrivacy'
   | 'serviceWelcome'
-  | 'serviceSubtitle';
+  | 'serviceSubtitle'
+  | 'noAccount'
+  | 'haveAccount'
+  | 'backToLogin';
 
 type Translations = {
   [key in TranslationKey]: string;
@@ -50,7 +53,10 @@ const translations: Record<'de' | 'en' | 'es', Translations> = {
     privacyPolicy: 'Datenschutzrichtlinie',
     termsAndPrivacy: 'Mit der Registrierung stimmen Sie unserer Nutzungsbedingungen & Datenschutzrichtlinie zu.',
     serviceWelcome: 'Willkommen bei unserem Service',
-    serviceSubtitle: 'Greifen Sie auf interaktive Live-Streams, shoppable Clips und intelligente KI-Features auf unserer Video-Commerce-Plattform zu.'
+    serviceSubtitle: 'Greifen Sie auf interaktive Live-Streams, shoppable Clips und intelligente KI-Features auf unserer Video-Commerce-Plattform zu.',
+    noAccount: 'Noch kein Konto? Hier registrieren',
+    haveAccount: 'Bereits ein Konto? Hier anmelden',
+    backToLogin: 'Zurück zur Anmeldung'
   },
   en: {
     welcome: 'Welcome! 👋',
@@ -73,7 +79,10 @@ const translations: Record<'de' | 'en' | 'es', Translations> = {
     privacyPolicy: 'Privacy Policy',
     termsAndPrivacy: 'By registering, you agree to our Terms of Service & Privacy Policy.',
     serviceWelcome: 'Welcome to our Service',
-    serviceSubtitle: 'Access interactive live streams, shoppable clips, and intelligent AI features on our video commerce platform.'
+    serviceSubtitle: 'Access interactive live streams, shoppable clips, and intelligent AI features on our video commerce platform.',
+    noAccount: 'No account yet? Sign up here',
+    haveAccount: 'Already have an account? Sign in here',
+    backToLogin: 'Back to Login'
   },
   es: {
     welcome: '¡Bienvenido! 👋',
@@ -96,7 +105,10 @@ const translations: Record<'de' | 'en' | 'es', Translations> = {
     privacyPolicy: 'Política de Privacidad',
     termsAndPrivacy: 'Al registrarte, aceptas nuestros Términos de Servicio y Política de Privacidad.',
     serviceWelcome: 'Bienvenido a nuestro Servicio',
-    serviceSubtitle: 'Accede a transmisiones en vivo interactivas, clips comprables e funciones inteligentes de IA en nuestra plataforma de comercio de video.'
+    serviceSubtitle: 'Accede a transmisiones en vivo interactivas, clips comprables e funciones inteligentes de IA en nuestra plataforma de comercio de video.',
+    noAccount: '¿No tienes cuenta? Regístrate aquí',
+    haveAccount: '¿Ya tienes cuenta? Inicia sesión aquí',
+    backToLogin: 'Volver al Login'
   }
 };
 

@@ -17,6 +17,7 @@ import {
   Visibility,
   VisibilityOff,
 } from '@mui/icons-material';
+import ForgotPasswordModal from './ForgotPasswordModal';
 import { TranslationKey } from "@/hooks/useTranslations";
 
 interface LoginFormProps {
@@ -28,6 +29,7 @@ const LoginForm = ({ language, t }: LoginFormProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -113,7 +115,16 @@ const LoginForm = ({ language, t }: LoginFormProps) => {
           label={t('rememberMe')}
           sx={{ '& .MuiFormControlLabel-label': { fontSize: '0.875rem' } }}
         />
-        <Link href="#" variant="body2" color="primary">
+        <Link 
+          component="button" 
+          type="button" 
+          variant="body2" 
+          color="primary"
+          onClick={(e) => {
+            e.preventDefault();
+            setShowForgotPassword(true);
+          }}
+        >
           {t('forgotPassword')}
         </Link>
       </Box>
@@ -127,6 +138,12 @@ const LoginForm = ({ language, t }: LoginFormProps) => {
       >
         {t('signIn')}
       </Button>
+
+      <ForgotPasswordModal 
+        isOpen={showForgotPassword}
+        onClose={() => setShowForgotPassword(false)}
+        t={t}
+      />
     </Box>
   );
 };
