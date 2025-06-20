@@ -11,9 +11,9 @@ export type Language = {
 };
 
 export const languages: Language[] = [
-  { code: 'de', name: 'Deutsch'},
-  { code: 'en', name: 'English'},
-  { code: 'es', name: 'Español'},
+  { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
+  { code: 'en', name: 'English', flag: '🇺🇸' },
+  { code: 'es', name: 'Español', flag: '🇪🇸' },
 ];
 
 interface LanguageSwitcherProps {

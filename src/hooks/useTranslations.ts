@@ -31,8 +31,8 @@ type Translations = {
 const translations: Record<'de' | 'en' | 'es', Translations> = {
   de: {
     welcome: 'Willkommen! 👋',
-    welcomeSubtitle: 'Anmelden oder neues Konto erstellen',
-    signIn: 'Anmelden',
+    welcomeSubtitle: 'In Ihr Konto anmelden oder neues Konto erstellen',
+    signIn: 'In Ihr Konto anmelden',
     register: 'Registrieren',
     createAccount: 'Konto erstellen',
     emailAddress: 'E-Mail-Adresse',
@@ -50,12 +50,12 @@ const translations: Record<'de' | 'en' | 'es', Translations> = {
     privacyPolicy: 'Datenschutzrichtlinie',
     termsAndPrivacy: 'Mit der Registrierung stimmen Sie unserer Nutzungsbedingungen & Datenschutzrichtlinie zu.',
     serviceWelcome: 'Willkommen bei unserem Service',
-    serviceSubtitle: 'Erstellen und verwalten Sie Ihre Inhalte an einem Ort'
+    serviceSubtitle: 'Greifen Sie auf interaktive Live-Streams, shoppable Clips und intelligente KI-Features auf unserer Video-Commerce-Plattform zu.'
   },
   en: {
     welcome: 'Welcome! 👋',
-    welcomeSubtitle: 'Sign in or create a new account',
-    signIn: 'Sign In',
+    welcomeSubtitle: 'Sign in to your account or create a new account',
+    signIn: 'Sign in to your account',
     register: 'Register',
     createAccount: 'Create Account',
     emailAddress: 'Email Address',
@@ -73,12 +73,12 @@ const translations: Record<'de' | 'en' | 'es', Translations> = {
     privacyPolicy: 'Privacy Policy',
     termsAndPrivacy: 'By registering, you agree to our Terms of Service & Privacy Policy.',
     serviceWelcome: 'Welcome to our Service',
-    serviceSubtitle: 'Create and manage your content in one place'
+    serviceSubtitle: 'Access interactive live streams, shoppable clips, and intelligent AI features on our video commerce platform.'
   },
   es: {
     welcome: '¡Bienvenido! 👋',
-    welcomeSubtitle: 'Iniciar sesión o crear una nueva cuenta',
-    signIn: 'Iniciar Sesión',
+    welcomeSubtitle: 'Iniciar sesión en su cuenta o crear una nueva cuenta',
+    signIn: 'Iniciar sesión en su cuenta',
     register: 'Registrarse',
     createAccount: 'Crear Cuenta',
     emailAddress: 'Dirección de Correo',
@@ -96,7 +96,7 @@ const translations: Record<'de' | 'en' | 'es', Translations> = {
     privacyPolicy: 'Política de Privacidad',
     termsAndPrivacy: 'Al registrarte, aceptas nuestros Términos de Servicio y Política de Privacidad.',
     serviceWelcome: 'Bienvenido a nuestro Servicio',
-    serviceSubtitle: 'Crea y gestiona tu contenido en un solo lugar'
+    serviceSubtitle: 'Accede a transmisiones en vivo interactivas, clips comprables e funciones inteligentes de IA en nuestra plataforma de comercio de video.'
   }
 };
 
