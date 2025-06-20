@@ -83,16 +83,10 @@ const Index = () => {
           <div className="w-full max-w-md mx-auto">
             <Tabs defaultValue="login" className="w-full">
               <TabsList className="grid w-full grid-cols-2 mb-6">
-                <TabsTrigger 
-                  value="login" 
-                  className="text-sm font-medium data-[state=active]:bg-[rgb(14,112,144)] data-[state=active]:text-white"
-                >
+                <TabsTrigger value="login" className="text-sm font-medium">
                   {t('signIn')}
                 </TabsTrigger>
-                <TabsTrigger 
-                  value="register" 
-                  className="text-sm font-medium data-[state=active]:bg-[rgb(14,112,144)] data-[state=active]:text-white"
-                >
+                <TabsTrigger value="register" className="text-sm font-medium">
                   {t('register')}
                 </TabsTrigger>
               </TabsList>
