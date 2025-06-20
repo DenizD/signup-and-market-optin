@@ -71,8 +71,8 @@ const Index = () => {
           p: { xs: 2, md: 4 },
         }}
       >
-        <Container maxWidth="sm">
-          <Box sx={{ textAlign: 'center', mb: 4 }}>
+        <Container maxWidth={false} sx={{ maxWidth: { xs: '100%', md: '400px' } }}>
+          <Box sx={{ textAlign: 'center', mb: 3 }}>
             <Typography variant="h4" sx={{ mb: 1, fontWeight: 'bold' }}>
               {t('welcome')}
             </Typography>
@@ -97,12 +97,12 @@ const Index = () => {
                 
                 <Box sx={{ 
                   textAlign: 'center', 
-                  mt: 4, 
-                  pt: 3, 
+                  mt: 2.5, 
+                  pt: 2.5, 
                   borderTop: '1px solid', 
                   borderColor: 'divider' 
                 }}>
-                  <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+                  <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
                     {language === 'de' ? 'Noch kein Konto?' : 
                      language === 'es' ? '¿No tienes cuenta?' : 
                      'Don\'t have an account?'}
@@ -115,9 +115,9 @@ const Index = () => {
                       backgroundColor: 'rgb(14, 112, 144)',
                       color: 'white',
                       fontWeight: 600,
-                      py: 1.5,
-                      minHeight: '48px',
-                      fontSize: '1rem',
+                      py: 1.2,
+                      minHeight: '40px',
+                      fontSize: '0.9rem',
                       boxShadow: '0 2px 8px rgba(14, 112, 144, 0.2)',
                       '&:hover': { 
                         backgroundColor: 'rgb(10, 90, 115)',
@@ -135,12 +135,12 @@ const Index = () => {
                 
                 <Box sx={{ 
                   textAlign: 'center', 
-                  mt: 4, 
-                  pt: 3, 
+                  mt: 2.5, 
+                  pt: 2.5, 
                   borderTop: '1px solid', 
                   borderColor: 'divider' 
                 }}>
-                  <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                  <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
                     {language === 'de' ? 'Bereits ein Konto?' : 
                      language === 'es' ? '¿Ya tienes cuenta?' : 
                      'Already have an account?'}
@@ -153,8 +153,9 @@ const Index = () => {
                       color: 'rgb(14, 112, 144)',
                       fontWeight: 600,
                       px: 4,
-                      py: 1,
-                      minHeight: '44px',
+                      py: 0.8,
+                      minHeight: '36px',
+                      fontSize: '0.85rem',
                       '&:hover': { 
                         borderColor: 'rgb(10, 90, 115)',
                         backgroundColor: 'rgba(14, 112, 144, 0.04)',

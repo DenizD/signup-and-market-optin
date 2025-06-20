@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import {
   Box,
@@ -118,7 +117,7 @@ const LoginForm = ({ language, t }: LoginFormProps) => {
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+    <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
       {showSuccess && (
         <Alert severity="success" sx={{ mb: 2 }}>
           {t('loginSuccess')}
@@ -225,7 +224,7 @@ const LoginForm = ({ language, t }: LoginFormProps) => {
         />
       </Box>
 
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 1 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 0.5 }}>
         <Tooltip title={getRememberMeTooltip()} arrow placement="top">
           <FormControlLabel
             control={
@@ -285,7 +284,7 @@ const LoginForm = ({ language, t }: LoginFormProps) => {
         fullWidth
         disabled={isLoading}
         sx={{ 
-          mt: 2, 
+          mt: 1.5, 
           py: 1.5,
           minHeight: '48px',
           backgroundColor: 'rgb(14, 112, 144)',
