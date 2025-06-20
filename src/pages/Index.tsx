@@ -57,7 +57,7 @@ const Index = () => {
         sx={{
           display: { xs: 'none', lg: 'flex' },
           width: { lg: '50%' },
-          background: 'linear-gradient(135deg, #eff6ff 0%, #e0e7ff 50%, #f3e8ff 100%)',
+          background: '#59C3C3',
           alignItems: 'center',
           justifyContent: 'center',
         }}
@@ -80,10 +80,10 @@ const Index = () => {
               Logo
             </Typography>
           </Box>
-          <Typography variant="h4" sx={{ color: 'text.primary', mb: 2, fontWeight: 'bold' }}>
+          <Typography variant="h4" sx={{ color: 'white', mb: 2, fontWeight: 'bold' }}>
             {t('serviceWelcome')}
           </Typography>
-          <Typography variant="h6" sx={{ color: 'text.secondary' }}>
+          <Typography variant="h6" sx={{ color: 'white' }}>
             {t('serviceSubtitle')}
           </Typography>
         </Box>

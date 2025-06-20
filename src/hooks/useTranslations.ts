@@ -31,8 +31,8 @@ type Translations = {
 const translations: Record<'de' | 'en' | 'es', Translations> = {
   de: {
     welcome: 'Willkommen! 👋',
-    welcomeSubtitle: 'In Ihr Konto anmelden oder neues Konto erstellen',
-    signIn: 'In Ihr Konto anmelden',
+    welcomeSubtitle: 'Anmelden oder neues Konto erstellen',
+    signIn: 'Anmelden',
     register: 'Registrieren',
     createAccount: 'Konto erstellen',
     emailAddress: 'E-Mail-Adresse',
@@ -54,8 +54,8 @@ const translations: Record<'de' | 'en' | 'es', Translations> = {
   },
   en: {
     welcome: 'Welcome! 👋',
-    welcomeSubtitle: 'Sign in to your account or create a new account',
-    signIn: 'Sign in to your account',
+    welcomeSubtitle: 'Sign in or create a new account',
+    signIn: 'Login',
     register: 'Register',
     createAccount: 'Create Account',
     emailAddress: 'Email Address',
@@ -77,8 +77,8 @@ const translations: Record<'de' | 'en' | 'es', Translations> = {
   },
   es: {
     welcome: '¡Bienvenido! 👋',
-    welcomeSubtitle: 'Iniciar sesión en su cuenta o crear una nueva cuenta',
-    signIn: 'Iniciar sesión en su cuenta',
+    welcomeSubtitle: 'Iniciar sesión o crear una nueva cuenta',
+    signIn: 'Iniciar Sesión',
     register: 'Registrarse',
     createAccount: 'Crear Cuenta',
     emailAddress: 'Dirección de Correo',
