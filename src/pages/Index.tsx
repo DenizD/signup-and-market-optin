@@ -1,13 +1,12 @@
 
-import { useState } from "react";
-import { Box, Container, Typography, Paper, Button } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import LoginForm from "@/components/LoginForm";
 import RegisterForm from "@/components/RegisterForm";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useTranslations } from "@/hooks/useTranslations";
 
 const Index = () => {
-  const [isRegisterMode, setIsRegisterMode] = useState(false);
   const { language, setLanguage, t } = useTranslations();
 
   const handleLanguageChange = (newLanguage: string) => {
@@ -61,7 +60,7 @@ const Index = () => {
         </Box>
       </Box>
 
-      {/* Right side - Forms */}
+      {/* Right side - Forms with Tabs */}
       <Box
         sx={{
           width: { xs: '100%', lg: '50%' },
@@ -81,95 +80,36 @@ const Index = () => {
             </Typography>
           </Box>
 
-          <Paper
-            elevation={3}
-            sx={{
-              p: { xs: 3, md: 4 },
-              borderRadius: 2,
-              border: '1px solid',
-              borderColor: 'divider',
-              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
-            }}
-          >
-            {!isRegisterMode ? (
-              <>
-                <LoginForm language={language} t={t} />
-                
-                <Box sx={{ 
-                  textAlign: 'center', 
-                  mt: 4, 
-                  pt: 3, 
-                  borderTop: '1px solid', 
-                  borderColor: 'divider' 
-                }}>
-                  <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-                    {language === 'de' ? 'Noch kein Konto?' : 
-                     language === 'es' ? '¿No tienes cuenta?' : 
-                     'Don\'t have an account?'}
-                  </Typography>
-                  <Button
-                    variant="contained"
-                    onClick={() => setIsRegisterMode(true)}
-                    fullWidth
-                    sx={{ 
-                      backgroundColor: 'rgb(14, 112, 144)',
-                      color: 'white',
-                      fontWeight: 600,
-                      py: 1.5,
-                      minHeight: '48px',
-                      fontSize: '1rem',
-                      boxShadow: '0 2px 8px rgba(14, 112, 144, 0.2)',
-                      '&:hover': { 
-                        backgroundColor: 'rgb(10, 90, 115)',
-                        boxShadow: '0 4px 12px rgba(14, 112, 144, 0.3)'
-                      }
-                    }}
-                  >
-                    {t('register')}
-                  </Button>
-                </Box>
-              </>
-            ) : (
-              <>
-                <RegisterForm language={language} t={t} />
-                
-                <Box sx={{ 
-                  textAlign: 'center', 
-                  mt: 4, 
-                  pt: 3, 
-                  borderTop: '1px solid', 
-                  borderColor: 'divider' 
-                }}>
-                  <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                    {language === 'de' ? 'Bereits ein Konto?' : 
-                     language === 'es' ? '¿Ya tienes cuenta?' : 
-                     'Already have an account?'}
-                  </Typography>
-                  <Button
-                    variant="outlined"
-                    onClick={() => setIsRegisterMode(false)}
-                    sx={{ 
-                      borderColor: 'rgb(14, 112, 144)',
-                      color: 'rgb(14, 112, 144)',
-                      fontWeight: 600,
-                      px: 4,
-                      py: 1,
-                      minHeight: '44px',
-                      '&:hover': { 
-                        borderColor: 'rgb(10, 90, 115)',
-                        backgroundColor: 'rgba(14, 112, 144, 0.04)',
-                        color: 'rgb(10, 90, 115)'
-                      }
-                    }}
-                  >
-                    {language === 'de' ? 'Zur Anmeldung' : 
-                     language === 'es' ? 'Ir a iniciar sesión' : 
-                     'Go to Sign In'}
-                  </Button>
-                </Box>
-              </>
-            )}
-          </Paper>
+          <div className="w-full max-w-md mx-auto">
+            <Tabs defaultValue="login" className="w-full">
+              <TabsList className="grid w-full grid-cols-2 mb-6">
+                <TabsTrigger 
+                  value="login" 
+                  className="text-sm font-medium data-[state=active]:bg-[rgb(14,112,144)] data-[state=active]:text-white"
+                >
+                  {t('signIn')}
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="register" 
+                  className="text-sm font-medium data-[state=active]:bg-[rgb(14,112,144)] data-[state=active]:text-white"
+                >
+                  {t('register')}
+                </TabsTrigger>
+              </TabsList>
+              
+              <TabsContent value="login" className="mt-0">
+                <div className="bg-white p-6 rounded-lg shadow-lg border border-gray-200">
+                  <LoginForm language={language} t={t} />
+                </div>
+              </TabsContent>
+              
+              <TabsContent value="register" className="mt-0">
+                <div className="bg-white p-6 rounded-lg shadow-lg border border-gray-200">
+                  <RegisterForm language={language} t={t} />
+                </div>
+              </TabsContent>
+            </Tabs>
+          </div>
         </Container>
       </Box>
     </Box>
