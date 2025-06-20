@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Dialog,
   DialogContent,
@@ -20,6 +20,21 @@ interface ForgotPasswordModalProps {
 const ForgotPasswordModal = ({ isOpen, onClose, t }: ForgotPasswordModalProps) => {
   const [email, setEmail] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const emailInputRef = useRef<HTMLInputElement>(null);
+  const successMessageRef = useRef<HTMLDivElement>(null);
+
+  // Focus management when modal opens
+  useEffect(() => {
+    if (isOpen && !isSubmitted) {
+      setTimeout(() => {
+        emailInputRef.current?.focus();
+      }, 100);
+    } else if (isSubmitted) {
+      setTimeout(() => {
+        successMessageRef.current?.focus();
+      }, 100);
+    }
+  }, [isOpen, isSubmitted]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,54 +47,98 @@ const ForgotPasswordModal = ({ isOpen, onClose, t }: ForgotPasswordModalProps) =
     }, 2000);
   };
 
+  const handleClose = () => {
+    setIsSubmitted(false);
+    setEmail("");
+    onClose();
+  };
+
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md">
+    <Dialog open={isOpen} onOpenChange={handleClose}>
+      <DialogContent 
+        className="sm:max-w-md"
+        role="dialog"
+        aria-labelledby="forgot-password-title"
+        aria-describedby="forgot-password-description"
+      >
         <DialogHeader>
-          <DialogTitle>{t('forgotPassword')}</DialogTitle>
+          <DialogTitle id="forgot-password-title">{t('forgotPassword')}</DialogTitle>
         </DialogHeader>
         
         {!isSubmitted ? (
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="reset-email">{t('emailAddress')}</Label>
-              <Input
-                id="reset-email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="your.email@example.com"
-                required
-              />
+          <>
+            <div id="forgot-password-description" className="sr-only">
+              Geben Sie Ihre E-Mail-Adresse ein, um einen Link zum Zurücksetzen des Passworts zu erhalten
             </div>
-            <div className="flex flex-col gap-2">
-              <Button 
-                type="submit" 
-                className="w-full"
-                style={{ 
-                  backgroundColor: 'rgb(14, 112, 144)',
-                  color: 'white'
-                }}
-              >
-                Reset Password
-              </Button>
-              <Button 
-                type="button" 
-                variant="outline" 
-                onClick={onClose} 
-                className="w-full"
-                style={{ 
-                  borderColor: 'rgb(14, 112, 144)',
-                  color: 'rgb(14, 112, 144)'
-                }}
-              >
-                Cancel
-              </Button>
-            </div>
-          </form>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="space-y-2">
+                <Label 
+                  htmlFor="reset-email"
+                  className="text-sm font-medium"
+                >
+                  {t('emailAddress')}
+                </Label>
+                <Input
+                  id="reset-email"
+                  ref={emailInputRef}
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="your.email@example.com"
+                  required
+                  aria-describedby="reset-email-helper"
+                  className="w-full"
+                />
+                <div id="reset-email-helper" className="text-xs text-gray-600">
+                  Wir senden Ihnen einen Link zum Zurücksetzen Ihres Passworts
+                </div>
+              </div>
+              <div className="flex flex-col gap-2">
+                <Button 
+                  type="submit" 
+                  className="w-full focus:ring-2 focus:ring-offset-2"
+                  style={{ 
+                    backgroundColor: 'rgb(14, 112, 144)',
+                    color: 'white'
+                  }}
+                  aria-describedby="reset-button-description"
+                >
+                  Reset Password
+                </Button>
+                <div id="reset-button-description" className="sr-only">
+                  Sendet einen Passwort-Reset-Link an Ihre E-Mail-Adresse
+                </div>
+                
+                <Button 
+                  type="button" 
+                  variant="outline" 
+                  onClick={handleClose} 
+                  className="w-full focus:ring-2 focus:ring-offset-2"
+                  style={{ 
+                    borderColor: 'rgb(14, 112, 144)',
+                    color: 'rgb(14, 112, 144)'
+                  }}
+                >
+                  Cancel
+                </Button>
+              </div>
+            </form>
+          </>
         ) : (
           <div className="text-center py-4">
-            <p className="text-green-600 mb-4">✓ Reset link sent to your email!</p>
+            <div 
+              ref={successMessageRef}
+              className="text-green-600 mb-4"
+              role="status"
+              aria-live="polite"
+              aria-atomic="true"
+              tabIndex={-1}
+            >
+              ✓ Reset link sent to your email!
+            </div>
+            <div className="text-sm text-gray-600">
+              Überprüfen Sie Ihren Posteingang und folgen Sie dem Link, um Ihr Passwort zurückzusetzen
+            </div>
           </div>
         )}
       </DialogContent>

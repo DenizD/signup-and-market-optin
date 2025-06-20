@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import {
   Box,
   Button,
@@ -34,12 +34,17 @@ const LoginForm = ({ language, t }: LoginFormProps) => {
     email: "",
     password: "",
   });
+  const alertRef = useRef<HTMLDivElement>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Login attempt:", { ...formData, rememberMe });
     setShowSuccess(true);
-    setTimeout(() => setShowSuccess(false), 3000);
+    // Focus the success message for screen readers
+    setTimeout(() => {
+      alertRef.current?.focus();
+      setTimeout(() => setShowSuccess(false), 3000);
+    }, 100);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,10 +54,32 @@ const LoginForm = ({ language, t }: LoginFormProps) => {
     });
   };
 
+  const getPasswordVisibilityLabel = (isVisible: boolean) => {
+    if (language === 'de') {
+      return isVisible ? 'Passwort verbergen' : 'Passwort anzeigen';
+    } else if (language === 'es') {
+      return isVisible ? 'Ocultar contraseña' : 'Mostrar contraseña';
+    }
+    return isVisible ? 'Hide password' : 'Show password';
+  };
+
   return (
-    <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+    <Box 
+      component="form" 
+      onSubmit={handleSubmit} 
+      sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
+      role="form"
+      aria-label={language === 'de' ? 'Anmeldeformular' : language === 'es' ? 'Formulario de inicio de sesión' : 'Login form'}
+    >
       {showSuccess && (
-        <Alert severity="success">
+        <Alert 
+          severity="success"
+          ref={alertRef}
+          tabIndex={-1}
+          role="alert"
+          aria-live="polite"
+          aria-atomic="true"
+        >
           {t('loginSuccess')}
         </Alert>
       )}
@@ -66,12 +93,17 @@ const LoginForm = ({ language, t }: LoginFormProps) => {
         onChange={handleChange}
         placeholder="your.email@example.com"
         required
+        aria-describedby="email-helper-text"
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <Email color="action" />
+              <Email color="action" aria-hidden="true" />
             </InputAdornment>
           ),
+        }}
+        helperText={language === 'de' ? 'Geben Sie Ihre E-Mail-Adresse ein' : language === 'es' ? 'Ingrese su dirección de correo electrónico' : 'Enter your email address'}
+        FormHelperTextProps={{
+          id: 'email-helper-text'
         }}
       />
 
@@ -84,10 +116,11 @@ const LoginForm = ({ language, t }: LoginFormProps) => {
         onChange={handleChange}
         placeholder={language === 'de' ? 'Ihr Passwort' : language === 'es' ? 'Tu contraseña' : 'Your password'}
         required
+        aria-describedby="password-helper-text"
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <Lock color="action" />
+              <Lock color="action" aria-hidden="true" />
             </InputAdornment>
           ),
           endAdornment: (
@@ -95,26 +128,41 @@ const LoginForm = ({ language, t }: LoginFormProps) => {
               <IconButton
                 onClick={() => setShowPassword(!showPassword)}
                 edge="end"
+                aria-label={getPasswordVisibilityLabel(showPassword)}
+                tabIndex={0}
               >
                 {showPassword ? <VisibilityOff /> : <Visibility />}
               </IconButton>
             </InputAdornment>
           ),
         }}
+        helperText={language === 'de' ? 'Geben Sie Ihr Passwort ein' : language === 'es' ? 'Ingrese su contraseña' : 'Enter your password'}
+        FormHelperTextProps={{
+          id: 'password-helper-text'
+        }}
       />
 
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 1 }}>
         <FormControlLabel
           control={
             <Checkbox
               checked={rememberMe}
               onChange={(e) => setRememberMe(e.target.checked)}
               size="small"
+              inputProps={{
+                'aria-describedby': 'remember-me-description'
+              }}
             />
           }
           label={t('rememberMe')}
           sx={{ '& .MuiFormControlLabel-label': { fontSize: '0.875rem' } }}
         />
+        <span id="remember-me-description" className="sr-only">
+          {language === 'de' ? 'Merken Sie sich meine Anmeldedaten für zukünftige Besuche' : 
+           language === 'es' ? 'Recordar mis datos de inicio de sesión para futuras visitas' : 
+           'Remember my login details for future visits'}
+        </span>
+        
         <Link 
           component="button" 
           type="button" 
@@ -125,11 +173,21 @@ const LoginForm = ({ language, t }: LoginFormProps) => {
           }}
           sx={{ 
             color: 'rgb(14, 112, 144)',
-            '&:hover': { color: 'rgb(10, 90, 115)' }
+            '&:hover': { color: 'rgb(10, 90, 115)' },
+            '&:focus': { 
+              outline: '2px solid rgb(14, 112, 144)',
+              outlineOffset: '2px'
+            }
           }}
+          aria-describedby="forgot-password-description"
         >
           {t('forgotPassword')}
         </Link>
+        <span id="forgot-password-description" className="sr-only">
+          {language === 'de' ? 'Öffnet ein Formular zum Zurücksetzen des Passworts' : 
+           language === 'es' ? 'Abre un formulario para restablecer la contraseña' : 
+           'Opens a form to reset your password'}
+        </span>
       </Box>
 
       <Button
@@ -141,11 +199,21 @@ const LoginForm = ({ language, t }: LoginFormProps) => {
           mt: 2, 
           py: 1.5,
           backgroundColor: 'rgb(14, 112, 144)',
-          '&:hover': { backgroundColor: 'rgb(10, 90, 115)' }
+          '&:hover': { backgroundColor: 'rgb(10, 90, 115)' },
+          '&:focus': { 
+            outline: '2px solid rgb(14, 112, 144)',
+            outlineOffset: '2px'
+          }
         }}
+        aria-describedby="login-button-description"
       >
         {t('signIn')}
       </Button>
+      <span id="login-button-description" className="sr-only">
+        {language === 'de' ? 'Melden Sie sich mit Ihren Anmeldedaten an' : 
+         language === 'es' ? 'Inicie sesión con sus credenciales' : 
+         'Sign in with your credentials'}
+      </span>
 
       <ForgotPasswordModal 
         isOpen={showForgotPassword}

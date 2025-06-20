@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import {
   Box,
   Button,
@@ -37,20 +37,27 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
     password: "",
     confirmPassword: "",
   });
+  const alertRef = useRef<HTMLDivElement>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
     if (formData.password !== formData.confirmPassword) {
       setShowError(true);
-      setTimeout(() => setShowError(false), 3000);
+      setTimeout(() => {
+        alertRef.current?.focus();
+        setTimeout(() => setShowError(false), 3000);
+      }, 100);
       return;
     }
 
     console.log("Registration data:", formData);
     
     setShowSuccess(true);
-    setTimeout(() => setShowSuccess(false), 3000);
+    setTimeout(() => {
+      alertRef.current?.focus();
+      setTimeout(() => setShowSuccess(false), 3000);
+    }, 100);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,6 +65,18 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
       ...formData,
       [e.target.name]: e.target.value,
     });
+  };
+
+  const getPasswordVisibilityLabel = (isVisible: boolean, isConfirm: boolean = false) => {
+    if (language === 'de') {
+      const prefix = isConfirm ? 'Passwort-Bestätigung' : 'Passwort';
+      return isVisible ? `${prefix} verbergen` : `${prefix} anzeigen`;
+    } else if (language === 'es') {
+      const prefix = isConfirm ? 'Confirmación de contraseña' : 'Contraseña';
+      return isVisible ? `Ocultar ${prefix.toLowerCase()}` : `Mostrar ${prefix.toLowerCase()}`;
+    }
+    const prefix = isConfirm ? 'Password confirmation' : 'Password';
+    return isVisible ? `Hide ${prefix.toLowerCase()}` : `Show ${prefix.toLowerCase()}`;
   };
 
   const getPlaceholders = () => {
@@ -93,15 +112,35 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
   const placeholders = getPlaceholders();
 
   return (
-    <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+    <Box 
+      component="form" 
+      onSubmit={handleSubmit} 
+      sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
+      role="form"
+      aria-label={language === 'de' ? 'Registrierungsformular' : language === 'es' ? 'Formulario de registro' : 'Registration form'}
+    >
       {showSuccess && (
-        <Alert severity="success">
+        <Alert 
+          severity="success"
+          ref={alertRef}
+          tabIndex={-1}
+          role="alert"
+          aria-live="polite"
+          aria-atomic="true"
+        >
           {t('registerSuccess')}
         </Alert>
       )}
 
       {showError && (
-        <Alert severity="error">
+        <Alert 
+          severity="error"
+          ref={alertRef}
+          tabIndex={-1}
+          role="alert"
+          aria-live="polite"
+          aria-atomic="true"
+        >
           {t('passwordMismatch')}
         </Alert>
       )}
@@ -115,12 +154,17 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
           onChange={handleChange}
           placeholder={placeholders.firstName}
           required
+          aria-describedby="firstName-helper-text"
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <Person color="action" />
+                <Person color="action" aria-hidden="true" />
               </InputAdornment>
             ),
+          }}
+          helperText={language === 'de' ? 'Geben Sie Ihren Vornamen ein' : language === 'es' ? 'Ingrese su nombre' : 'Enter your first name'}
+          FormHelperTextProps={{
+            id: 'firstName-helper-text'
           }}
         />
         <TextField
@@ -131,12 +175,17 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
           onChange={handleChange}
           placeholder={placeholders.lastName}
           required
+          aria-describedby="lastName-helper-text"
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <Person color="action" />
+                <Person color="action" aria-hidden="true" />
               </InputAdornment>
             ),
+          }}
+          helperText={language === 'de' ? 'Geben Sie Ihren Nachnamen ein' : language === 'es' ? 'Ingrese su apellido' : 'Enter your last name'}
+          FormHelperTextProps={{
+            id: 'lastName-helper-text'
           }}
         />
       </Box>
@@ -148,12 +197,17 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
         value={formData.company}
         onChange={handleChange}
         placeholder={placeholders.company}
+        aria-describedby="company-helper-text"
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <Business color="action" />
+              <Business color="action" aria-hidden="true" />
             </InputAdornment>
           ),
+        }}
+        helperText={language === 'de' ? 'Optional: Geben Sie Ihren Firmennamen ein' : language === 'es' ? 'Opcional: Ingrese el nombre de su empresa' : 'Optional: Enter your company name'}
+        FormHelperTextProps={{
+          id: 'company-helper-text'
         }}
       />
 
@@ -166,12 +220,17 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
         onChange={handleChange}
         placeholder={placeholders.email}
         required
+        aria-describedby="email-helper-text"
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <Email color="action" />
+              <Email color="action" aria-hidden="true" />
             </InputAdornment>
           ),
+        }}
+        helperText={language === 'de' ? 'Geben Sie eine gültige E-Mail-Adresse ein' : language === 'es' ? 'Ingrese una dirección de correo válida' : 'Enter a valid email address'}
+        FormHelperTextProps={{
+          id: 'email-helper-text'
         }}
       />
 
@@ -184,11 +243,14 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
         onChange={handleChange}
         placeholder={placeholders.password}
         required
-        inputProps={{ minLength: 8 }}
+        inputProps={{ 
+          minLength: 8,
+          'aria-describedby': 'password-helper-text'
+        }}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <Lock color="action" />
+              <Lock color="action" aria-hidden="true" />
             </InputAdornment>
           ),
           endAdornment: (
@@ -196,11 +258,17 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
               <IconButton
                 onClick={() => setShowPassword(!showPassword)}
                 edge="end"
+                aria-label={getPasswordVisibilityLabel(showPassword)}
+                tabIndex={0}
               >
                 {showPassword ? <VisibilityOff /> : <Visibility />}
               </IconButton>
             </InputAdornment>
           ),
+        }}
+        helperText={language === 'de' ? 'Mindestens 8 Zeichen erforderlich' : language === 'es' ? 'Se requieren al menos 8 caracteres' : 'At least 8 characters required'}
+        FormHelperTextProps={{
+          id: 'password-helper-text'
         }}
       />
 
@@ -213,10 +281,11 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
         onChange={handleChange}
         placeholder={placeholders.confirmPassword}
         required
+        aria-describedby="confirmPassword-helper-text"
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <Lock color="action" />
+              <Lock color="action" aria-hidden="true" />
             </InputAdornment>
           ),
           endAdornment: (
@@ -224,11 +293,17 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
               <IconButton
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 edge="end"
+                aria-label={getPasswordVisibilityLabel(showConfirmPassword, true)}
+                tabIndex={0}
               >
                 {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
               </IconButton>
             </InputAdornment>
           ),
+        }}
+        helperText={language === 'de' ? 'Wiederholen Sie Ihr Passwort zur Bestätigung' : language === 'es' ? 'Repita su contraseña para confirmar' : 'Repeat your password to confirm'}
+        FormHelperTextProps={{
+          id: 'confirmPassword-helper-text'
         }}
       />
 
@@ -241,22 +316,54 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
           mt: 2, 
           py: 1.5,
           backgroundColor: 'rgb(14, 112, 144)',
-          '&:hover': { backgroundColor: 'rgb(10, 90, 115)' }
+          '&:hover': { backgroundColor: 'rgb(10, 90, 115)' },
+          '&:focus': { 
+            outline: '2px solid rgb(14, 112, 144)',
+            outlineOffset: '2px'
+          }
         }}
+        aria-describedby="register-button-description"
       >
         {t('createAccount')}
       </Button>
+      <span id="register-button-description" className="sr-only">
+        {language === 'de' ? 'Erstellen Sie Ihr neues Konto' : 
+         language === 'es' ? 'Crear su nueva cuenta' : 
+         'Create your new account'}
+      </span>
 
       <Box sx={{ textAlign: 'center', mt: 2 }}>
-        <Typography variant="caption" color="text.secondary">
+        <Typography variant="caption" color="text.secondary" role="note">
           {language === 'de' && (
             <>
               Mit der Registrierung stimmen Sie unserer{' '}
-              <Link href="#" underline="hover" sx={{ color: 'rgb(14, 112, 144)' }}>
+              <Link 
+                href="#" 
+                underline="hover" 
+                sx={{ 
+                  color: 'rgb(14, 112, 144)',
+                  '&:focus': { 
+                    outline: '2px solid rgb(14, 112, 144)',
+                    outlineOffset: '2px'
+                  }
+                }}
+                aria-label="Nutzungsbedingungen öffnen"
+              >
                 Nutzungsbedingungen
               </Link>
               {' '}&{' '}
-              <Link href="#" underline="hover" sx={{ color: 'rgb(14, 112, 144)' }}>
+              <Link 
+                href="#" 
+                underline="hover" 
+                sx={{ 
+                  color: 'rgb(14, 112, 144)',
+                  '&:focus': { 
+                    outline: '2px solid rgb(14, 112, 144)',
+                    outlineOffset: '2px'
+                  }
+                }}
+                aria-label="Datenschutzrichtlinie öffnen"
+              >
                 Datenschutzrichtlinie
               </Link>
               {' '}zu.
@@ -265,11 +372,33 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
           {language === 'en' && (
             <>
               By registering, you agree to our{' '}
-              <Link href="#" underline="hover" sx={{ color: 'rgb(14, 112, 144)' }}>
+              <Link 
+                href="#" 
+                underline="hover" 
+                sx={{ 
+                  color: 'rgb(14, 112, 144)',
+                  '&:focus': { 
+                    outline: '2px solid rgb(14, 112, 144)',
+                    outlineOffset: '2px'
+                  }
+                }}
+                aria-label="Open Terms of Service"
+              >
                 Terms of Service
               </Link>
               {' '}&{' '}
-              <Link href="#" underline="hover" sx={{ color: 'rgb(14, 112, 144)' }}>
+              <Link 
+                href="#" 
+                underline="hover" 
+                sx={{ 
+                  color: 'rgb(14, 112, 144)',
+                  '&:focus': { 
+                    outline: '2px solid rgb(14, 112, 144)',
+                    outlineOffset: '2px'
+                  }
+                }}
+                aria-label="Open Privacy Policy"
+              >
                 Privacy Policy
               </Link>
               .
@@ -278,11 +407,33 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
           {language === 'es' && (
             <>
               Al registrarte, aceptas nuestros{' '}
-              <Link href="#" underline="hover" sx={{ color: 'rgb(14, 112, 144)' }}>
+              <Link 
+                href="#" 
+                underline="hover" 
+                sx={{ 
+                  color: 'rgb(14, 112, 144)',
+                  '&:focus': { 
+                    outline: '2px solid rgb(14, 112, 144)',
+                    outlineOffset: '2px'
+                  }
+                }}
+                aria-label="Abrir Términos de Servicio"
+              >
                 Términos de Servicio
               </Link>
               {' '}y{' '}
-              <Link href="#" underline="hover" sx={{ color: 'rgb(14, 112, 144)' }}>
+              <Link 
+                href="#" 
+                underline="hover" 
+                sx={{ 
+                  color: 'rgb(14, 112, 144)',
+                  '&:focus': { 
+                    outline: '2px solid rgb(14, 112, 144)',
+                    outlineOffset: '2px'
+                  }
+                }}
+                aria-label="Abrir Política de Privacidad"
+              >
                 Política de Privacidad
               </Link>
               .
