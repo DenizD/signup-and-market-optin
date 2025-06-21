@@ -12,10 +12,11 @@ import {
   faEyeSlash, 
   faUser, 
   faBuilding,
-  faCheck 
+  faCheck,
+  faQuestionCircle 
 } from '@fortawesome/free-solid-svg-icons'
 
 // Add icons to the library
-library.add(faEnvelope, faLock, faEye, faEyeSlash, faUser, faBuilding, faCheck)
+library.add(faEnvelope, faLock, faEye, faEyeSlash, faUser, faBuilding, faCheck, faQuestionCircle)
 
 createRoot(document.getElementById("root")!).render(<App />);
