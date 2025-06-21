@@ -117,59 +117,67 @@ const LoginForm = ({ language, t }: LoginFormProps) => {
           }}
         />
 
-        <TextField
-          fullWidth
-          label={
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              {t('password')}
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Box component="span" sx={{ display: 'inline-flex', cursor: 'help' }}>
-                    <FontAwesomeIcon 
-                      icon="question-circle" 
-                      style={{ color: '#666', fontSize: '0.875rem' }} 
-                    />
-                  </Box>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>{t('passwordTooltip')}</p>
-                </TooltipContent>
-              </Tooltip>
-            </Box>
-          }
-          name="password"
-          type={showPassword ? "text" : "password"}
-          value={formData.password}
-          onChange={handleChange}
-          placeholder={language === 'de' ? 'Ihr Passwort' : language === 'es' ? 'Tu contraseña' : 'Your password'}
-          required
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <FontAwesomeIcon 
-                  icon="lock" 
-                  style={{ color: '#37474F', fontSize: '1.2rem' }} 
-                  aria-hidden="true" 
-                />
-              </InputAdornment>
-            ),
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  onClick={() => setShowPassword(!showPassword)}
-                  edge="end"
-                  aria-label={getPasswordVisibilityLabel(showPassword)}
-                  tabIndex={0}
-                >
+        <Box sx={{ position: 'relative' }}>
+          <TextField
+            fullWidth
+            label={t('password')}
+            name="password"
+            type={showPassword ? "text" : "password"}
+            value={formData.password}
+            onChange={handleChange}
+            placeholder={language === 'de' ? 'Ihr Passwort' : language === 'es' ? 'Tu contraseña' : 'Your password'}
+            required
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
                   <FontAwesomeIcon 
-                    icon={showPassword ? "eye-slash" : "eye"} 
-                    style={{ color: '#37474F', fontSize: '1.1rem' }} 
+                    icon="lock" 
+                    style={{ color: '#37474F', fontSize: '1.2rem' }} 
+                    aria-hidden="true" 
                   />
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
+                </InputAdornment>
+              ),
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() => setShowPassword(!showPassword)}
+                    edge="end"
+                    aria-label={getPasswordVisibilityLabel(showPassword)}
+                    tabIndex={0}
+                  >
+                    <FontAwesomeIcon 
+                      icon={showPassword ? "eye-slash" : "eye"} 
+                      style={{ color: '#37474F', fontSize: '1.1rem' }} 
+                    />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Box 
+                component="span" 
+                sx={{ 
+                  position: 'absolute',
+                  top: '8px',
+                  right: '50px',
+                  display: 'inline-flex', 
+                  cursor: 'help',
+                  zIndex: 1
+                }}
+              >
+                <FontAwesomeIcon 
+                  icon="question-circle" 
+                  style={{ color: '#666', fontSize: '0.875rem' }} 
+                />
+              </Box>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>{t('passwordTooltip')}</p>
+            </TooltipContent>
+          </Tooltip>
+        </Box>
 
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 1 }}>
           <FormControlLabel

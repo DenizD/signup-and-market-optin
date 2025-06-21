@@ -197,42 +197,50 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
           />
         </Box>
 
-        <TextField
-          fullWidth
-          label={
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              {t('company')}
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Box component="span" sx={{ display: 'inline-flex', cursor: 'help' }}>
-                    <FontAwesomeIcon 
-                      icon="question-circle" 
-                      style={{ color: '#666', fontSize: '0.875rem' }} 
-                    />
-                  </Box>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>{t('companyTooltip')}</p>
-                </TooltipContent>
-              </Tooltip>
-            </Box>
-          }
-          name="company"
-          value={formData.company}
-          onChange={handleChange}
-          placeholder={placeholders.company}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
+        <Box sx={{ position: 'relative' }}>
+          <TextField
+            fullWidth
+            label={t('company')}
+            name="company"
+            value={formData.company}
+            onChange={handleChange}
+            placeholder={placeholders.company}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <FontAwesomeIcon 
+                    icon="building" 
+                    style={{ color: '#37474F', fontSize: '1.2rem' }} 
+                    aria-hidden="true" 
+                  />
+                </InputAdornment>
+              ),
+            }}
+          />
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Box 
+                component="span" 
+                sx={{ 
+                  position: 'absolute',
+                  top: '8px',
+                  right: '12px',
+                  display: 'inline-flex', 
+                  cursor: 'help',
+                  zIndex: 1
+                }}
+              >
                 <FontAwesomeIcon 
-                  icon="building" 
-                  style={{ color: '#37474F', fontSize: '1.2rem' }} 
-                  aria-hidden="true" 
+                  icon="question-circle" 
+                  style={{ color: '#666', fontSize: '0.875rem' }} 
                 />
-              </InputAdornment>
-            ),
-          }}
-        />
+              </Box>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>{t('companyTooltip')}</p>
+            </TooltipContent>
+          </Tooltip>
+        </Box>
 
         <TextField
           fullWidth
@@ -256,116 +264,132 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
           }}
         />
 
-        <TextField
-          fullWidth
-          label={
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              {t('password')}
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Box component="span" sx={{ display: 'inline-flex', cursor: 'help' }}>
-                    <FontAwesomeIcon 
-                      icon="question-circle" 
-                      style={{ color: '#666', fontSize: '0.875rem' }} 
-                    />
-                  </Box>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>{t('passwordTooltip')}</p>
-                </TooltipContent>
-              </Tooltip>
-            </Box>
-          }
-          name="password"
-          type={showPassword ? "text" : "password"}
-          value={formData.password}
-          onChange={handleChange}
-          placeholder={placeholders.password}
-          required
-          inputProps={{ 
-            minLength: 8
-          }}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <FontAwesomeIcon 
-                  icon="lock" 
-                  style={{ color: '#37474F', fontSize: '1.2rem' }} 
-                  aria-hidden="true" 
-                />
-              </InputAdornment>
-            ),
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  onClick={() => setShowPassword(!showPassword)}
-                  edge="end"
-                  aria-label={getPasswordVisibilityLabel(showPassword)}
-                  tabIndex={0}
-                >
+        <Box sx={{ position: 'relative' }}>
+          <TextField
+            fullWidth
+            label={t('password')}
+            name="password"
+            type={showPassword ? "text" : "password"}
+            value={formData.password}
+            onChange={handleChange}
+            placeholder={placeholders.password}
+            required
+            inputProps={{ 
+              minLength: 8
+            }}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
                   <FontAwesomeIcon 
-                    icon={showPassword ? "eye-slash" : "eye"} 
-                    style={{ color: '#37474F', fontSize: '1.1rem' }} 
+                    icon="lock" 
+                    style={{ color: '#37474F', fontSize: '1.2rem' }} 
+                    aria-hidden="true" 
                   />
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
+                </InputAdornment>
+              ),
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() => setShowPassword(!showPassword)}
+                    edge="end"
+                    aria-label={getPasswordVisibilityLabel(showPassword)}
+                    tabIndex={0}
+                  >
+                    <FontAwesomeIcon 
+                      icon={showPassword ? "eye-slash" : "eye"} 
+                      style={{ color: '#37474F', fontSize: '1.1rem' }} 
+                    />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Box 
+                component="span" 
+                sx={{ 
+                  position: 'absolute',
+                  top: '8px',
+                  right: '50px',
+                  display: 'inline-flex', 
+                  cursor: 'help',
+                  zIndex: 1
+                }}
+              >
+                <FontAwesomeIcon 
+                  icon="question-circle" 
+                  style={{ color: '#666', fontSize: '0.875rem' }} 
+                />
+              </Box>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>{t('passwordTooltip')}</p>
+            </TooltipContent>
+          </Tooltip>
+        </Box>
 
-        <TextField
-          fullWidth
-          label={
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              {t('confirmPassword')}
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Box component="span" sx={{ display: 'inline-flex', cursor: 'help' }}>
-                    <FontAwesomeIcon 
-                      icon="question-circle" 
-                      style={{ color: '#666', fontSize: '0.875rem' }} 
-                    />
-                  </Box>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>{t('confirmPasswordTooltip')}</p>
-                </TooltipContent>
-              </Tooltip>
-            </Box>
-          }
-          name="confirmPassword"
-          type={showConfirmPassword ? "text" : "password"}
-          value={formData.confirmPassword}
-          onChange={handleChange}
-          placeholder={placeholders.confirmPassword}
-          required
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <FontAwesomeIcon 
-                  icon="lock" 
-                  style={{ color: '#37474F', fontSize: '1.2rem' }} 
-                  aria-hidden="true" 
-                />
-              </InputAdornment>
-            ),
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  edge="end"
-                  aria-label={getPasswordVisibilityLabel(showConfirmPassword, true)}
-                  tabIndex={0}
-                >
+        <Box sx={{ position: 'relative' }}>
+          <TextField
+            fullWidth
+            label={t('confirmPassword')}
+            name="confirmPassword"
+            type={showConfirmPassword ? "text" : "password"}
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            placeholder={placeholders.confirmPassword}
+            required
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
                   <FontAwesomeIcon 
-                    icon={showConfirmPassword ? "eye-slash" : "eye"} 
-                    style={{ color: '#37474F', fontSize: '1.1rem' }} 
+                    icon="lock" 
+                    style={{ color: '#37474F', fontSize: '1.2rem' }} 
+                    aria-hidden="true" 
                   />
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
+                </InputAdornment>
+              ),
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    edge="end"
+                    aria-label={getPasswordVisibilityLabel(showConfirmPassword, true)}
+                    tabIndex={0}
+                  >
+                    <FontAwesomeIcon 
+                      icon={showConfirmPassword ? "eye-slash" : "eye"} 
+                      style={{ color: '#37474F', fontSize: '1.1rem' }} 
+                    />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Box 
+                component="span" 
+                sx={{ 
+                  position: 'absolute',
+                  top: '8px',
+                  right: '50px',
+                  display: 'inline-flex', 
+                  cursor: 'help',
+                  zIndex: 1
+                }}
+              >
+                <FontAwesomeIcon 
+                  icon="question-circle" 
+                  style={{ color: '#666', fontSize: '0.875rem' }} 
+                />
+              </Box>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>{t('confirmPasswordTooltip')}</p>
+            </TooltipContent>
+          </Tooltip>
+        </Box>
 
         <Button
           type="submit"
