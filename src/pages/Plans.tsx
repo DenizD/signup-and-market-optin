@@ -1,5 +1,5 @@
 
-import { Box, Container, Typography, Button, Card, CardContent, CardActions, Stack, Chip, Tooltip, Grid2, ToggleButtonGroup, ToggleButton, Grow, Fade } from '@mui/material';
+import { Box, Container, Typography, Button, Card, CardContent, CardActions, Stack, Chip, Tooltip, Grid, ToggleButtonGroup, ToggleButton, Grow, Fade } from '@mui/material';
 import { Check, HelpOutline } from '@mui/icons-material';
 import { useState } from 'react';
 import { useTranslations } from '@/hooks/useTranslations';
@@ -230,9 +230,9 @@ const Plans = () => {
         </Box>
 
         {/* Category Headers */}
-        <Grid2 container spacing={4} sx={{ maxWidth: '1200px', mx: 'auto', mb: 2 }}>
+        <Grid container spacing={4} sx={{ maxWidth: '1200px', mx: 'auto', mb: 2 }}>
           {plans.map((plan) => (
-            <Grid2 xs={12} md={4} key={`header-${plan.id}`}>
+            <Grid item xs={12} md={4} key={`header-${plan.id}`}>
               <Typography 
                 variant="overline" 
                 sx={{ 
@@ -245,14 +245,14 @@ const Plans = () => {
               >
                 {plan.subtitle}
               </Typography>
-            </Grid2>
+            </Grid>
           ))}
-        </Grid2>
+        </Grid>
 
         {/* Plans Grid */}
-        <Grid2 container spacing={4} sx={{ maxWidth: '1200px', mx: 'auto' }}>
+        <Grid container spacing={4} sx={{ maxWidth: '1200px', mx: 'auto' }}>
           {plans.map((plan, index) => (
-            <Grid2 xs={12} md={4} key={plan.id}>
+            <Grid item xs={12} md={4} key={plan.id}>
               <Grow in timeout={500 + index * 200}>
                 <Card sx={getCardStyles(plan)}>
                   {plan.popular && (
@@ -491,9 +491,9 @@ const Plans = () => {
                   </CardActions>
                 </Card>
               </Grow>
-            </Grid2>
+            </Grid>
           ))}
-        </Grid2>
+        </Grid>
       </Container>
     </Box>
   );
