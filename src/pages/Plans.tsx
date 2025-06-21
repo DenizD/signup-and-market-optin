@@ -1,14 +1,13 @@
 
-import { Box, Container, Typography, Button, Switch, FormControlLabel, Card, CardContent, CardActions, Stack, Chip, Tooltip, RadioGroup, FormControl, FormControlLabel as MuiFormControlLabel, Radio, ToggleButtonGroup, ToggleButton, Grid, Grow } from '@mui/material';
-import { Check, HelpCircle } from 'lucide-react';
+import { Box, Container, Typography, Button, Card, CardContent, CardActions, Stack, Chip, Tooltip, RadioGroup, FormControl, FormControlLabel, Radio, ToggleButtonGroup, ToggleButton, Grid, Grow } from '@mui/material';
+import { Check, HelpOutline } from '@mui/icons-material';
 import { useState } from 'react';
 import { useTranslations } from '@/hooks/useTranslations';
 
 const Plans = () => {
   const { t } = useTranslations();
-  const [isYearly, setIsYearly] = useState(false);
-  const [selectedModule, setSelectedModule] = useState('clips');
   const [billingPeriod, setBillingPeriod] = useState<'monthly' | 'yearly'>('monthly');
+  const [selectedModule, setSelectedModule] = useState('clips');
 
   const plans = [
     {
@@ -92,25 +91,26 @@ const Plans = () => {
       position: 'relative',
       transition: 'all 0.3s ease',
       cursor: 'pointer',
+      borderRadius: 3,
       '&:hover': {
         transform: 'scale(1.02)',
-        boxShadow: plan.popular ? '0 12px 40px rgba(67, 190, 172, 0.3)' : '0 8px 30px rgba(0,0,0,0.12)'
+        boxShadow: plan.popular ? '0 12px 40px rgba(25, 118, 210, 0.3)' : '0 8px 30px rgba(0,0,0,0.12)'
       }
     };
 
     if (plan.popular) {
       return {
         ...baseStyles,
-        border: '2px solid #43BEAC',
-        boxShadow: '0 8px 32px rgba(67, 190, 172, 0.2)',
-        background: 'linear-gradient(135deg, #ffffff 0%, #f0fffe 100%)'
+        border: '2px solid #1976d2',
+        boxShadow: '0 8px 32px rgba(25, 118, 210, 0.2)',
+        background: 'linear-gradient(135deg, #ffffff 0%, #f3f7ff 100%)'
       };
     }
 
     if (plan.id === 'enterprise') {
       return {
         ...baseStyles,
-        background: 'linear-gradient(135deg, #1a202c 0%, #2d3748 100%)',
+        background: 'linear-gradient(135deg, #0d47a1 0%, #1565c0 100%)',
         color: 'white',
         '& .MuiTypography-root': {
           color: 'white'
@@ -118,11 +118,14 @@ const Plans = () => {
       };
     }
 
-    return baseStyles;
+    return {
+      ...baseStyles,
+      border: '1px solid #e0e0e0'
+    };
   };
 
   return (
-    <Box sx={{ py: 8, background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)', minHeight: '100vh' }}>
+    <Box sx={{ py: 8, background: 'linear-gradient(135deg, #f8fafc 0%, #e8f4fd 100%)', minHeight: '100vh' }}>
       <Container maxWidth="lg">
         {/* Header */}
         <Box sx={{ textAlign: 'center', mb: 8 }}>
@@ -131,9 +134,9 @@ const Plans = () => {
             sx={{ 
               fontWeight: 800, 
               mb: 2, 
-              color: '#1e293b',
+              color: '#0d47a1',
               fontSize: { xs: '2.5rem', md: '3.5rem' },
-              background: 'linear-gradient(135deg, #1e293b 0%, #43BEAC 100%)',
+              background: 'linear-gradient(135deg, #0d47a1 0%, #1976d2 100%)',
               backgroundClip: 'text',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent'
@@ -175,12 +178,16 @@ const Plans = () => {
                   py: 1.5,
                   fontWeight: 600,
                   textTransform: 'none',
+                  color: '#64748b',
                   '&.Mui-selected': {
-                    backgroundColor: '#43BEAC',
+                    backgroundColor: '#1976d2',
                     color: '#ffffff',
                     '&:hover': {
-                      backgroundColor: '#36a994'
+                      backgroundColor: '#1565c0'
                     }
+                  },
+                  '&:hover': {
+                    backgroundColor: '#f5f5f5'
                   }
                 }
               }}
@@ -193,8 +200,8 @@ const Plans = () => {
                     label="15% sparen" 
                     size="small" 
                     sx={{ 
-                      backgroundColor: '#dcfce7', 
-                      color: '#16a34a',
+                      backgroundColor: '#e8f5e8', 
+                      color: '#2e7d32',
                       fontSize: '0.7rem',
                       height: '20px'
                     }} 
@@ -205,7 +212,7 @@ const Plans = () => {
           </Box>
 
           {getSavings() && (
-            <Typography sx={{ color: '#16a34a', fontWeight: 600, mb: 4 }}>
+            <Typography sx={{ color: '#2e7d32', fontWeight: 600, mb: 4 }}>
               {getSavings()}
             </Typography>
           )}
@@ -225,7 +232,7 @@ const Plans = () => {
                         top: -12,
                         left: '50%',
                         transform: 'translateX(-50%)',
-                        backgroundColor: '#43BEAC',
+                        backgroundColor: '#1976d2',
                         color: '#ffffff',
                         fontWeight: 700,
                         zIndex: 1
@@ -237,66 +244,84 @@ const Plans = () => {
                     {/* Plan Header */}
                     <Box sx={{ textAlign: 'center', mb: 4 }}>
                       <Typography variant="subtitle2" sx={{ 
-                        color: plan.id === 'enterprise' ? '#a0aec0' : '#64748b', 
+                        color: plan.id === 'enterprise' ? '#bbdefb' : '#64748b', 
                         mb: 1,
                         textTransform: 'uppercase',
-                        letterSpacing: 1
+                        letterSpacing: 1,
+                        fontWeight: 600
                       }}>
                         {plan.subtitle}
                       </Typography>
                       <Typography variant="h4" sx={{ 
                         fontWeight: 700, 
                         mb: 1,
-                        color: plan.id === 'enterprise' ? '#ffffff' : '#1e293b'
+                        color: plan.id === 'enterprise' ? '#ffffff' : '#0d47a1'
                       }}>
                         {plan.name}
                       </Typography>
                       <Typography variant="body2" sx={{ 
-                        color: plan.id === 'enterprise' ? '#a0aec0' : '#64748b',
-                        mb: 3
+                        color: plan.id === 'enterprise' ? '#bbdefb' : '#64748b',
+                        mb: 3,
+                        lineHeight: 1.6
                       }}>
                         {plan.description}
                       </Typography>
 
                       {/* Price */}
                       <Box sx={{ mb: 3 }}>
-                        <Typography variant="h3" sx={{
-                          fontWeight: 800,
-                          color: plan.id === 'enterprise' ? '#ffffff' : '#1e293b',
-                          lineHeight: 1
-                        }}>
-                          {formatPrice(plan.monthlyPrice)}
-                        </Typography>
-                        {plan.monthlyPrice !== null && (
-                          <Typography variant="body2" sx={{ 
-                            color: plan.id === 'enterprise' ? '#a0aec0' : '#64748b'
+                        <Stack direction="row" alignItems="baseline" justifyContent="center" spacing={0.5}>
+                          <Typography variant="h3" sx={{
+                            fontWeight: 800,
+                            color: plan.id === 'enterprise' ? '#ffffff' : '#0d47a1',
+                            lineHeight: 1
                           }}>
-                            pro {t('month')}
+                            {formatPrice(plan.monthlyPrice)}
                           </Typography>
-                        )}
+                          {plan.monthlyPrice !== null && (
+                            <Typography variant="body2" sx={{ 
+                              color: plan.id === 'enterprise' ? '#bbdefb' : '#64748b'
+                            }}>
+                              /{t('month')}
+                            </Typography>
+                          )}
+                        </Stack>
                       </Box>
                     </Box>
 
                     {/* Module Selector for Starter */}
                     {plan.hasModuleSelector && (
-                      <Box sx={{ mb: 4, p: 2, backgroundColor: '#f8fafc', borderRadius: 2 }}>
-                        <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
+                      <Box sx={{ 
+                        mb: 4, 
+                        p: 3, 
+                        backgroundColor: '#f8fafc', 
+                        borderRadius: 2,
+                        border: '1px solid #e0e7ff'
+                      }}>
+                        <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600, color: '#0d47a1' }}>
                           Modul auswählen:
                         </Typography>
-                        <FormControl>
+                        <FormControl component="fieldset">
                           <RadioGroup
                             value={selectedModule}
                             onChange={(e) => setSelectedModule(e.target.value)}
                           >
-                            <MuiFormControlLabel 
+                            <FormControlLabel 
                               value="clips" 
-                              control={<Radio size="small" />} 
-                              label="Clips Modul" 
+                              control={<Radio size="small" sx={{ color: '#1976d2' }} />} 
+                              label={
+                                <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                                  Clips Modul
+                                </Typography>
+                              }
                             />
-                            <MuiFormControlLabel 
+                            <FormControlLabel 
                               value="live-shopping" 
-                              control={<Radio size="small" />} 
-                              label="Live Shopping Modul" 
+                              control={<Radio size="small" sx={{ color: '#1976d2' }} />} 
+                              label={
+                                <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                                  Live Shopping Modul
+                                </Typography>
+                              }
                             />
                           </RadioGroup>
                         </FormControl>
@@ -304,32 +329,38 @@ const Plans = () => {
                     )}
 
                     {/* Features */}
-                    <Stack spacing={2}>
+                    <Stack spacing={2.5}>
                       {plan.features.map((feature, index) => (
                         <Stack key={index} direction="row" alignItems="center" spacing={1.5}>
                           <Box sx={{
-                            backgroundColor: plan.id === 'enterprise' ? 'rgba(67, 190, 172, 0.2)' : '#dcfce7',
+                            backgroundColor: plan.id === 'enterprise' ? 'rgba(25, 118, 210, 0.2)' : '#e8f5e8',
                             borderRadius: '50%',
                             p: 0.5,
-                            flexShrink: 0
+                            flexShrink: 0,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
                           }}>
-                            <Check size={16} color={plan.id === 'enterprise' ? '#43BEAC' : '#16a34a'} />
+                            <Check sx={{ 
+                              fontSize: 16, 
+                              color: plan.id === 'enterprise' ? '#1976d2' : '#2e7d32' 
+                            }} />
                           </Box>
                           <Stack direction="row" alignItems="center" spacing={0.5} sx={{ flexGrow: 1 }}>
                             <Typography variant="body2" sx={{ 
-                              color: plan.id === 'enterprise' ? '#e2e8f0' : '#475569',
-                              lineHeight: 1.5
+                              color: plan.id === 'enterprise' ? '#e3f2fd' : '#374151',
+                              lineHeight: 1.5,
+                              fontWeight: 500
                             }}>
                               {feature.text}
                             </Typography>
                             {feature.tooltip && (
                               <Tooltip title={feature.tooltip} arrow>
-                                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                  <HelpCircle 
-                                    size={14} 
-                                    color={plan.id === 'enterprise' ? '#a0aec0' : '#94a3b8'} 
-                                  />
-                                </Box>
+                                <HelpOutline sx={{ 
+                                  fontSize: 16, 
+                                  color: plan.id === 'enterprise' ? '#bbdefb' : '#9ca3af',
+                                  cursor: 'help'
+                                }} />
                               </Tooltip>
                             )}
                           </Stack>
@@ -348,7 +379,7 @@ const Plans = () => {
                         sx={{
                           py: 1.5,
                           backgroundColor: plan.popular 
-                            ? '#43BEAC' 
+                            ? '#1976d2' 
                             : plan.id === 'enterprise' 
                               ? 'transparent' 
                               : 'transparent',
@@ -356,19 +387,19 @@ const Plans = () => {
                             ? '#ffffff' 
                             : plan.id === 'enterprise' 
                               ? '#ffffff' 
-                              : '#43BEAC',
+                              : '#1976d2',
                           border: plan.popular 
                             ? 'none' 
                             : plan.id === 'enterprise' 
                               ? '2px solid #ffffff' 
-                              : '2px solid #43BEAC',
+                              : '2px solid #1976d2',
                           '&:hover': {
                             backgroundColor: plan.id === 'enterprise' 
                               ? 'rgba(255,255,255,0.1)' 
-                              : '#43BEAC',
+                              : '#1976d2',
                             color: '#ffffff',
                             transform: 'translateY(-2px)',
-                            boxShadow: '0 8px 24px rgba(67, 190, 172, 0.4)'
+                            boxShadow: '0 8px 24px rgba(25, 118, 210, 0.4)'
                           },
                           fontWeight: 700,
                           textTransform: 'none',
@@ -383,13 +414,13 @@ const Plans = () => {
                       <Button
                         variant="text"
                         sx={{
-                          color: plan.id === 'enterprise' ? '#a0aec0' : '#64748b',
+                          color: plan.id === 'enterprise' ? '#bbdefb' : '#64748b',
                           textTransform: 'none',
                           fontWeight: 500,
                           fontSize: '0.875rem',
                           '&:hover': {
                             backgroundColor: 'transparent',
-                            color: plan.id === 'enterprise' ? '#ffffff' : '#43BEAC',
+                            color: plan.id === 'enterprise' ? '#ffffff' : '#1976d2',
                             textDecoration: 'underline'
                           }
                         }}
