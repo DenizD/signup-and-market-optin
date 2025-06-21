@@ -1,6 +1,6 @@
 
-import { Box, Container, Typography, Button, Card, CardContent, CardActions, Stack, Chip, Tooltip, ToggleButtonGroup, ToggleButton, Grow, Fade } from '@mui/material';
-import { Check, HelpOutline, PlayCircle, ShoppingCart } from '@mui/icons-material';
+import { Box, Container, Typography, Button, Card, CardContent, CardActions, Stack, Chip, Tooltip, ToggleButtonGroup, ToggleButton, Grow, Fade, Collapse, Grid } from '@mui/material';
+import { Check, HelpOutline, PlayCircle, ShoppingCart, ExpandMore, ExpandLess } from '@mui/icons-material';
 import { useState } from 'react';
 import { useTranslations } from '@/hooks/useTranslations';
 
@@ -8,25 +8,33 @@ const Plans = () => {
   const { t } = useTranslations();
   const [billingPeriod, setBillingPeriod] = useState<'monthly' | 'yearly'>('monthly');
   const [selectedModule, setSelectedModule] = useState('clips');
+  const [expandedDetails, setExpandedDetails] = useState<string | null>(null);
 
   const plans = [
     {
       id: 'starter',
       name: 'Starter',
       description: t('starterDescription'),
-      subtitle: 'Für Einsteiger',
+      subtitle: t('starterSubtitle'),
       monthlyPrice: 695,
       yearlyPrice: 6950,
       popular: false,
       color: 'default' as const,
       features: [
-        { text: t('starterModule'), tooltip: 'Wählen Sie zwischen Live Shopping oder Clips Modul' },
+        { text: t('starterModule'), tooltip: t('starterModuleTooltip') },
         { text: t('starterViews'), tooltip: null },
         { text: t('starterUploads'), tooltip: null },
         { text: t('starterAccounts'), tooltip: null },
         { text: t('basicAnalytics'), tooltip: null },
-        { text: t('playerIntegration'), tooltip: '1-Code Integration in Ihre Website' },
-        { text: t('selfBranding'), tooltip: 'Personalisieren Sie das Aussehen' }
+        { text: t('playerIntegration'), tooltip: t('playerIntegrationTooltip') },
+        { text: t('selfBranding'), tooltip: t('selfBrandingTooltip') }
+      ],
+      detailedFeatures: [
+        t('videoHosting'),
+        t('customPlayer'),
+        t('basicSupport'),
+        t('sslSecurity'),
+        t('mobileOptimized')
       ],
       hasModuleSelector: true
     },
@@ -34,51 +42,65 @@ const Plans = () => {
       id: 'advanced',
       name: 'Advanced',
       description: t('advancedDescription'),
-      subtitle: 'Für Teams',
+      subtitle: t('advancedSubtitle'),
       monthlyPrice: 1495,
       yearlyPrice: 14950,
       popular: true,
       color: 'primary' as const,
       features: [
         { text: t('allFromStarter'), tooltip: null },
-        { text: t('fullVideoCommerce'), tooltip: 'Beide Module: Live Shopping & Clips' },
+        { text: t('fullVideoCommerce'), tooltip: t('fullVideoCommerceTooltip') },
         { text: t('advancedViews'), tooltip: null },
         { text: t('advancedUploads'), tooltip: null },
         { text: t('advancedUserAccounts'), tooltip: null },
-        { text: t('advancedAnalytics'), tooltip: 'Detaillierte Berichte mit Export-Funktion' },
-        { text: t('extendedApiAccess'), tooltip: 'Erweiterte API-Funktionen verfügbar' }
+        { text: t('advancedAnalytics'), tooltip: t('advancedAnalyticsTooltip') },
+        { text: t('extendedApiAccess'), tooltip: t('extendedApiAccessTooltip') }
+      ],
+      detailedFeatures: [
+        t('prioritySupport'),
+        t('advancedIntegrations'),
+        t('customBranding'),
+        t('teamCollaboration'),
+        t('advancedReporting')
       ]
     },
     {
       id: 'enterprise',
       name: 'Enterprise',
       description: t('enterpriseDescription'),
-      subtitle: 'Für Konzerne',
+      subtitle: t('enterpriseSubtitle'),
       monthlyPrice: null,
       yearlyPrice: null,
       popular: false,
       color: 'secondary' as const,
       features: [
-        { text: t('allFromStarter'), tooltip: null },
-        { text: t('aiBot'), tooltip: 'KI-gestützter Chatbot für Kunden' },
+        { text: t('allFromAdvanced'), tooltip: null },
+        { text: t('aiBot'), tooltip: t('aiBotTooltip') },
         { text: t('enterpriseViews'), tooltip: null },
         { text: t('unlimitedUploads'), tooltip: null },
         { text: t('unlimitedAccounts'), tooltip: null },
-        { text: t('enterpriseSupport'), tooltip: 'Prioritärer 24/7 Support' },
-        { text: t('successManager'), tooltip: 'Persönlicher Ansprechpartner' }
+        { text: t('enterpriseSupport'), tooltip: t('enterpriseSupportTooltip') },
+        { text: t('successManager'), tooltip: t('successManagerTooltip') }
+      ],
+      detailedFeatures: [
+        t('dedicatedInfrastructure'),
+        t('slaGuarantee'),
+        t('onPremiseOption'),
+        t('customDevelopment'),
+        t('trainingIncluded')
       ]
     }
   ];
 
   const formatPrice = (price: number | null) => {
-    if (price === null) return 'Kontakt';
+    if (price === null) return t('contact');
     const displayPrice = billingPeriod === 'yearly' ? Math.floor(price / 12) : price;
     return `${displayPrice}€`;
   };
 
   const getSavings = () => {
     if (billingPeriod === 'yearly') {
-      return 'Spare 15% bei Jahresabo';
+      return t('saveWithYearly');
     }
     return null;
   };
@@ -97,23 +119,27 @@ const Plans = () => {
       border: '1px solid #e2e8f0',
       '&:hover': {
         transform: 'scale(1.02)',
-        boxShadow: '0 12px 32px rgba(67, 190, 172, 0.15)'
+        boxShadow: '0 12px 32px rgba(14, 112, 144, 0.15)'
       }
     };
 
     if (plan.popular) {
       return {
         ...baseStyles,
-        border: '2px solid #43BEAC',
-        boxShadow: '0 8px 24px rgba(67, 190, 172, 0.12)',
+        border: '2px solid rgb(14, 112, 144)',
+        boxShadow: '0 8px 24px rgba(14, 112, 144, 0.12)',
         '&:hover': {
           transform: 'scale(1.02)',
-          boxShadow: '0 16px 40px rgba(67, 190, 172, 0.2)'
+          boxShadow: '0 16px 40px rgba(14, 112, 144, 0.2)'
         }
       };
     }
 
     return baseStyles;
+  };
+
+  const toggleDetails = (planId: string) => {
+    setExpandedDetails(expandedDetails === planId ? null : planId);
   };
 
   return (
@@ -126,12 +152,12 @@ const Plans = () => {
             sx={{ 
               fontWeight: 700, 
               mb: 2, 
-              color: '#43BEAC',
+              color: 'rgb(14, 112, 144)',
               fontSize: { xs: '2.5rem', md: '3.5rem' },
               letterSpacing: '-0.02em'
             }}
           >
-            Entdecken Sie die Pläne
+            {t('discoverPlans')}
           </Typography>
           <Typography 
             variant="h6" 
@@ -144,7 +170,7 @@ const Plans = () => {
               lineHeight: 1.6
             }}
           >
-            Wählen Sie den perfekten Plan für Ihr Unternehmen und starten Sie noch heute
+            {t('plansSubtitle')}
           </Typography>
 
           {/* Modern Billing Toggle */}
@@ -172,11 +198,11 @@ const Plans = () => {
                   color: '#64748b',
                   borderRadius: 50,
                   '&.Mui-selected': {
-                    backgroundColor: '#43BEAC',
+                    backgroundColor: 'rgb(14, 112, 144)',
                     color: '#ffffff',
-                    boxShadow: '0 2px 8px rgba(67, 190, 172, 0.3)',
+                    boxShadow: '0 2px 8px rgba(14, 112, 144, 0.3)',
                     '&:hover': {
-                      backgroundColor: '#37a08e'
+                      backgroundColor: 'rgb(12, 100, 128)'
                     }
                   },
                   '&:hover': {
@@ -185,12 +211,12 @@ const Plans = () => {
                 }
               }}
             >
-              <ToggleButton value="monthly">Monatlich</ToggleButton>
+              <ToggleButton value="monthly">{t('monthly')}</ToggleButton>
               <ToggleButton value="yearly">
                 <Stack direction="row" alignItems="center" spacing={1}>
-                  <span>Jährlich</span>
+                  <span>{t('yearly')}</span>
                   <Chip 
-                    label="15% sparen" 
+                    label={t('save15')}
                     size="small" 
                     sx={{ 
                       backgroundColor: '#dcfce7', 
@@ -255,13 +281,13 @@ const Plans = () => {
                 <Card sx={getCardStyles(plan)}>
                   {plan.popular && (
                     <Chip 
-                      label="EMPFOHLEN" 
+                      label={t('recommended')}
                       sx={{
                         position: 'absolute',
                         top: -12,
                         left: '50%',
                         transform: 'translateX(-50%)',
-                        backgroundColor: '#43BEAC',
+                        backgroundColor: 'rgb(14, 112, 144)',
                         color: '#ffffff',
                         fontWeight: 700,
                         fontSize: '0.75rem',
@@ -294,7 +320,7 @@ const Plans = () => {
                         <Stack direction="row" alignItems="baseline" justifyContent="center" spacing={0.5}>
                           <Typography variant="h3" sx={{
                             fontWeight: 800,
-                            color: '#43BEAC',
+                            color: 'rgb(14, 112, 144)',
                             lineHeight: 1,
                             letterSpacing: '-0.02em'
                           }}>
@@ -305,14 +331,14 @@ const Plans = () => {
                               color: '#64748b',
                               fontWeight: 500
                             }}>
-                              /Monat
+                              /{t('month')}
                             </Typography>
                           )}
                         </Stack>
                       </Box>
                     </Box>
 
-                    {/* Module Selector for Starter - Clean Design */}
+                    {/* Module Selector for Starter */}
                     {plan.hasModuleSelector && (
                       <Box sx={{ mb: 4 }}>
                         <Typography variant="subtitle2" sx={{ 
@@ -322,7 +348,7 @@ const Plans = () => {
                           textAlign: 'center',
                           fontSize: '0.875rem'
                         }}>
-                          Wählen Sie Ihr Modul:
+                          {t('chooseModule')}:
                         </Typography>
                         <Stack spacing={1.5}>
                           <Box
@@ -331,18 +357,18 @@ const Plans = () => {
                               cursor: 'pointer',
                               p: 2,
                               borderRadius: 2,
-                              border: selectedModule === 'clips' ? '2px solid #43BEAC' : '1px solid #e2e8f0',
-                              backgroundColor: selectedModule === 'clips' ? '#f0fdfa' : '#ffffff',
+                              border: selectedModule === 'clips' ? '2px solid rgb(14, 112, 144)' : '1px solid #e2e8f0',
+                              backgroundColor: selectedModule === 'clips' ? 'rgba(14, 112, 144, 0.05)' : '#ffffff',
                               transition: 'all 0.2s ease',
                               '&:hover': {
-                                borderColor: '#43BEAC',
-                                backgroundColor: '#f0fdfa'
+                                borderColor: 'rgb(14, 112, 144)',
+                                backgroundColor: 'rgba(14, 112, 144, 0.05)'
                               }
                             }}
                           >
                             <Stack direction="row" alignItems="center" spacing={2}>
                               <Box sx={{ 
-                                backgroundColor: selectedModule === 'clips' ? '#43BEAC' : '#f1f5f9',
+                                backgroundColor: selectedModule === 'clips' ? 'rgb(14, 112, 144)' : '#f1f5f9',
                                 borderRadius: '50%',
                                 p: 1,
                                 minWidth: 36,
@@ -358,10 +384,10 @@ const Plans = () => {
                               </Box>
                               <Box sx={{ flex: 1 }}>
                                 <Typography fontWeight={600} variant="body2" sx={{ color: '#252A2E' }}>
-                                  Clips Modul
+                                  {t('clipsModule')}
                                 </Typography>
                                 <Typography variant="caption" sx={{ color: '#64748b' }}>
-                                  Ideal für Highlight-Videos
+                                  {t('clipsModuleDesc')}
                                 </Typography>
                               </Box>
                             </Stack>
@@ -373,18 +399,18 @@ const Plans = () => {
                               cursor: 'pointer',
                               p: 2,
                               borderRadius: 2,
-                              border: selectedModule === 'live-shopping' ? '2px solid #43BEAC' : '1px solid #e2e8f0',
-                              backgroundColor: selectedModule === 'live-shopping' ? '#f0fdfa' : '#ffffff',
+                              border: selectedModule === 'live-shopping' ? '2px solid rgb(14, 112, 144)' : '1px solid #e2e8f0',
+                              backgroundColor: selectedModule === 'live-shopping' ? 'rgba(14, 112, 144, 0.05)' : '#ffffff',
                               transition: 'all 0.2s ease',
                               '&:hover': {
-                                borderColor: '#43BEAC',
-                                backgroundColor: '#f0fdfa'
+                                borderColor: 'rgb(14, 112, 144)',
+                                backgroundColor: 'rgba(14, 112, 144, 0.05)'
                               }
                             }}
                           >
                             <Stack direction="row" alignItems="center" spacing={2}>
                               <Box sx={{ 
-                                backgroundColor: selectedModule === 'live-shopping' ? '#43BEAC' : '#f1f5f9',
+                                backgroundColor: selectedModule === 'live-shopping' ? 'rgb(14, 112, 144)' : '#f1f5f9',
                                 borderRadius: '50%',
                                 p: 1,
                                 minWidth: 36,
@@ -400,10 +426,10 @@ const Plans = () => {
                               </Box>
                               <Box sx={{ flex: 1 }}>
                                 <Typography fontWeight={600} variant="body2" sx={{ color: '#252A2E' }}>
-                                  Live Shopping Modul
+                                  {t('liveShoppingModule')}
                                 </Typography>
                                 <Typography variant="caption" sx={{ color: '#64748b' }}>
-                                  Ideal für Livestream Sales
+                                  {t('liveShoppingModuleDesc')}
                                 </Typography>
                               </Box>
                             </Stack>
@@ -451,6 +477,31 @@ const Plans = () => {
                         </Stack>
                       ))}
                     </Stack>
+
+                    {/* Detailed Features Collapse */}
+                    <Collapse in={expandedDetails === plan.id}>
+                      <Box sx={{ mt: 3, pt: 3, borderTop: '1px solid #e2e8f0' }}>
+                        <Typography variant="subtitle2" sx={{ 
+                          fontWeight: 700, 
+                          mb: 2, 
+                          color: 'rgb(14, 112, 144)' 
+                        }}>
+                          {t('additionalFeatures')}:
+                        </Typography>
+                        <Grid container spacing={2}>
+                          {plan.detailedFeatures?.map((feature, index) => (
+                            <Grid item xs={12} sm={6} key={index}>
+                              <Stack direction="row" alignItems="center" spacing={1}>
+                                <Check sx={{ fontSize: 14, color: '#16a34a' }} />
+                                <Typography variant="body2" sx={{ color: '#64748b', fontSize: '0.8rem' }}>
+                                  {feature}
+                                </Typography>
+                              </Stack>
+                            </Grid>
+                          ))}
+                        </Grid>
+                      </Box>
+                    </Collapse>
                   </CardContent>
 
                   <CardActions sx={{ p: 4, pt: 0 }}>
@@ -462,12 +513,12 @@ const Plans = () => {
                         data-track-id={`pricing-${plan.id}-click`}
                         sx={{
                           py: 1.5,
-                          backgroundColor: '#43BEAC',
+                          backgroundColor: 'rgb(14, 112, 144)',
                           color: '#ffffff',
                           '&:hover': {
-                            backgroundColor: '#37a08e',
+                            backgroundColor: 'rgb(12, 100, 128)',
                             transform: 'translateY(-2px)',
-                            boxShadow: '0 8px 24px rgba(67, 190, 172, 0.4)'
+                            boxShadow: '0 8px 24px rgba(14, 112, 144, 0.4)'
                           },
                           fontWeight: 700,
                           textTransform: 'none',
@@ -476,11 +527,13 @@ const Plans = () => {
                           transition: 'all 0.3s ease'
                         }}
                       >
-                        {plan.id === 'enterprise' ? 'Kontakt aufnehmen' : 'Plan auswählen'}
+                        {plan.id === 'enterprise' ? t('contactSales') : t('selectPlan')}
                       </Button>
 
                       <Button
                         variant="text"
+                        onClick={() => toggleDetails(plan.id)}
+                        endIcon={expandedDetails === plan.id ? <ExpandLess /> : <ExpandMore />}
                         sx={{
                           color: '#64748b',
                           textTransform: 'none',
@@ -488,12 +541,11 @@ const Plans = () => {
                           fontSize: '0.875rem',
                           '&:hover': {
                             backgroundColor: 'transparent',
-                            color: '#43BEAC',
-                            textDecoration: 'underline'
+                            color: 'rgb(14, 112, 144)',
                           }
                         }}
                       >
-                        Alle Details anzeigen
+                        {t('allDetails')}
                       </Button>
                     </Stack>
                   </CardActions>

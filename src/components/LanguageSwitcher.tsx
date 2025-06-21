@@ -5,7 +5,7 @@ import { Languages } from 'lucide-react';
 import { Box } from '@mui/material';
 
 export type Language = {
-  code: 'de' | 'en' | 'es';
+  code: 'de' | 'en' | 'es' | 'zh';
   name: string;
 };
 
@@ -13,6 +13,7 @@ export const languages: Language[] = [
   { code: 'de', name: 'Deutsch' },
   { code: 'en', name: 'English' },
   { code: 'es', name: 'Español' },
+  { code: 'zh', name: '中文' },
 ];
 
 interface LanguageSwitcherProps {
