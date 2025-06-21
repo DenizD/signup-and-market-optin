@@ -155,11 +155,11 @@ const Index = () => {
         }}
       >
         <Container maxWidth="sm">
-          <Box sx={{ textAlign: 'center', mb: 4 }}>
+          <Box sx={{ textAlign: 'center', mb: 3 }}>
             <Typography 
               variant="h4" 
               sx={{ 
-                mb: 1, 
+                mb: 2, 
                 fontWeight: 'bold',
                 fontFamily: 'Inter, sans-serif',
                 color: '#252A2E'
@@ -171,9 +171,13 @@ const Index = () => {
             <Typography 
               variant="body1" 
               color="text.secondary"
-              sx={{ fontFamily: 'Inter, sans-serif' }}
+              sx={{ 
+                fontFamily: 'Inter, sans-serif',
+                lineHeight: 1.6,
+                mb: 1
+              }}
             >
-              {t('welcomeSubtitle')}
+              {t('platformDescription')}
             </Typography>
           </Box>
 

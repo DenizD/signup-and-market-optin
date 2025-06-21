@@ -5,7 +5,9 @@ export type TranslationKey =
   | 'welcome'
   | 'welcomeSubtitle'
   | 'signIn'
+  | 'signInHeadline'
   | 'register'
+  | 'registerHeadline'
   | 'createAccount'
   | 'emailAddress'
   | 'password'
@@ -23,6 +25,7 @@ export type TranslationKey =
   | 'termsAndPrivacy'
   | 'serviceWelcome'
   | 'serviceSubtitle'
+  | 'platformDescription'
   | 'noAccount'
   | 'haveAccount'
   | 'backToLogin';
@@ -33,10 +36,13 @@ type Translations = {
 
 const translations: Record<'de' | 'en' | 'es', Translations> = {
   de: {
-    welcome: 'Willkommen! 👋',
+    welcome: 'Willkommen',
     welcomeSubtitle: 'Anmelden oder neues Konto erstellen',
+    platformDescription: 'Greifen Sie auf interaktive Live-Streams, shoppable Clips und intelligente KI-Features auf unserer Video-Commerce-Plattform zu.',
     signIn: 'Anmelden',
+    signInHeadline: 'Anmelden',
     register: 'Registrieren',
+    registerHeadline: 'Registrierung',
     createAccount: 'Konto erstellen',
     emailAddress: 'E-Mail-Adresse',
     password: 'Passwort',
@@ -59,10 +65,13 @@ const translations: Record<'de' | 'en' | 'es', Translations> = {
     backToLogin: 'Zurück zur Anmeldung'
   },
   en: {
-    welcome: 'Welcome! 👋',
+    welcome: 'Welcome',
     welcomeSubtitle: 'Sign in or create a new account',
+    platformDescription: 'Access interactive live streams, shoppable clips, and intelligent AI features on our video commerce platform.',
     signIn: 'Login',
+    signInHeadline: 'Sign In',
     register: 'Register',
+    registerHeadline: 'Registration',
     createAccount: 'Create Account',
     emailAddress: 'Email Address',
     password: 'Password',
@@ -85,10 +94,13 @@ const translations: Record<'de' | 'en' | 'es', Translations> = {
     backToLogin: 'Back to Login'
   },
   es: {
-    welcome: '¡Bienvenido! 👋',
+    welcome: 'Bienvenido',
     welcomeSubtitle: 'Iniciar sesión o crear una nueva cuenta',
+    platformDescription: 'Accede a transmisiones en vivo interactivas, clips comprables e funciones inteligentes de IA en nuestra plataforma de comercio de video.',
     signIn: 'Iniciar Sesión',
+    signInHeadline: 'Iniciar Sesión',
     register: 'Registrarse',
+    registerHeadline: 'Registro',
     createAccount: 'Crear Cuenta',
     emailAddress: 'Dirección de Correo',
     password: 'Contraseña',

@@ -105,22 +105,10 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
   };
 
   const getTooltipText = (field: string) => {
-    if (field === 'firstName') {
-      return language === 'de' ? 'Geben Sie Ihren Vornamen ein' : 
-             language === 'es' ? 'Ingrese su nombre' : 
-             'Enter your first name';
-    } else if (field === 'lastName') {
-      return language === 'de' ? 'Geben Sie Ihren Nachnamen ein' : 
-             language === 'es' ? 'Ingrese su apellido' : 
-             'Enter your last name';
-    } else if (field === 'company') {
+    if (field === 'company') {
       return language === 'de' ? 'Optional: Geben Sie Ihren Firmennamen ein' : 
              language === 'es' ? 'Opcional: Ingrese el nombre de su empresa' : 
              'Optional: Enter your company name';
-    } else if (field === 'email') {
-      return language === 'de' ? 'Geben Sie eine gültige E-Mail-Adresse ein' : 
-             language === 'es' ? 'Ingrese una dirección de correo válida' : 
-             'Enter a valid email address';
     } else if (field === 'password') {
       return language === 'de' ? 'Mindestens 8 Zeichen erforderlich' : 
              language === 'es' ? 'Se requieren al menos 8 caracteres' : 
@@ -144,6 +132,20 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
         role="form"
         aria-label={language === 'de' ? 'Registrierungsformular' : language === 'es' ? 'Formulario de registro' : 'Registration form'}
       >
+        <Typography 
+          variant="h5" 
+          sx={{ 
+            mb: 2, 
+            fontWeight: 'bold',
+            fontFamily: 'Inter, sans-serif',
+            color: '#252A2E',
+            textAlign: 'center'
+          }}
+          component="h2"
+        >
+          {t('registerHeadline')}
+        </Typography>
+
         {showSuccess && (
           <Alert 
             severity="success"
@@ -173,24 +175,7 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
         <Box sx={{ display: 'flex', gap: 2, flexDirection: { xs: 'column', sm: 'row' } }}>
           <TextField
             fullWidth
-            label={
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                {t('firstName')}
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Box component="span" sx={{ display: 'inline-flex', cursor: 'help' }}>
-                      <FontAwesomeIcon 
-                        icon="question-circle" 
-                        style={{ color: '#666', fontSize: '0.875rem' }} 
-                      />
-                    </Box>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>{getTooltipText('firstName')}</p>
-                  </TooltipContent>
-                </Tooltip>
-              </Box>
-            }
+            label={t('firstName')}
             name="firstName"
             value={formData.firstName}
             onChange={handleChange}
@@ -210,24 +195,7 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
           />
           <TextField
             fullWidth
-            label={
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                {t('lastName')}
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Box component="span" sx={{ display: 'inline-flex', cursor: 'help' }}>
-                      <FontAwesomeIcon 
-                        icon="question-circle" 
-                        style={{ color: '#666', fontSize: '0.875rem' }} 
-                      />
-                    </Box>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>{getTooltipText('lastName')}</p>
-                  </TooltipContent>
-                </Tooltip>
-              </Box>
-            }
+            label={t('lastName')}
             name="lastName"
             value={formData.lastName}
             onChange={handleChange}
@@ -286,24 +254,7 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
 
         <TextField
           fullWidth
-          label={
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              {t('emailAddress')}
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Box component="span" sx={{ display: 'inline-flex', cursor: 'help' }}>
-                    <FontAwesomeIcon 
-                      icon="question-circle" 
-                      style={{ color: '#666', fontSize: '0.875rem' }} 
-                    />
-                  </Box>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>{getTooltipText('email')}</p>
-                </TooltipContent>
-              </Tooltip>
-            </Box>
-          }
+          label={t('emailAddress')}
           name="email"
           type="email"
           value={formData.email}
@@ -442,10 +393,10 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
           sx={{ 
             mt: 2, 
             py: 1.5,
-            backgroundColor: 'rgb(14, 112, 144)',
-            '&:hover': { backgroundColor: 'rgb(10, 90, 115)' },
+            backgroundColor: '#43BEAC',
+            '&:hover': { backgroundColor: '#30A39D' },
             '&:focus': { 
-              outline: '2px solid rgb(14, 112, 144)',
+              outline: '2px solid #43BEAC',
               outlineOffset: '2px'
             }
           }}
@@ -468,9 +419,9 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
                   href="#" 
                   underline="hover" 
                   sx={{ 
-                    color: 'rgb(14, 112, 144)',
+                    color: '#43BEAC',
                     '&:focus': { 
-                      outline: '2px solid rgb(14, 112, 144)',
+                      outline: '2px solid #43BEAC',
                       outlineOffset: '2px'
                     }
                   }}
@@ -483,9 +434,9 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
                   href="#" 
                   underline="hover" 
                   sx={{ 
-                    color: 'rgb(14, 112, 144)',
+                    color: '#43BEAC',
                     '&:focus': { 
-                      outline: '2px solid rgb(14, 112, 144)',
+                      outline: '2px solid #43BEAC',
                       outlineOffset: '2px'
                     }
                   }}
@@ -503,9 +454,9 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
                   href="#" 
                   underline="hover" 
                   sx={{ 
-                    color: 'rgb(14, 112, 144)',
+                    color: '#43BEAC',
                     '&:focus': { 
-                      outline: '2px solid rgb(14, 112, 144)',
+                      outline: '2px solid #43BEAC',
                       outlineOffset: '2px'
                     }
                   }}
@@ -518,9 +469,9 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
                   href="#" 
                   underline="hover" 
                   sx={{ 
-                    color: 'rgb(14, 112, 144)',
+                    color: '#43BEAC',
                     '&:focus': { 
-                      outline: '2px solid rgb(14, 112, 144)',
+                      outline: '2px solid #43BEAC',
                       outlineOffset: '2px'
                     }
                   }}
@@ -538,9 +489,9 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
                   href="#" 
                   underline="hover" 
                   sx={{ 
-                    color: 'rgb(14, 112, 144)',
+                    color: '#43BEAC',
                     '&:focus': { 
-                      outline: '2px solid rgb(14, 112, 144)',
+                      outline: '2px solid #43BEAC',
                       outlineOffset: '2px'
                     }
                   }}
@@ -553,9 +504,9 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
                   href="#" 
                   underline="hover" 
                   sx={{ 
-                    color: 'rgb(14, 112, 144)',
+                    color: '#43BEAC',
                     '&:focus': { 
-                      outline: '2px solid rgb(14, 112, 144)',
+                      outline: '2px solid #43BEAC',
                       outlineOffset: '2px'
                     }
                   }}

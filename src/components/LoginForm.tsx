@@ -10,6 +10,7 @@ import {
   InputAdornment,
   IconButton,
   Alert,
+  Typography,
 } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
@@ -59,17 +60,10 @@ const LoginForm = ({ language, t }: LoginFormProps) => {
     return isVisible ? 'Hide password' : 'Show password';
   };
 
-  const getTooltipText = (field: string) => {
-    if (field === 'email') {
-      return language === 'de' ? 'Geben Sie Ihre E-Mail-Adresse ein' : 
-             language === 'es' ? 'Ingrese su dirección de correo electrónico' : 
-             'Enter your email address';
-    } else if (field === 'password') {
-      return language === 'de' ? 'Geben Sie Ihr Passwort ein' : 
-             language === 'es' ? 'Ingrese su contraseña' : 
-             'Enter your password';
-    }
-    return '';
+  const getPasswordTooltipText = () => {
+    return language === 'de' ? 'Geben Sie Ihr Passwort ein' : 
+           language === 'es' ? 'Ingrese su contraseña' : 
+           'Enter your password';
   };
 
   return (
@@ -81,6 +75,20 @@ const LoginForm = ({ language, t }: LoginFormProps) => {
         role="form"
         aria-label={language === 'de' ? 'Anmeldeformular' : language === 'es' ? 'Formulario de inicio de sesión' : 'Login form'}
       >
+        <Typography 
+          variant="h5" 
+          sx={{ 
+            mb: 2, 
+            fontWeight: 'bold',
+            fontFamily: 'Inter, sans-serif',
+            color: '#252A2E',
+            textAlign: 'center'
+          }}
+          component="h2"
+        >
+          {t('signInHeadline')}
+        </Typography>
+
         {showSuccess && (
           <Alert 
             severity="success"
@@ -96,24 +104,7 @@ const LoginForm = ({ language, t }: LoginFormProps) => {
 
         <TextField
           fullWidth
-          label={
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              {t('emailAddress')}
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Box component="span" sx={{ display: 'inline-flex', cursor: 'help' }}>
-                    <FontAwesomeIcon 
-                      icon="question-circle" 
-                      style={{ color: '#666', fontSize: '0.875rem' }} 
-                    />
-                  </Box>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>{getTooltipText('email')}</p>
-                </TooltipContent>
-              </Tooltip>
-            </Box>
-          }
+          label={t('emailAddress')}
           name="email"
           type="email"
           value={formData.email}
@@ -148,7 +139,7 @@ const LoginForm = ({ language, t }: LoginFormProps) => {
                   </Box>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>{getTooltipText('password')}</p>
+                  <p>{getPasswordTooltipText()}</p>
                 </TooltipContent>
               </Tooltip>
             </Box>
