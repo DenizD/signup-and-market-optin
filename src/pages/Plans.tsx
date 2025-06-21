@@ -1,5 +1,5 @@
 
-import { Box, Container, Typography, Button, Card, CardContent, CardActions, Stack, Chip, Tooltip, RadioGroup, FormControl, FormControlLabel, Radio, ToggleButtonGroup, ToggleButton, Grid, Grow } from '@mui/material';
+import { Box, Container, Typography, Button, Card, CardContent, CardActions, Stack, Chip, Tooltip, Grid2, ToggleButtonGroup, ToggleButton, Grow, Fade } from '@mui/material';
 import { Check, HelpOutline } from '@mui/icons-material';
 import { useState } from 'react';
 import { useTranslations } from '@/hooks/useTranslations';
@@ -14,7 +14,7 @@ const Plans = () => {
       id: 'starter',
       name: 'Starter',
       description: t('starterDescription'),
-      subtitle: 'Für den Einstieg',
+      subtitle: 'Für Einsteiger',
       monthlyPrice: 695,
       yearlyPrice: 6950,
       popular: false,
@@ -71,7 +71,7 @@ const Plans = () => {
   ];
 
   const formatPrice = (price: number | null) => {
-    if (price === null) return t('custom');
+    if (price === null) return 'Kontakt';
     const displayPrice = billingPeriod === 'yearly' ? Math.floor(price / 12) : price;
     return `${displayPrice}€`;
   };
@@ -92,35 +92,42 @@ const Plans = () => {
       transition: 'all 0.3s ease',
       cursor: 'pointer',
       borderRadius: 3,
+      overflow: 'visible',
       '&:hover': {
         transform: 'scale(1.02)',
-        boxShadow: plan.popular ? '0 12px 40px rgba(25, 118, 210, 0.3)' : '0 8px 30px rgba(0,0,0,0.12)'
+        boxShadow: 8
       }
     };
 
     if (plan.popular) {
       return {
         ...baseStyles,
-        border: '2px solid #1976d2',
-        boxShadow: '0 8px 32px rgba(25, 118, 210, 0.2)',
-        background: 'linear-gradient(135deg, #ffffff 0%, #f3f7ff 100%)'
+        border: '2px solid',
+        borderColor: 'primary.main',
+        boxShadow: 4,
+        background: 'linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%)'
       };
     }
 
     if (plan.id === 'enterprise') {
       return {
         ...baseStyles,
-        background: 'linear-gradient(135deg, #0d47a1 0%, #1565c0 100%)',
+        background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)',
         color: 'white',
         '& .MuiTypography-root': {
           color: 'white'
+        },
+        '& .MuiSvgIcon-root': {
+          color: '#10b981'
         }
       };
     }
 
     return {
       ...baseStyles,
-      border: '1px solid #e0e0e0'
+      border: '1px solid',
+      borderColor: 'grey.200',
+      background: '#ffffff'
     };
   };
 
@@ -132,17 +139,14 @@ const Plans = () => {
           <Typography 
             variant="h3" 
             sx={{ 
-              fontWeight: 800, 
+              fontWeight: 700, 
               mb: 2, 
-              color: '#0d47a1',
+              color: '#43BEAC',
               fontSize: { xs: '2.5rem', md: '3.5rem' },
-              background: 'linear-gradient(135deg, #0d47a1 0%, #1976d2 100%)',
-              backgroundClip: 'text',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent'
+              letterSpacing: '-0.02em'
             }}
           >
-            {t('discoverPlans')}
+            Entdecken Sie die Pläne
           </Typography>
           <Typography 
             variant="h6" 
@@ -151,10 +155,11 @@ const Plans = () => {
               fontWeight: 400,
               mb: 6,
               maxWidth: '600px',
-              mx: 'auto'
+              mx: 'auto',
+              lineHeight: 1.6
             }}
           >
-            {t('plansSubtitle')}
+            Wählen Sie den perfekten Plan für Ihr Unternehmen und starten Sie noch heute
           </Typography>
 
           {/* Modern Billing Toggle */}
@@ -170,8 +175,9 @@ const Plans = () => {
               onChange={(_, value) => value && setBillingPeriod(value)}
               sx={{
                 backgroundColor: '#ffffff',
-                borderRadius: 3,
-                boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+                borderRadius: 50,
+                boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+                border: '1px solid #e2e8f0',
                 '& .MuiToggleButton-root': {
                   border: 'none',
                   px: 4,
@@ -179,15 +185,17 @@ const Plans = () => {
                   fontWeight: 600,
                   textTransform: 'none',
                   color: '#64748b',
+                  borderRadius: 50,
                   '&.Mui-selected': {
-                    backgroundColor: '#1976d2',
+                    backgroundColor: '#43BEAC',
                     color: '#ffffff',
+                    boxShadow: '0 2px 8px rgba(67, 190, 172, 0.3)',
                     '&:hover': {
-                      backgroundColor: '#1565c0'
+                      backgroundColor: '#37a08e'
                     }
                   },
                   '&:hover': {
-                    backgroundColor: '#f5f5f5'
+                    backgroundColor: 'transparent'
                   }
                 }
               }}
@@ -200,10 +208,11 @@ const Plans = () => {
                     label="15% sparen" 
                     size="small" 
                     sx={{ 
-                      backgroundColor: '#e8f5e8', 
-                      color: '#2e7d32',
+                      backgroundColor: '#dcfce7', 
+                      color: '#16a34a',
                       fontSize: '0.7rem',
-                      height: '20px'
+                      height: '20px',
+                      fontWeight: 600
                     }} 
                   />
                 </Stack>
@@ -212,16 +221,38 @@ const Plans = () => {
           </Box>
 
           {getSavings() && (
-            <Typography sx={{ color: '#2e7d32', fontWeight: 600, mb: 4 }}>
-              {getSavings()}
-            </Typography>
+            <Fade in>
+              <Typography sx={{ color: '#16a34a', fontWeight: 600, mb: 4 }}>
+                💰 {getSavings()}
+              </Typography>
+            </Fade>
           )}
         </Box>
 
+        {/* Category Headers */}
+        <Grid2 container spacing={4} sx={{ maxWidth: '1200px', mx: 'auto', mb: 2 }}>
+          {plans.map((plan) => (
+            <Grid2 xs={12} md={4} key={`header-${plan.id}`}>
+              <Typography 
+                variant="overline" 
+                sx={{ 
+                  color: '#64748b',
+                  fontWeight: 700,
+                  letterSpacing: 1.5,
+                  display: 'block',
+                  textAlign: 'center'
+                }}
+              >
+                {plan.subtitle}
+              </Typography>
+            </Grid2>
+          ))}
+        </Grid2>
+
         {/* Plans Grid */}
-        <Grid container spacing={4} sx={{ maxWidth: '1200px', mx: 'auto' }}>
+        <Grid2 container spacing={4} sx={{ maxWidth: '1200px', mx: 'auto' }}>
           {plans.map((plan, index) => (
-            <Grid item xs={12} md={4} key={plan.id}>
+            <Grid2 xs={12} md={4} key={plan.id}>
               <Grow in timeout={500 + index * 200}>
                 <Card sx={getCardStyles(plan)}>
                   {plan.popular && (
@@ -232,9 +263,10 @@ const Plans = () => {
                         top: -12,
                         left: '50%',
                         transform: 'translateX(-50%)',
-                        backgroundColor: '#1976d2',
+                        backgroundColor: '#43BEAC',
                         color: '#ffffff',
                         fontWeight: 700,
+                        fontSize: '0.75rem',
                         zIndex: 1
                       }}
                     />
@@ -243,24 +275,16 @@ const Plans = () => {
                   <CardContent sx={{ p: 4, flexGrow: 1 }}>
                     {/* Plan Header */}
                     <Box sx={{ textAlign: 'center', mb: 4 }}>
-                      <Typography variant="subtitle2" sx={{ 
-                        color: plan.id === 'enterprise' ? '#bbdefb' : '#64748b', 
-                        mb: 1,
-                        textTransform: 'uppercase',
-                        letterSpacing: 1,
-                        fontWeight: 600
-                      }}>
-                        {plan.subtitle}
-                      </Typography>
-                      <Typography variant="h4" sx={{ 
+                      <Typography variant="h6" sx={{ 
                         fontWeight: 700, 
                         mb: 1,
-                        color: plan.id === 'enterprise' ? '#ffffff' : '#0d47a1'
+                        color: plan.id === 'enterprise' ? '#ffffff' : '#252A2E',
+                        letterSpacing: '-0.01em'
                       }}>
                         {plan.name}
                       </Typography>
                       <Typography variant="body2" sx={{ 
-                        color: plan.id === 'enterprise' ? '#bbdefb' : '#64748b',
+                        color: plan.id === 'enterprise' ? '#cbd5e1' : '#64748b',
                         mb: 3,
                         lineHeight: 1.6
                       }}>
@@ -272,16 +296,18 @@ const Plans = () => {
                         <Stack direction="row" alignItems="baseline" justifyContent="center" spacing={0.5}>
                           <Typography variant="h3" sx={{
                             fontWeight: 800,
-                            color: plan.id === 'enterprise' ? '#ffffff' : '#0d47a1',
-                            lineHeight: 1
+                            color: plan.id === 'enterprise' ? '#ffffff' : '#43BEAC',
+                            lineHeight: 1,
+                            letterSpacing: '-0.02em'
                           }}>
                             {formatPrice(plan.monthlyPrice)}
                           </Typography>
                           {plan.monthlyPrice !== null && (
                             <Typography variant="body2" sx={{ 
-                              color: plan.id === 'enterprise' ? '#bbdefb' : '#64748b'
+                              color: plan.id === 'enterprise' ? '#cbd5e1' : '#64748b',
+                              fontWeight: 500
                             }}>
-                              /{t('month')}
+                              /Monat
                             </Typography>
                           )}
                         </Stack>
@@ -290,50 +316,94 @@ const Plans = () => {
 
                     {/* Module Selector for Starter */}
                     {plan.hasModuleSelector && (
-                      <Box sx={{ 
-                        mb: 4, 
-                        p: 3, 
-                        backgroundColor: '#f8fafc', 
-                        borderRadius: 2,
-                        border: '1px solid #e0e7ff'
-                      }}>
-                        <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600, color: '#0d47a1' }}>
+                      <Box sx={{ mb: 4 }}>
+                        <Typography variant="subtitle2" sx={{ mb: 3, fontWeight: 600, color: '#43BEAC', textAlign: 'center' }}>
                           Modul auswählen:
                         </Typography>
-                        <FormControl component="fieldset">
-                          <RadioGroup
-                            value={selectedModule}
-                            onChange={(e) => setSelectedModule(e.target.value)}
+                        <Stack spacing={2}>
+                          <Card
+                            variant={selectedModule === 'clips' ? 'elevation' : 'outlined'}
+                            onClick={() => setSelectedModule('clips')}
+                            sx={{
+                              cursor: 'pointer',
+                              p: 2.5,
+                              borderColor: selectedModule === 'clips' ? '#43BEAC' : '#e2e8f0',
+                              borderWidth: selectedModule === 'clips' ? 2 : 1,
+                              transition: 'all 0.2s ease',
+                              '&:hover': {
+                                borderColor: '#43BEAC',
+                                transform: 'translateY(-1px)'
+                              }
+                            }}
                           >
-                            <FormControlLabel 
-                              value="clips" 
-                              control={<Radio size="small" sx={{ color: '#1976d2' }} />} 
-                              label={
-                                <Typography variant="body2" sx={{ fontWeight: 500 }}>
-                                  Clips Modul
+                            <Stack direction="row" alignItems="center" spacing={2}>
+                              <Box sx={{ 
+                                backgroundColor: selectedModule === 'clips' ? '#43BEAC' : '#f1f5f9',
+                                borderRadius: '50%',
+                                p: 1,
+                                minWidth: 40,
+                                height: 40,
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                              }}>
+                                <Typography sx={{ fontSize: '1.2rem' }}>🎬</Typography>
+                              </Box>
+                              <Box>
+                                <Typography fontWeight={600} variant="body2">Clips Modul</Typography>
+                                <Typography variant="caption" color="text.secondary">
+                                  Ideal für Highlight-Videos
                                 </Typography>
+                              </Box>
+                            </Stack>
+                          </Card>
+
+                          <Card
+                            variant={selectedModule === 'live-shopping' ? 'elevation' : 'outlined'}
+                            onClick={() => setSelectedModule('live-shopping')}
+                            sx={{
+                              cursor: 'pointer',
+                              p: 2.5,
+                              borderColor: selectedModule === 'live-shopping' ? '#43BEAC' : '#e2e8f0',
+                              borderWidth: selectedModule === 'live-shopping' ? 2 : 1,
+                              transition: 'all 0.2s ease',
+                              '&:hover': {
+                                borderColor: '#43BEAC',
+                                transform: 'translateY(-1px)'
                               }
-                            />
-                            <FormControlLabel 
-                              value="live-shopping" 
-                              control={<Radio size="small" sx={{ color: '#1976d2' }} />} 
-                              label={
-                                <Typography variant="body2" sx={{ fontWeight: 500 }}>
-                                  Live Shopping Modul
+                            }}
+                          >
+                            <Stack direction="row" alignItems="center" spacing={2}>
+                              <Box sx={{ 
+                                backgroundColor: selectedModule === 'live-shopping' ? '#43BEAC' : '#f1f5f9',
+                                borderRadius: '50%',
+                                p: 1,
+                                minWidth: 40,
+                                height: 40,
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                              }}>
+                                <Typography sx={{ fontSize: '1.2rem' }}>🛍️</Typography>
+                              </Box>
+                              <Box>
+                                <Typography fontWeight={600} variant="body2">Live Shopping Modul</Typography>
+                                <Typography variant="caption" color="text.secondary">
+                                  Ideal für Livestream Sales
                                 </Typography>
-                              }
-                            />
-                          </RadioGroup>
-                        </FormControl>
+                              </Box>
+                            </Stack>
+                          </Card>
+                        </Stack>
                       </Box>
                     )}
 
                     {/* Features */}
                     <Stack spacing={2.5}>
                       {plan.features.map((feature, index) => (
-                        <Stack key={index} direction="row" alignItems="center" spacing={1.5}>
+                        <Stack key={index} direction="row" alignItems="center" spacing={2}>
                           <Box sx={{
-                            backgroundColor: plan.id === 'enterprise' ? 'rgba(25, 118, 210, 0.2)' : '#e8f5e8',
+                            backgroundColor: plan.id === 'enterprise' ? 'rgba(16, 185, 129, 0.2)' : '#dcfce7',
                             borderRadius: '50%',
                             p: 0.5,
                             flexShrink: 0,
@@ -343,12 +413,12 @@ const Plans = () => {
                           }}>
                             <Check sx={{ 
                               fontSize: 16, 
-                              color: plan.id === 'enterprise' ? '#1976d2' : '#2e7d32' 
+                              color: plan.id === 'enterprise' ? '#10b981' : '#16a34a' 
                             }} />
                           </Box>
                           <Stack direction="row" alignItems="center" spacing={0.5} sx={{ flexGrow: 1 }}>
                             <Typography variant="body2" sx={{ 
-                              color: plan.id === 'enterprise' ? '#e3f2fd' : '#374151',
+                              color: plan.id === 'enterprise' ? '#e2e8f0' : '#374151',
                               lineHeight: 1.5,
                               fontWeight: 500
                             }}>
@@ -358,7 +428,7 @@ const Plans = () => {
                               <Tooltip title={feature.tooltip} arrow>
                                 <HelpOutline sx={{ 
                                   fontSize: 16, 
-                                  color: plan.id === 'enterprise' ? '#bbdefb' : '#9ca3af',
+                                  color: plan.id === 'enterprise' ? '#94a3b8' : '#9ca3af',
                                   cursor: 'help'
                                 }} />
                               </Tooltip>
@@ -372,34 +442,24 @@ const Plans = () => {
                   <CardActions sx={{ p: 4, pt: 0 }}>
                     <Stack spacing={2} sx={{ width: '100%' }}>
                       <Button
-                        variant={plan.popular ? "contained" : "outlined"}
+                        variant="contained"
                         fullWidth
                         size="large"
                         data-track-id={`pricing-${plan.id}-click`}
                         sx={{
                           py: 1.5,
-                          backgroundColor: plan.popular 
-                            ? '#1976d2' 
-                            : plan.id === 'enterprise' 
-                              ? 'transparent' 
-                              : 'transparent',
-                          color: plan.popular 
+                          backgroundColor: plan.id === 'enterprise' 
                             ? '#ffffff' 
-                            : plan.id === 'enterprise' 
-                              ? '#ffffff' 
-                              : '#1976d2',
-                          border: plan.popular 
-                            ? 'none' 
-                            : plan.id === 'enterprise' 
-                              ? '2px solid #ffffff' 
-                              : '2px solid #1976d2',
+                            : '#43BEAC',
+                          color: plan.id === 'enterprise' 
+                            ? '#252A2E' 
+                            : '#ffffff',
                           '&:hover': {
                             backgroundColor: plan.id === 'enterprise' 
-                              ? 'rgba(255,255,255,0.1)' 
-                              : '#1976d2',
-                            color: '#ffffff',
+                              ? '#f1f5f9' 
+                              : '#37a08e',
                             transform: 'translateY(-2px)',
-                            boxShadow: '0 8px 24px rgba(25, 118, 210, 0.4)'
+                            boxShadow: '0 8px 24px rgba(67, 190, 172, 0.4)'
                           },
                           fontWeight: 700,
                           textTransform: 'none',
@@ -408,32 +468,32 @@ const Plans = () => {
                           transition: 'all 0.3s ease'
                         }}
                       >
-                        {plan.id === 'enterprise' ? t('contactSales') : t('buyPlan')}
+                        {plan.id === 'enterprise' ? 'Kontakt aufnehmen' : 'Plan auswählen'}
                       </Button>
 
                       <Button
                         variant="text"
                         sx={{
-                          color: plan.id === 'enterprise' ? '#bbdefb' : '#64748b',
+                          color: plan.id === 'enterprise' ? '#cbd5e1' : '#64748b',
                           textTransform: 'none',
                           fontWeight: 500,
                           fontSize: '0.875rem',
                           '&:hover': {
                             backgroundColor: 'transparent',
-                            color: plan.id === 'enterprise' ? '#ffffff' : '#1976d2',
+                            color: plan.id === 'enterprise' ? '#ffffff' : '#43BEAC',
                             textDecoration: 'underline'
                           }
                         }}
                       >
-                        {t('allDetails')}
+                        Alle Details anzeigen
                       </Button>
                     </Stack>
                   </CardActions>
                 </Card>
               </Grow>
-            </Grid>
+            </Grid2>
           ))}
-        </Grid>
+        </Grid2>
       </Container>
     </Box>
   );
