@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from "react";
 import {
   Dialog,
@@ -8,6 +9,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { TranslationKey } from "@/hooks/useTranslations";
 
 interface ForgotPasswordModalProps {
@@ -119,13 +121,18 @@ const ForgotPasswordModal = ({ isOpen, onClose, t }: ForgotPasswordModalProps) =
           <div className="text-center py-4">
             <div 
               ref={successMessageRef}
-              className="text-green-600 mb-4"
+              className="text-green-600 mb-4 flex items-center justify-center gap-2"
               role="status"
               aria-live="polite"
               aria-atomic="true"
               tabIndex={-1}
             >
-              ✓ Reset link sent to your email!
+              <FontAwesomeIcon 
+                icon="check" 
+                style={{ color: '#10B981', fontSize: '1.2rem' }} 
+                aria-hidden="true" 
+              />
+              Reset link sent to your email!
             </div>
             <div className="text-sm text-gray-600">
               Überprüfen Sie Ihren Posteingang und folgen Sie dem Link, um Ihr Passwort zurückzusetzen

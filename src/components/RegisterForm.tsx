@@ -1,3 +1,4 @@
+
 import { useState, useRef } from "react";
 import {
   Box,
@@ -9,14 +10,7 @@ import {
   Alert,
   Typography,
 } from '@mui/material';
-import {
-  Email,
-  Lock,
-  Visibility,
-  VisibilityOff,
-  Person,
-  Business,
-} from '@mui/icons-material';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { TranslationKey } from "@/hooks/useTranslations";
 
 interface RegisterFormProps {
@@ -158,7 +152,11 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <Person color="action" aria-hidden="true" />
+                <FontAwesomeIcon 
+                  icon="user" 
+                  style={{ color: '#37474F', fontSize: '1.2rem' }} 
+                  aria-hidden="true" 
+                />
               </InputAdornment>
             ),
           }}
@@ -179,7 +177,11 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <Person color="action" aria-hidden="true" />
+                <FontAwesomeIcon 
+                  icon="user" 
+                  style={{ color: '#37474F', fontSize: '1.2rem' }} 
+                  aria-hidden="true" 
+                />
               </InputAdornment>
             ),
           }}
@@ -201,7 +203,11 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <Business color="action" aria-hidden="true" />
+              <FontAwesomeIcon 
+                icon="building" 
+                style={{ color: '#37474F', fontSize: '1.2rem' }} 
+                aria-hidden="true" 
+              />
             </InputAdornment>
           ),
         }}
@@ -224,7 +230,11 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <Email color="action" aria-hidden="true" />
+              <FontAwesomeIcon 
+                icon="envelope" 
+                style={{ color: '#37474F', fontSize: '1.2rem' }} 
+                aria-hidden="true" 
+              />
             </InputAdornment>
           ),
         }}
@@ -250,7 +260,11 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <Lock color="action" aria-hidden="true" />
+              <FontAwesomeIcon 
+                icon="lock" 
+                style={{ color: '#37474F', fontSize: '1.2rem' }} 
+                aria-hidden="true" 
+              />
             </InputAdornment>
           ),
           endAdornment: (
@@ -261,7 +275,10 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
                 aria-label={getPasswordVisibilityLabel(showPassword)}
                 tabIndex={0}
               >
-                {showPassword ? <VisibilityOff /> : <Visibility />}
+                <FontAwesomeIcon 
+                  icon={showPassword ? "eye-slash" : "eye"} 
+                  style={{ color: '#37474F', fontSize: '1.1rem' }} 
+                />
               </IconButton>
             </InputAdornment>
           ),
@@ -285,7 +302,11 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <Lock color="action" aria-hidden="true" />
+              <FontAwesomeIcon 
+                icon="lock" 
+                style={{ color: '#37474F', fontSize: '1.2rem' }} 
+                aria-hidden="true" 
+              />
             </InputAdornment>
           ),
           endAdornment: (
@@ -296,7 +317,10 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
                 aria-label={getPasswordVisibilityLabel(showConfirmPassword, true)}
                 tabIndex={0}
               >
-                {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                <FontAwesomeIcon 
+                  icon={showConfirmPassword ? "eye-slash" : "eye"} 
+                  style={{ color: '#37474F', fontSize: '1.1rem' }} 
+                />
               </IconButton>
             </InputAdornment>
           ),

@@ -11,12 +11,7 @@ import {
   IconButton,
   Alert,
 } from '@mui/material';
-import {
-  Email,
-  Lock,
-  Visibility,
-  VisibilityOff,
-} from '@mui/icons-material';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ForgotPasswordModal from './ForgotPasswordModal';
 import { TranslationKey } from "@/hooks/useTranslations";
 
@@ -97,7 +92,11 @@ const LoginForm = ({ language, t }: LoginFormProps) => {
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <Email color="action" aria-hidden="true" />
+              <FontAwesomeIcon 
+                icon="envelope" 
+                style={{ color: '#37474F', fontSize: '1.2rem' }} 
+                aria-hidden="true" 
+              />
             </InputAdornment>
           ),
         }}
@@ -120,7 +119,11 @@ const LoginForm = ({ language, t }: LoginFormProps) => {
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <Lock color="action" aria-hidden="true" />
+              <FontAwesomeIcon 
+                icon="lock" 
+                style={{ color: '#37474F', fontSize: '1.2rem' }} 
+                aria-hidden="true" 
+              />
             </InputAdornment>
           ),
           endAdornment: (
@@ -131,7 +134,10 @@ const LoginForm = ({ language, t }: LoginFormProps) => {
                 aria-label={getPasswordVisibilityLabel(showPassword)}
                 tabIndex={0}
               >
-                {showPassword ? <VisibilityOff /> : <Visibility />}
+                <FontAwesomeIcon 
+                  icon={showPassword ? "eye-slash" : "eye"} 
+                  style={{ color: '#37474F', fontSize: '1.1rem' }} 
+                />
               </IconButton>
             </InputAdornment>
           ),
