@@ -1,3 +1,4 @@
+
 import { useState, useRef } from "react";
 import {
   Box,
@@ -12,7 +13,6 @@ import {
   Typography,
 } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import ForgotPasswordModal from './ForgotPasswordModal';
 import { TranslationKey } from "@/hooks/useTranslations";
 
@@ -60,205 +60,178 @@ const LoginForm = ({ language, t }: LoginFormProps) => {
   };
 
   return (
-    <TooltipProvider>
-      <Box 
-        component="form" 
-        onSubmit={handleSubmit} 
-        sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
-        role="form"
-        aria-label={language === 'de' ? 'Anmeldeformular' : language === 'es' ? 'Formulario de inicio de sesión' : 'Login form'}
+    <Box 
+      component="form" 
+      onSubmit={handleSubmit} 
+      sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
+      role="form"
+      aria-label={language === 'de' ? 'Anmeldeformular' : language === 'es' ? 'Formulario de inicio de sesión' : 'Login form'}
+    >
+      <Typography 
+        variant="h5" 
+        sx={{ 
+          mb: 2, 
+          fontWeight: 'bold',
+          fontFamily: 'Inter, sans-serif',
+          color: '#252A2E',
+          textAlign: 'center'
+        }}
+        component="h2"
       >
-        <Typography 
-          variant="h5" 
-          sx={{ 
-            mb: 2, 
-            fontWeight: 'bold',
-            fontFamily: 'Inter, sans-serif',
-            color: '#252A2E',
-            textAlign: 'center'
-          }}
-          component="h2"
+        {t('signInHeadline')}
+      </Typography>
+
+      {showSuccess && (
+        <Alert 
+          severity="success"
+          ref={alertRef}
+          tabIndex={-1}
+          role="alert"
+          aria-live="polite"
+          aria-atomic="true"
         >
-          {t('signInHeadline')}
-        </Typography>
+          {t('loginSuccess')}
+        </Alert>
+      )}
 
-        {showSuccess && (
-          <Alert 
-            severity="success"
-            ref={alertRef}
-            tabIndex={-1}
-            role="alert"
-            aria-live="polite"
-            aria-atomic="true"
-          >
-            {t('loginSuccess')}
-          </Alert>
-        )}
+      <TextField
+        fullWidth
+        label={t('emailAddress')}
+        name="email"
+        type="email"
+        value={formData.email}
+        onChange={handleChange}
+        placeholder="your.email@example.com"
+        required
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <FontAwesomeIcon 
+                icon="envelope" 
+                style={{ color: '#37474F', fontSize: '1.2rem' }} 
+                aria-hidden="true" 
+              />
+            </InputAdornment>
+          ),
+        }}
+      />
 
-        <TextField
-          fullWidth
-          label={t('emailAddress')}
-          name="email"
-          type="email"
-          value={formData.email}
-          onChange={handleChange}
-          placeholder="your.email@example.com"
-          required
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <FontAwesomeIcon 
-                  icon="envelope" 
-                  style={{ color: '#37474F', fontSize: '1.2rem' }} 
-                  aria-hidden="true" 
-                />
-              </InputAdornment>
-            ),
-          }}
-        />
-
-        <Box sx={{ position: 'relative' }}>
-          <TextField
-            fullWidth
-            label={t('password')}
-            name="password"
-            type={showPassword ? "text" : "password"}
-            value={formData.password}
-            onChange={handleChange}
-            placeholder={language === 'de' ? 'Ihr Passwort' : language === 'es' ? 'Tu contraseña' : 'Your password'}
-            required
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <FontAwesomeIcon 
-                    icon="lock" 
-                    style={{ color: '#37474F', fontSize: '1.2rem' }} 
-                    aria-hidden="true" 
-                  />
-                </InputAdornment>
-              ),
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    onClick={() => setShowPassword(!showPassword)}
-                    edge="end"
-                    aria-label={getPasswordVisibilityLabel(showPassword)}
-                    tabIndex={0}
-                  >
-                    <FontAwesomeIcon 
-                      icon={showPassword ? "eye-slash" : "eye"} 
-                      style={{ color: '#37474F', fontSize: '1.1rem' }} 
-                    />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Box 
-                component="span" 
-                sx={{ 
-                  position: 'absolute',
-                  top: '8px',
-                  right: '50px',
-                  display: 'inline-flex', 
-                  cursor: 'help',
-                  zIndex: 1
-                }}
+      <TextField
+        fullWidth
+        label={t('password')}
+        name="password"
+        type={showPassword ? "text" : "password"}
+        value={formData.password}
+        onChange={handleChange}
+        placeholder={language === 'de' ? 'Ihr Passwort' : language === 'es' ? 'Tu contraseña' : 'Your password'}
+        required
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <FontAwesomeIcon 
+                icon="lock" 
+                style={{ color: '#37474F', fontSize: '1.2rem' }} 
+                aria-hidden="true" 
+              />
+            </InputAdornment>
+          ),
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton
+                onClick={() => setShowPassword(!showPassword)}
+                edge="end"
+                aria-label={getPasswordVisibilityLabel(showPassword)}
+                tabIndex={0}
               >
                 <FontAwesomeIcon 
-                  icon="question-circle" 
-                  style={{ color: '#666', fontSize: '0.875rem' }} 
+                  icon={showPassword ? "eye-slash" : "eye"} 
+                  style={{ color: '#37474F', fontSize: '1.1rem' }} 
                 />
-              </Box>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>{t('passwordTooltip')}</p>
-            </TooltipContent>
-          </Tooltip>
-        </Box>
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
+      />
 
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 1 }}>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
-                size="small"
-                inputProps={{
-                  'aria-describedby': 'remember-me-description'
-                }}
-              />
-            }
-            label={t('rememberMe')}
-            sx={{ '& .MuiFormControlLabel-label': { fontSize: '0.875rem' } }}
-          />
-          <span id="remember-me-description" className="sr-only">
-            {language === 'de' ? 'Merken Sie sich meine Anmeldedaten für zukünftige Besuche' : 
-             language === 'es' ? 'Recordar mis datos de inicio de sesión para futuras visitas' : 
-             'Remember my login details for future visits'}
-          </span>
-          
-          <Link 
-            component="button" 
-            type="button" 
-            variant="body2" 
-            onClick={(e) => {
-              e.preventDefault();
-              setShowForgotPassword(true);
-            }}
-            sx={{ 
-              color: '#43BEAC',
-              '&:hover': { color: '#30A39D' },
-              '&:focus': { 
-                outline: '2px solid #43BEAC',
-                outlineOffset: '2px'
-              }
-            }}
-            aria-describedby="forgot-password-description"
-          >
-            {t('forgotPassword')}
-          </Link>
-          <span id="forgot-password-description" className="sr-only">
-            {language === 'de' ? 'Öffnet ein Formular zum Zurücksetzen des Passworts' : 
-             language === 'es' ? 'Abre un formulario para restablecer la contraseña' : 
-             'Opens a form to reset your password'}
-          </span>
-        </Box>
-
-        <Button
-          type="submit"
-          variant="contained"
-          size="large"
-          fullWidth
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 1 }}>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={rememberMe}
+              onChange={(e) => setRememberMe(e.target.checked)}
+              size="small"
+              inputProps={{
+                'aria-describedby': 'remember-me-description'
+              }}
+            />
+          }
+          label={t('rememberMe')}
+          sx={{ '& .MuiFormControlLabel-label': { fontSize: '0.875rem' } }}
+        />
+        <span id="remember-me-description" className="sr-only">
+          {language === 'de' ? 'Merken Sie sich meine Anmeldedaten für zukünftige Besuche' : 
+           language === 'es' ? 'Recordar mis datos de inicio de sesión para futuras visitas' : 
+           'Remember my login details for future visits'}
+        </span>
+        
+        <Link 
+          component="button" 
+          type="button" 
+          variant="body2" 
+          onClick={(e) => {
+            e.preventDefault();
+            setShowForgotPassword(true);
+          }}
           sx={{ 
-            mt: 2, 
-            py: 1.5,
-            backgroundColor: '#43BEAC',
-            '&:hover': { backgroundColor: '#30A39D' },
+            color: '#43BEAC',
+            '&:hover': { color: '#30A39D' },
             '&:focus': { 
               outline: '2px solid #43BEAC',
               outlineOffset: '2px'
             }
           }}
-          aria-describedby="login-button-description"
+          aria-describedby="forgot-password-description"
         >
-          {t('signIn')}
-        </Button>
-        <span id="login-button-description" className="sr-only">
-          {language === 'de' ? 'Melden Sie sich mit Ihren Anmeldedaten an' : 
-           language === 'es' ? 'Inicie sesión con sus credenciales' : 
-           'Sign in with your credentials'}
+          {t('forgotPassword')}
+        </Link>
+        <span id="forgot-password-description" className="sr-only">
+          {language === 'de' ? 'Öffnet ein Formular zum Zurücksetzen des Passworts' : 
+           language === 'es' ? 'Abre un formulario para restablecer la contraseña' : 
+           'Opens a form to reset your password'}
         </span>
-
-        <ForgotPasswordModal 
-          isOpen={showForgotPassword}
-          onClose={() => setShowForgotPassword(false)}
-          t={t}
-        />
       </Box>
-    </TooltipProvider>
+
+      <Button
+        type="submit"
+        variant="contained"
+        size="large"
+        fullWidth
+        sx={{ 
+          mt: 2, 
+          py: 1.5,
+          backgroundColor: '#43BEAC',
+          '&:hover': { backgroundColor: '#30A39D' },
+          '&:focus': { 
+            outline: '2px solid #43BEAC',
+            outlineOffset: '2px'
+          }
+        }}
+        aria-describedby="login-button-description"
+      >
+        {t('signIn')}
+      </Button>
+      <span id="login-button-description" className="sr-only">
+        {language === 'de' ? 'Melden Sie sich mit Ihren Anmeldedaten an' : 
+         language === 'es' ? 'Inicie sesión con sus credenciales' : 
+         'Sign in with your credentials'}
+      </span>
+
+      <ForgotPasswordModal 
+        isOpen={showForgotPassword}
+        onClose={() => setShowForgotPassword(false)}
+        t={t}
+      />
+    </Box>
   );
 };
 
