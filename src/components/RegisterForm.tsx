@@ -1,4 +1,3 @@
-
 import { useState, useRef } from "react";
 import {
   Box,
@@ -102,23 +101,6 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
       password: 'At least 8 characters',
       confirmPassword: 'Repeat password'
     };
-  };
-
-  const getTooltipText = (field: string) => {
-    if (field === 'company') {
-      return language === 'de' ? 'Optional: Geben Sie Ihren Firmennamen ein' : 
-             language === 'es' ? 'Opcional: Ingrese el nombre de su empresa' : 
-             'Optional: Enter your company name';
-    } else if (field === 'password') {
-      return language === 'de' ? 'Mindestens 8 Zeichen erforderlich' : 
-             language === 'es' ? 'Se requieren al menos 8 caracteres' : 
-             'At least 8 characters required';
-    } else if (field === 'confirmPassword') {
-      return language === 'de' ? 'Wiederholen Sie Ihr Passwort zur Bestätigung' : 
-             language === 'es' ? 'Repita su contraseña para confirmar' : 
-             'Repeat your password to confirm';
-    }
-    return '';
   };
 
   const placeholders = getPlaceholders();
@@ -230,7 +212,7 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
                   </Box>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>{getTooltipText('company')}</p>
+                  <p>{t('companyTooltip')}</p>
                 </TooltipContent>
               </Tooltip>
             </Box>
@@ -289,7 +271,7 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
                   </Box>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>{getTooltipText('password')}</p>
+                  <p>{t('passwordTooltip')}</p>
                 </TooltipContent>
               </Tooltip>
             </Box>
@@ -346,7 +328,7 @@ const RegisterForm = ({ language, t }: RegisterFormProps) => {
                   </Box>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>{getTooltipText('confirmPassword')}</p>
+                  <p>{t('confirmPasswordTooltip')}</p>
                 </TooltipContent>
               </Tooltip>
             </Box>

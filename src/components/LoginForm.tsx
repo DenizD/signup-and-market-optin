@@ -1,4 +1,3 @@
-
 import { useState, useRef } from "react";
 import {
   Box,
@@ -58,12 +57,6 @@ const LoginForm = ({ language, t }: LoginFormProps) => {
       return isVisible ? 'Ocultar contraseña' : 'Mostrar contraseña';
     }
     return isVisible ? 'Hide password' : 'Show password';
-  };
-
-  const getPasswordTooltipText = () => {
-    return language === 'de' ? 'Geben Sie Ihr Passwort ein' : 
-           language === 'es' ? 'Ingrese su contraseña' : 
-           'Enter your password';
   };
 
   return (
@@ -139,7 +132,7 @@ const LoginForm = ({ language, t }: LoginFormProps) => {
                   </Box>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>{getPasswordTooltipText()}</p>
+                  <p>{t('passwordTooltip')}</p>
                 </TooltipContent>
               </Tooltip>
             </Box>

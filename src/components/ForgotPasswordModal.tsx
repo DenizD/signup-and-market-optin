@@ -63,13 +63,13 @@ const ForgotPasswordModal = ({ isOpen, onClose, t }: ForgotPasswordModalProps) =
         aria-describedby="forgot-password-description"
       >
         <DialogHeader>
-          <DialogTitle id="forgot-password-title">{t('forgotPassword')}</DialogTitle>
+          <DialogTitle id="forgot-password-title">{t('resetPassword')}</DialogTitle>
         </DialogHeader>
         
         {!isSubmitted ? (
           <>
             <div id="forgot-password-description" className="sr-only">
-              Geben Sie Ihre E-Mail-Adresse ein, um einen Link zum Zurücksetzen des Passworts zu erhalten
+              {t('resetPasswordDescription')}
             </div>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
@@ -91,7 +91,7 @@ const ForgotPasswordModal = ({ isOpen, onClose, t }: ForgotPasswordModalProps) =
                   className="w-full"
                 />
                 <div id="reset-email-helper" className="text-xs text-gray-600">
-                  Wir senden Ihnen einen Link zum Zurücksetzen Ihres Passworts
+                  {t('resetEmailHelper')}
                 </div>
               </div>
               <div className="flex flex-col gap-2">
@@ -100,10 +100,10 @@ const ForgotPasswordModal = ({ isOpen, onClose, t }: ForgotPasswordModalProps) =
                   className="w-full focus:ring-2 focus:ring-offset-2 bg-primary hover:bg-primary/90"
                   aria-describedby="reset-button-description"
                 >
-                  Reset Password
+                  {t('resetPassword')}
                 </Button>
                 <div id="reset-button-description" className="sr-only">
-                  Sendet einen Passwort-Reset-Link an Ihre E-Mail-Adresse
+                  {t('resetButtonDescription')}
                 </div>
                 
                 <Button 
@@ -112,7 +112,7 @@ const ForgotPasswordModal = ({ isOpen, onClose, t }: ForgotPasswordModalProps) =
                   onClick={handleClose} 
                   className="w-full focus:ring-2 focus:ring-offset-2 border-primary text-primary hover:bg-primary/5"
                 >
-                  Cancel
+                  {t('cancel')}
                 </Button>
               </div>
             </form>
@@ -132,10 +132,10 @@ const ForgotPasswordModal = ({ isOpen, onClose, t }: ForgotPasswordModalProps) =
                 style={{ color: '#10B981', fontSize: '1.2rem' }} 
                 aria-hidden="true" 
               />
-              Reset link sent to your email!
+              {t('resetLinkSent')}
             </div>
             <div className="text-sm text-gray-600">
-              Überprüfen Sie Ihren Posteingang und folgen Sie dem Link, um Ihr Passwort zurückzusetzen
+              {t('checkEmailInbox')}
             </div>
           </div>
         )}

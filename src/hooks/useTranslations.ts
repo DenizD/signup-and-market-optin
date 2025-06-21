@@ -28,7 +28,17 @@ export type TranslationKey =
   | 'platformDescription'
   | 'noAccount'
   | 'haveAccount'
-  | 'backToLogin';
+  | 'backToLogin'
+  | 'resetPassword'
+  | 'resetPasswordDescription'
+  | 'resetEmailHelper'
+  | 'resetButtonDescription'
+  | 'cancel'
+  | 'resetLinkSent'
+  | 'checkEmailInbox'
+  | 'passwordTooltip'
+  | 'confirmPasswordTooltip'
+  | 'companyTooltip';
 
 type Translations = {
   [key in TranslationKey]: string;
@@ -62,7 +72,17 @@ const translations: Record<'de' | 'en' | 'es', Translations> = {
     serviceSubtitle: 'Greifen Sie auf interaktive Live-Streams, shoppable Clips und intelligente KI-Features auf unserer Video-Commerce-Plattform zu.',
     noAccount: 'Noch kein Konto? Hier registrieren',
     haveAccount: 'Bereits ein Konto? Hier anmelden',
-    backToLogin: 'Zurück zur Anmeldung'
+    backToLogin: 'Zurück zur Anmeldung',
+    resetPassword: 'Passwort zurücksetzen',
+    resetPasswordDescription: 'Geben Sie Ihre E-Mail-Adresse ein, um einen Link zum Zurücksetzen des Passworts zu erhalten',
+    resetEmailHelper: 'Wir senden Ihnen einen Link zum Zurücksetzen Ihres Passworts',
+    resetButtonDescription: 'Sendet einen Passwort-Reset-Link an Ihre E-Mail-Adresse',
+    cancel: 'Abbrechen',
+    resetLinkSent: 'Reset-Link an Ihre E-Mail gesendet!',
+    checkEmailInbox: 'Überprüfen Sie Ihren Posteingang und folgen Sie dem Link, um Ihr Passwort zurückzusetzen',
+    passwordTooltip: 'Geben Sie Ihr Passwort ein',
+    confirmPasswordTooltip: 'Wiederholen Sie Ihr Passwort zur Bestätigung',
+    companyTooltip: 'Optional: Geben Sie Ihren Firmennamen ein'
   },
   en: {
     welcome: 'Welcome',
@@ -91,7 +111,17 @@ const translations: Record<'de' | 'en' | 'es', Translations> = {
     serviceSubtitle: 'Access interactive live streams, shoppable clips, and intelligent AI features on our video commerce platform.',
     noAccount: 'No account yet? Sign up here',
     haveAccount: 'Already have an account? Sign in here',
-    backToLogin: 'Back to Login'
+    backToLogin: 'Back to Login',
+    resetPassword: 'Reset Password',
+    resetPasswordDescription: 'Enter your email address to receive a password reset link',
+    resetEmailHelper: 'We will send you a password reset link',
+    resetButtonDescription: 'Sends a password reset link to your email address',
+    cancel: 'Cancel',
+    resetLinkSent: 'Reset link sent to your email!',
+    checkEmailInbox: 'Check your inbox and follow the link to reset your password',
+    passwordTooltip: 'Enter your password',
+    confirmPasswordTooltip: 'Repeat your password to confirm',
+    companyTooltip: 'Optional: Enter your company name'
   },
   es: {
     welcome: 'Bienvenido',
@@ -120,7 +150,17 @@ const translations: Record<'de' | 'en' | 'es', Translations> = {
     serviceSubtitle: 'Accede a transmisiones en vivo interactivas, clips comprables e funciones inteligentes de IA en nuestra plataforma de comercio de video.',
     noAccount: '¿No tienes cuenta? Regístrate aquí',
     haveAccount: '¿Ya tienes cuenta? Inicia sesión aquí',
-    backToLogin: 'Volver al Login'
+    backToLogin: 'Volver al Login',
+    resetPassword: 'Restablecer Contraseña',
+    resetPasswordDescription: 'Ingrese su dirección de correo electrónico para recibir un enlace de restablecimiento de contraseña',
+    resetEmailHelper: 'Le enviaremos un enlace para restablecer su contraseña',
+    resetButtonDescription: 'Envía un enlace de restablecimiento de contraseña a su dirección de correo electrónico',
+    cancel: 'Cancelar',
+    resetLinkSent: '¡Enlace de restablecimiento enviado a su correo!',
+    checkEmailInbox: 'Revise su bandeja de entrada y siga el enlace para restablecer su contraseña',
+    passwordTooltip: 'Ingrese su contraseña',
+    confirmPasswordTooltip: 'Repita su contraseña para confirmar',
+    companyTooltip: 'Opcional: Ingrese el nombre de su empresa'
   }
 };
 
