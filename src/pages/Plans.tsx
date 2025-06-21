@@ -1,5 +1,4 @@
-
-import { Box, Container, Typography, Button, Card, CardContent, CardActions, Stack, Chip, Tooltip, Grid, ToggleButtonGroup, ToggleButton, Grow, Fade } from '@mui/material';
+import { Box, Container, Typography, Button, Card, CardContent, CardActions, Stack, Chip, Tooltip, ToggleButtonGroup, ToggleButton, Grow, Fade } from '@mui/material';
 import { Check, HelpOutline } from '@mui/icons-material';
 import { useState } from 'react';
 import { useTranslations } from '@/hooks/useTranslations';
@@ -230,9 +229,16 @@ const Plans = () => {
         </Box>
 
         {/* Category Headers */}
-        <Grid container spacing={4} sx={{ maxWidth: '1200px', mx: 'auto', mb: 2 }}>
+        <Box sx={{ 
+          display: 'flex', 
+          maxWidth: '1200px', 
+          mx: 'auto', 
+          mb: 2,
+          gap: 4,
+          flexDirection: { xs: 'column', md: 'row' }
+        }}>
           {plans.map((plan) => (
-            <Grid item xs={12} md={4} key={`header-${plan.id}`}>
+            <Box key={`header-${plan.id}`} sx={{ flex: 1 }}>
               <Typography 
                 variant="overline" 
                 sx={{ 
@@ -245,14 +251,20 @@ const Plans = () => {
               >
                 {plan.subtitle}
               </Typography>
-            </Grid>
+            </Box>
           ))}
-        </Grid>
+        </Box>
 
         {/* Plans Grid */}
-        <Grid container spacing={4} sx={{ maxWidth: '1200px', mx: 'auto' }}>
+        <Box sx={{ 
+          display: 'flex', 
+          maxWidth: '1200px', 
+          mx: 'auto',
+          gap: 4,
+          flexDirection: { xs: 'column', md: 'row' }
+        }}>
           {plans.map((plan, index) => (
-            <Grid item xs={12} md={4} key={plan.id}>
+            <Box key={plan.id} sx={{ flex: 1 }}>
               <Grow in timeout={500 + index * 200}>
                 <Card sx={getCardStyles(plan)}>
                   {plan.popular && (
@@ -491,9 +503,9 @@ const Plans = () => {
                   </CardActions>
                 </Card>
               </Grow>
-            </Grid>
+            </Box>
           ))}
-        </Grid>
+        </Box>
       </Container>
     </Box>
   );
