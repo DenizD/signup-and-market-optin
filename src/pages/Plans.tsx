@@ -1,75 +1,128 @@
 
-import { Box, Container, Typography, Button, Switch, FormControlLabel } from '@mui/material';
-import { Check } from 'lucide-react';
+import { Box, Container, Typography, Button, Switch, FormControlLabel, Card, CardContent, CardActions, Stack, Chip, Tooltip, RadioGroup, FormControl, FormControlLabel as MuiFormControlLabel, Radio, ToggleButtonGroup, ToggleButton, Grid, Grow } from '@mui/material';
+import { Check, HelpCircle } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslations } from '@/hooks/useTranslations';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const Plans = () => {
   const { t } = useTranslations();
   const [isYearly, setIsYearly] = useState(false);
+  const [selectedModule, setSelectedModule] = useState('clips');
+  const [billingPeriod, setBillingPeriod] = useState<'monthly' | 'yearly'>('monthly');
 
   const plans = [
     {
       id: 'starter',
       name: 'Starter',
       description: t('starterDescription'),
+      subtitle: 'Für den Einstieg',
       monthlyPrice: 695,
       yearlyPrice: 6950,
       popular: false,
+      color: 'default' as const,
       features: [
-        t('starterModule'),
-        t('starterViews'),
-        t('starterUploads'),
-        t('starterAccounts'),
-        t('basicAnalytics'),
-        t('playerIntegration'),
-        t('selfBranding')
-      ]
+        { text: t('starterModule'), tooltip: 'Wählen Sie zwischen Live Shopping oder Clips Modul' },
+        { text: t('starterViews'), tooltip: null },
+        { text: t('starterUploads'), tooltip: null },
+        { text: t('starterAccounts'), tooltip: null },
+        { text: t('basicAnalytics'), tooltip: null },
+        { text: t('playerIntegration'), tooltip: '1-Code Integration in Ihre Website' },
+        { text: t('selfBranding'), tooltip: 'Personalisieren Sie das Aussehen' }
+      ],
+      hasModuleSelector: true
     },
     {
       id: 'advanced',
       name: 'Advanced',
       description: t('advancedDescription'),
+      subtitle: 'Für Teams',
       monthlyPrice: 1495,
       yearlyPrice: 14950,
       popular: true,
+      color: 'primary' as const,
       features: [
-        t('allFromStarter'),
-        t('fullVideoCommerce'),
-        t('advancedViews'),
-        t('advancedUploads'),
-        t('advancedUserAccounts'),
-        t('advancedAnalytics'),
-        t('extendedApiAccess')
+        { text: t('allFromStarter'), tooltip: null },
+        { text: t('fullVideoCommerce'), tooltip: 'Beide Module: Live Shopping & Clips' },
+        { text: t('advancedViews'), tooltip: null },
+        { text: t('advancedUploads'), tooltip: null },
+        { text: t('advancedUserAccounts'), tooltip: null },
+        { text: t('advancedAnalytics'), tooltip: 'Detaillierte Berichte mit Export-Funktion' },
+        { text: t('extendedApiAccess'), tooltip: 'Erweiterte API-Funktionen verfügbar' }
       ]
     },
     {
       id: 'enterprise',
       name: 'Enterprise',
       description: t('enterpriseDescription'),
+      subtitle: 'Für Konzerne',
       monthlyPrice: null,
       yearlyPrice: null,
       popular: false,
+      color: 'secondary' as const,
       features: [
-        t('allFromStarter'),
-        t('aiBot'),
-        t('enterpriseViews'),
-        t('unlimitedUploads'),
-        t('unlimitedAccounts'),
-        t('enterpriseSupport'),
-        t('successManager')
+        { text: t('allFromStarter'), tooltip: null },
+        { text: t('aiBot'), tooltip: 'KI-gestützter Chatbot für Kunden' },
+        { text: t('enterpriseViews'), tooltip: null },
+        { text: t('unlimitedUploads'), tooltip: null },
+        { text: t('unlimitedAccounts'), tooltip: null },
+        { text: t('enterpriseSupport'), tooltip: 'Prioritärer 24/7 Support' },
+        { text: t('successManager'), tooltip: 'Persönlicher Ansprechpartner' }
       ]
     }
   ];
 
   const formatPrice = (price: number | null) => {
     if (price === null) return t('custom');
-    return `${price}€`;
+    const displayPrice = billingPeriod === 'yearly' ? Math.floor(price / 12) : price;
+    return `${displayPrice}€`;
+  };
+
+  const getSavings = () => {
+    if (billingPeriod === 'yearly') {
+      return 'Spare 15% bei Jahresabo';
+    }
+    return null;
+  };
+
+  const getCardStyles = (plan: typeof plans[0]) => {
+    const baseStyles = {
+      height: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      position: 'relative',
+      transition: 'all 0.3s ease',
+      cursor: 'pointer',
+      '&:hover': {
+        transform: 'scale(1.02)',
+        boxShadow: plan.popular ? '0 12px 40px rgba(67, 190, 172, 0.3)' : '0 8px 30px rgba(0,0,0,0.12)'
+      }
+    };
+
+    if (plan.popular) {
+      return {
+        ...baseStyles,
+        border: '2px solid #43BEAC',
+        boxShadow: '0 8px 32px rgba(67, 190, 172, 0.2)',
+        background: 'linear-gradient(135deg, #ffffff 0%, #f0fffe 100%)'
+      };
+    }
+
+    if (plan.id === 'enterprise') {
+      return {
+        ...baseStyles,
+        background: 'linear-gradient(135deg, #1a202c 0%, #2d3748 100%)',
+        color: 'white',
+        '& .MuiTypography-root': {
+          color: 'white'
+        }
+      };
+    }
+
+    return baseStyles;
   };
 
   return (
-    <Box sx={{ py: 8, backgroundColor: '#f8fafc', minHeight: '100vh' }}>
+    <Box sx={{ py: 8, background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)', minHeight: '100vh' }}>
       <Container maxWidth="lg">
         {/* Header */}
         <Box sx={{ textAlign: 'center', mb: 8 }}>
@@ -77,10 +130,13 @@ const Plans = () => {
             variant="h3" 
             sx={{ 
               fontWeight: 800, 
-              mb: 3, 
+              mb: 2, 
               color: '#1e293b',
-              fontFamily: 'Inter, sans-serif',
-              fontSize: { xs: '2rem', md: '3rem' }
+              fontSize: { xs: '2.5rem', md: '3.5rem' },
+              background: 'linear-gradient(135deg, #1e293b 0%, #43BEAC 100%)',
+              backgroundClip: 'text',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent'
             }}
           >
             {t('discoverPlans')}
@@ -90,260 +146,263 @@ const Plans = () => {
             sx={{ 
               color: '#64748b', 
               fontWeight: 400,
-              fontFamily: 'Inter, sans-serif',
               mb: 6,
-              fontSize: '1.125rem',
-              lineHeight: 1.6
+              maxWidth: '600px',
+              mx: 'auto'
             }}
           >
             {t('plansSubtitle')}
           </Typography>
 
-          {/* Monthly/Yearly Toggle */}
+          {/* Modern Billing Toggle */}
           <Box sx={{ 
             display: 'flex', 
             alignItems: 'center', 
             justifyContent: 'center',
-            gap: 2,
-            mb: 6,
-            p: 1,
-            backgroundColor: '#ffffff',
-            borderRadius: 3,
-            boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-            width: 'fit-content',
-            mx: 'auto'
+            mb: 6
           }}>
-            <Typography sx={{ 
-              fontWeight: isYearly ? 400 : 600, 
-              color: isYearly ? '#64748b' : '#1e293b',
-              fontFamily: 'Inter, sans-serif'
-            }}>
-              Monatlich
-            </Typography>
-            <Switch
-              checked={isYearly}
-              onChange={(e) => setIsYearly(e.target.checked)}
+            <ToggleButtonGroup
+              value={billingPeriod}
+              exclusive
+              onChange={(_, value) => value && setBillingPeriod(value)}
               sx={{
-                '& .MuiSwitch-switchBase.Mui-checked': {
-                  color: '#43BEAC',
-                },
-                '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
-                  backgroundColor: '#43BEAC',
-                },
+                backgroundColor: '#ffffff',
+                borderRadius: 3,
+                boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+                '& .MuiToggleButton-root': {
+                  border: 'none',
+                  px: 4,
+                  py: 1.5,
+                  fontWeight: 600,
+                  textTransform: 'none',
+                  '&.Mui-selected': {
+                    backgroundColor: '#43BEAC',
+                    color: '#ffffff',
+                    '&:hover': {
+                      backgroundColor: '#36a994'
+                    }
+                  }
+                }
               }}
-            />
-            <Typography sx={{ 
-              fontWeight: isYearly ? 600 : 400, 
-              color: isYearly ? '#1e293b' : '#64748b',
-              fontFamily: 'Inter, sans-serif'
-            }}>
-              Jährlich
-            </Typography>
-            {isYearly && (
-              <Box sx={{
-                backgroundColor: '#dcfce7',
-                color: '#16a34a',
-                px: 2,
-                py: 0.5,
-                borderRadius: 2,
-                fontSize: '0.75rem',
-                fontWeight: 600,
-                fontFamily: 'Inter, sans-serif'
-              }}>
-                2 Monate gratis
-              </Box>
-            )}
+            >
+              <ToggleButton value="monthly">Monatlich</ToggleButton>
+              <ToggleButton value="yearly">
+                <Stack direction="row" alignItems="center" spacing={1}>
+                  <span>Jährlich</span>
+                  <Chip 
+                    label="15% sparen" 
+                    size="small" 
+                    sx={{ 
+                      backgroundColor: '#dcfce7', 
+                      color: '#16a34a',
+                      fontSize: '0.7rem',
+                      height: '20px'
+                    }} 
+                  />
+                </Stack>
+              </ToggleButton>
+            </ToggleButtonGroup>
           </Box>
+
+          {getSavings() && (
+            <Typography sx={{ color: '#16a34a', fontWeight: 600, mb: 4 }}>
+              {getSavings()}
+            </Typography>
+          )}
         </Box>
 
         {/* Plans Grid */}
-        <Box sx={{ 
-          display: 'grid', 
-          gridTemplateColumns: { xs: '1fr', md: 'repeat(3, 1fr)' },
-          gap: { xs: 3, md: 4 },
-          maxWidth: '1200px',
-          mx: 'auto'
-        }}>
-          {plans.map((plan) => (
-            <Card 
-              key={plan.id}
-              className={`relative ${plan.popular ? 'ring-2 ring-[#43BEAC] shadow-xl' : 'shadow-lg'} hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1`}
-              sx={{
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                backgroundColor: '#ffffff',
-                borderRadius: 3,
-                overflow: 'hidden',
-                position: 'relative'
-              }}
-            >
-              {plan.popular && (
-                <Box sx={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  backgroundColor: '#43BEAC',
-                  color: '#ffffff',
-                  textAlign: 'center',
-                  py: 1,
-                  fontSize: '0.875rem',
-                  fontWeight: 600,
-                  fontFamily: 'Inter, sans-serif',
-                  zIndex: 1
-                }}>
-                  EMPFOHLEN
-                </Box>
-              )}
-
-              <CardHeader sx={{ 
-                pt: plan.popular ? 6 : 4, 
-                pb: 2,
-                textAlign: 'center',
-                borderBottom: '1px solid #f1f5f9'
-              }}>
-                <CardTitle sx={{
-                  fontSize: '1.5rem',
-                  fontWeight: 700,
-                  color: '#1e293b',
-                  fontFamily: 'Inter, sans-serif',
-                  mb: 1
-                }}>
-                  {plan.name}
-                </CardTitle>
-                <Typography sx={{
-                  color: '#64748b',
-                  fontSize: '0.875rem',
-                  fontFamily: 'Inter, sans-serif',
-                  mb: 3
-                }}>
-                  {plan.description}
-                </Typography>
-
-                {/* Price */}
-                <Box sx={{ mb: 2 }}>
-                  <Typography sx={{
-                    fontSize: '3rem',
-                    fontWeight: 800,
-                    color: '#1e293b',
-                    fontFamily: 'Inter, sans-serif',
-                    lineHeight: 1
-                  }}>
-                    {plan.monthlyPrice === null 
-                      ? t('custom')
-                      : formatPrice(isYearly ? Math.floor((plan.yearlyPrice || 0) / 12) : plan.monthlyPrice)
-                    }
-                  </Typography>
-                  {plan.monthlyPrice !== null && (
-                    <Typography sx={{
-                      color: '#64748b',
-                      fontSize: '1rem',
-                      fontFamily: 'Inter, sans-serif'
-                    }}>
-                      pro {t('month')}
-                    </Typography>
+        <Grid container spacing={4} sx={{ maxWidth: '1200px', mx: 'auto' }}>
+          {plans.map((plan, index) => (
+            <Grid item xs={12} md={4} key={plan.id}>
+              <Grow in timeout={500 + index * 200}>
+                <Card sx={getCardStyles(plan)}>
+                  {plan.popular && (
+                    <Chip 
+                      label="EMPFOHLEN" 
+                      sx={{
+                        position: 'absolute',
+                        top: -12,
+                        left: '50%',
+                        transform: 'translateX(-50%)',
+                        backgroundColor: '#43BEAC',
+                        color: '#ffffff',
+                        fontWeight: 700,
+                        zIndex: 1
+                      }}
+                    />
                   )}
-                  {isYearly && plan.yearlyPrice && (
-                    <Typography sx={{
-                      color: '#16a34a',
-                      fontSize: '0.875rem',
-                      fontWeight: 600,
-                      fontFamily: 'Inter, sans-serif',
-                      mt: 1
-                    }}>
-                      {formatPrice(plan.yearlyPrice)} jährlich
-                    </Typography>
-                  )}
-                </Box>
-              </CardHeader>
 
-              <CardContent sx={{ 
-                flexGrow: 1, 
-                display: 'flex', 
-                flexDirection: 'column',
-                p: 4
-              }}>
-                {/* Features */}
-                <Box sx={{ flexGrow: 1, mb: 4 }}>
-                  {plan.features.map((feature, index) => (
-                    <Box key={index} sx={{ 
-                      display: 'flex', 
-                      alignItems: 'flex-start', 
-                      gap: 2, 
-                      mb: 2.5
-                    }}>
-                      <Box sx={{
-                        backgroundColor: '#dcfce7',
-                        borderRadius: '50%',
-                        p: 0.5,
-                        mt: 0.25,
-                        flexShrink: 0
+                  <CardContent sx={{ p: 4, flexGrow: 1 }}>
+                    {/* Plan Header */}
+                    <Box sx={{ textAlign: 'center', mb: 4 }}>
+                      <Typography variant="subtitle2" sx={{ 
+                        color: plan.id === 'enterprise' ? '#a0aec0' : '#64748b', 
+                        mb: 1,
+                        textTransform: 'uppercase',
+                        letterSpacing: 1
                       }}>
-                        <Check size={14} color="#16a34a" />
-                      </Box>
-                      <Typography sx={{
-                        fontSize: '0.9rem',
-                        color: '#475569',
-                        fontFamily: 'Inter, sans-serif',
-                        lineHeight: 1.5
-                      }}>
-                        {feature}
+                        {plan.subtitle}
                       </Typography>
+                      <Typography variant="h4" sx={{ 
+                        fontWeight: 700, 
+                        mb: 1,
+                        color: plan.id === 'enterprise' ? '#ffffff' : '#1e293b'
+                      }}>
+                        {plan.name}
+                      </Typography>
+                      <Typography variant="body2" sx={{ 
+                        color: plan.id === 'enterprise' ? '#a0aec0' : '#64748b',
+                        mb: 3
+                      }}>
+                        {plan.description}
+                      </Typography>
+
+                      {/* Price */}
+                      <Box sx={{ mb: 3 }}>
+                        <Typography variant="h3" sx={{
+                          fontWeight: 800,
+                          color: plan.id === 'enterprise' ? '#ffffff' : '#1e293b',
+                          lineHeight: 1
+                        }}>
+                          {formatPrice(plan.monthlyPrice)}
+                        </Typography>
+                        {plan.monthlyPrice !== null && (
+                          <Typography variant="body2" sx={{ 
+                            color: plan.id === 'enterprise' ? '#a0aec0' : '#64748b'
+                          }}>
+                            pro {t('month')}
+                          </Typography>
+                        )}
+                      </Box>
                     </Box>
-                  ))}
-                </Box>
 
-                {/* CTA Button */}
-                <Button
-                  variant={plan.popular ? "contained" : "outlined"}
-                  fullWidth
-                  size="large"
-                  sx={{
-                    py: 1.5,
-                    backgroundColor: plan.popular ? '#43BEAC' : 'transparent',
-                    color: plan.popular ? '#ffffff' : '#43BEAC',
-                    border: plan.popular ? 'none' : '2px solid #43BEAC',
-                    '&:hover': {
-                      backgroundColor: plan.popular ? '#36a994' : '#43BEAC',
-                      color: '#ffffff',
-                      transform: 'translateY(-1px)',
-                      boxShadow: '0 4px 12px rgba(67, 190, 172, 0.4)'
-                    },
-                    fontFamily: 'Inter, sans-serif',
-                    fontWeight: 600,
-                    textTransform: 'none',
-                    fontSize: '1rem',
-                    borderRadius: 2,
-                    transition: 'all 0.2s ease'
-                  }}
-                >
-                  {plan.id === 'enterprise' ? t('contactSales') : t('buyPlan')}
-                </Button>
+                    {/* Module Selector for Starter */}
+                    {plan.hasModuleSelector && (
+                      <Box sx={{ mb: 4, p: 2, backgroundColor: '#f8fafc', borderRadius: 2 }}>
+                        <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
+                          Modul auswählen:
+                        </Typography>
+                        <FormControl>
+                          <RadioGroup
+                            value={selectedModule}
+                            onChange={(e) => setSelectedModule(e.target.value)}
+                          >
+                            <MuiFormControlLabel 
+                              value="clips" 
+                              control={<Radio size="small" />} 
+                              label="Clips Modul" 
+                            />
+                            <MuiFormControlLabel 
+                              value="live-shopping" 
+                              control={<Radio size="small" />} 
+                              label="Live Shopping Modul" 
+                            />
+                          </RadioGroup>
+                        </FormControl>
+                      </Box>
+                    )}
 
-                {/* All Details Link */}
-                <Button
-                  variant="text"
-                  sx={{
-                    color: '#64748b',
-                    textTransform: 'none',
-                    fontFamily: 'Inter, sans-serif',
-                    fontWeight: 500,
-                    mt: 2,
-                    fontSize: '0.875rem',
-                    '&:hover': {
-                      backgroundColor: 'transparent',
-                      color: '#43BEAC',
-                      textDecoration: 'underline'
-                    }
-                  }}
-                >
-                  {t('allDetails')}
-                </Button>
-              </CardContent>
-            </Card>
+                    {/* Features */}
+                    <Stack spacing={2}>
+                      {plan.features.map((feature, index) => (
+                        <Stack key={index} direction="row" alignItems="center" spacing={1.5}>
+                          <Box sx={{
+                            backgroundColor: plan.id === 'enterprise' ? 'rgba(67, 190, 172, 0.2)' : '#dcfce7',
+                            borderRadius: '50%',
+                            p: 0.5,
+                            flexShrink: 0
+                          }}>
+                            <Check size={16} color={plan.id === 'enterprise' ? '#43BEAC' : '#16a34a'} />
+                          </Box>
+                          <Stack direction="row" alignItems="center" spacing={0.5} sx={{ flexGrow: 1 }}>
+                            <Typography variant="body2" sx={{ 
+                              color: plan.id === 'enterprise' ? '#e2e8f0' : '#475569',
+                              lineHeight: 1.5
+                            }}>
+                              {feature.text}
+                            </Typography>
+                            {feature.tooltip && (
+                              <Tooltip title={feature.tooltip} arrow>
+                                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                  <HelpCircle 
+                                    size={14} 
+                                    color={plan.id === 'enterprise' ? '#a0aec0' : '#94a3b8'} 
+                                  />
+                                </Box>
+                              </Tooltip>
+                            )}
+                          </Stack>
+                        </Stack>
+                      ))}
+                    </Stack>
+                  </CardContent>
+
+                  <CardActions sx={{ p: 4, pt: 0 }}>
+                    <Stack spacing={2} sx={{ width: '100%' }}>
+                      <Button
+                        variant={plan.popular ? "contained" : "outlined"}
+                        fullWidth
+                        size="large"
+                        data-track-id={`pricing-${plan.id}-click`}
+                        sx={{
+                          py: 1.5,
+                          backgroundColor: plan.popular 
+                            ? '#43BEAC' 
+                            : plan.id === 'enterprise' 
+                              ? 'transparent' 
+                              : 'transparent',
+                          color: plan.popular 
+                            ? '#ffffff' 
+                            : plan.id === 'enterprise' 
+                              ? '#ffffff' 
+                              : '#43BEAC',
+                          border: plan.popular 
+                            ? 'none' 
+                            : plan.id === 'enterprise' 
+                              ? '2px solid #ffffff' 
+                              : '2px solid #43BEAC',
+                          '&:hover': {
+                            backgroundColor: plan.id === 'enterprise' 
+                              ? 'rgba(255,255,255,0.1)' 
+                              : '#43BEAC',
+                            color: '#ffffff',
+                            transform: 'translateY(-2px)',
+                            boxShadow: '0 8px 24px rgba(67, 190, 172, 0.4)'
+                          },
+                          fontWeight: 700,
+                          textTransform: 'none',
+                          fontSize: '1.1rem',
+                          borderRadius: 2,
+                          transition: 'all 0.3s ease'
+                        }}
+                      >
+                        {plan.id === 'enterprise' ? t('contactSales') : t('buyPlan')}
+                      </Button>
+
+                      <Button
+                        variant="text"
+                        sx={{
+                          color: plan.id === 'enterprise' ? '#a0aec0' : '#64748b',
+                          textTransform: 'none',
+                          fontWeight: 500,
+                          fontSize: '0.875rem',
+                          '&:hover': {
+                            backgroundColor: 'transparent',
+                            color: plan.id === 'enterprise' ? '#ffffff' : '#43BEAC',
+                            textDecoration: 'underline'
+                          }
+                        }}
+                      >
+                        {t('allDetails')}
+                      </Button>
+                    </Stack>
+                  </CardActions>
+                </Card>
+              </Grow>
+            </Grid>
           ))}
-        </Box>
+        </Grid>
       </Container>
     </Box>
   );
