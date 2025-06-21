@@ -60,7 +60,7 @@ const Index = () => {
             backgroundColor: 'white',
             color: 'black',
             textDecoration: 'underline',
-            border: '2px solid rgb(14, 112, 144)',
+            border: '2px solid #43BEAC',
             borderRadius: '4px'
           }
         }}
@@ -87,7 +87,7 @@ const Index = () => {
         sx={{
           display: { xs: 'none', lg: 'flex' },
           width: { lg: '50%' },
-          background: '#59C3C3',
+          background: '#43BEAC',
           alignItems: 'center',
           justifyContent: 'center',
         }}
@@ -99,7 +99,7 @@ const Index = () => {
             sx={{
               width: 256,
               height: 256,
-              background: 'linear-gradient(135deg, #60a5fa 0%, #a855f7 100%)',
+              background: 'linear-gradient(135deg, #30A39D 0%, #252A2E 100%)',
               borderRadius: '50%',
               mx: 'auto',
               mb: 4,
@@ -110,14 +110,35 @@ const Index = () => {
             role="img"
             aria-label="Logo"
           >
-            <Typography variant="h3" sx={{ color: 'white', fontWeight: 'bold' }}>
+            <Typography 
+              variant="h3" 
+              sx={{ 
+                color: 'white', 
+                fontWeight: 'bold',
+                fontFamily: 'Inter, sans-serif'
+              }}
+            >
               Logo
             </Typography>
           </Box>
-          <Typography variant="h4" sx={{ color: 'white', mb: 2, fontWeight: 'bold' }}>
+          <Typography 
+            variant="h4" 
+            sx={{ 
+              color: 'white', 
+              mb: 2, 
+              fontWeight: 'bold',
+              fontFamily: 'Inter, sans-serif'
+            }}
+          >
             {t('serviceWelcome')}
           </Typography>
-          <Typography variant="h6" sx={{ color: 'white' }}>
+          <Typography 
+            variant="h6" 
+            sx={{ 
+              color: 'white',
+              fontFamily: 'Inter, sans-serif'
+            }}
+          >
             {t('serviceSubtitle')}
           </Typography>
         </Box>
@@ -137,12 +158,21 @@ const Index = () => {
           <Box sx={{ textAlign: 'center', mb: 4 }}>
             <Typography 
               variant="h4" 
-              sx={{ mb: 1, fontWeight: 'bold' }}
+              sx={{ 
+                mb: 1, 
+                fontWeight: 'bold',
+                fontFamily: 'Inter, sans-serif',
+                color: '#252A2E'
+              }}
               component="h1"
             >
               {t('welcome')}
             </Typography>
-            <Typography variant="body1" color="text.secondary">
+            <Typography 
+              variant="body1" 
+              color="text.secondary"
+              sx={{ fontFamily: 'Inter, sans-serif' }}
+            >
               {t('welcomeSubtitle')}
             </Typography>
           </Box>
@@ -165,9 +195,16 @@ const Index = () => {
                 <Box 
                   sx={{ textAlign: 'center', mt: 3, pt: 3, borderTop: '1px solid', borderColor: 'divider' }}
                   role="region"
-                  aria-label={language === 'de' ? 'Zur Registrierung wechseln' : language === 'es' ? 'Cambiar a registro' : 'Switch to registration'}
+                  aria-label={language === 'de' ? 'Zur Registrierung wechseln' :  language === 'es' ? 'Cambiar a registro' : 'Switch to registration'}
                 >
-                  <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                  <Typography 
+                    variant="body2" 
+                    color="text.secondary" 
+                    sx={{ 
+                      mb: 2,
+                      fontFamily: 'Inter, sans-serif'
+                    }}
+                  >
                     {language === 'de' ? 'Noch kein Konto?' : 
                      language === 'es' ? '¿No tienes cuenta?' : 
                      'Don\'t have an account?'}
@@ -176,17 +213,18 @@ const Index = () => {
                     variant="outlined"
                     onClick={() => handleModeSwitch(true)}
                     sx={{ 
-                      borderColor: 'rgb(14, 112, 144)',
-                      color: 'rgb(14, 112, 144)',
+                      borderColor: '#43BEAC',
+                      color: '#43BEAC',
                       fontWeight: 600,
                       px: 4,
                       py: 1,
+                      fontFamily: 'Inter, sans-serif',
                       '&:hover': { 
-                        borderColor: 'rgb(10, 90, 115)',
-                        backgroundColor: 'rgba(14, 112, 144, 0.04)'
+                        borderColor: '#30A39D',
+                        backgroundColor: 'rgba(67, 190, 172, 0.04)'
                       },
                       '&:focus': { 
-                        outline: '2px solid rgb(14, 112, 144)',
+                        outline: '2px solid #43BEAC',
                         outlineOffset: '2px'
                       }
                     }}
@@ -221,9 +259,10 @@ const Index = () => {
                     sx={{ 
                       textDecoration: 'none', 
                       '&:hover': { textDecoration: 'underline' },
-                      color: 'rgb(14, 112, 144)',
+                      color: '#43BEAC',
+                      fontFamily: 'Inter, sans-serif',
                       '&:focus': { 
-                        outline: '2px solid rgb(14, 112, 144)',
+                        outline: '2px solid #43BEAC',
                         outlineOffset: '2px'
                       }
                     }}

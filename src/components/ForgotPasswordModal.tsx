@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from "react";
 import {
   Dialog,
@@ -96,11 +95,7 @@ const ForgotPasswordModal = ({ isOpen, onClose, t }: ForgotPasswordModalProps) =
               <div className="flex flex-col gap-2">
                 <Button 
                   type="submit" 
-                  className="w-full focus:ring-2 focus:ring-offset-2"
-                  style={{ 
-                    backgroundColor: 'rgb(14, 112, 144)',
-                    color: 'white'
-                  }}
+                  className="w-full focus:ring-2 focus:ring-offset-2 bg-primary hover:bg-primary/90"
                   aria-describedby="reset-button-description"
                 >
                   Reset Password
@@ -113,11 +108,7 @@ const ForgotPasswordModal = ({ isOpen, onClose, t }: ForgotPasswordModalProps) =
                   type="button" 
                   variant="outline" 
                   onClick={handleClose} 
-                  className="w-full focus:ring-2 focus:ring-offset-2"
-                  style={{ 
-                    borderColor: 'rgb(14, 112, 144)',
-                    color: 'rgb(14, 112, 144)'
-                  }}
+                  className="w-full focus:ring-2 focus:ring-offset-2 border-primary text-primary hover:bg-primary/5"
                 >
                   Cancel
                 </Button>

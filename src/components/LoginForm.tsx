@@ -172,10 +172,10 @@ const LoginForm = ({ language, t }: LoginFormProps) => {
             setShowForgotPassword(true);
           }}
           sx={{ 
-            color: 'rgb(14, 112, 144)',
-            '&:hover': { color: 'rgb(10, 90, 115)' },
+            color: '#43BEAC',
+            '&:hover': { color: '#30A39D' },
             '&:focus': { 
-              outline: '2px solid rgb(14, 112, 144)',
+              outline: '2px solid #43BEAC',
               outlineOffset: '2px'
             }
           }}
@@ -198,10 +198,10 @@ const LoginForm = ({ language, t }: LoginFormProps) => {
         sx={{ 
           mt: 2, 
           py: 1.5,
-          backgroundColor: 'rgb(14, 112, 144)',
-          '&:hover': { backgroundColor: 'rgb(10, 90, 115)' },
+          backgroundColor: '#43BEAC',
+          '&:hover': { backgroundColor: '#30A39D' },
           '&:focus': { 
-            outline: '2px solid rgb(14, 112, 144)',
+            outline: '2px solid #43BEAC',
             outlineOffset: '2px'
           }
         }}
