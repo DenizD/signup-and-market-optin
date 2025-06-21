@@ -82,65 +82,30 @@ const Index = () => {
         />
       </Box>
 
-      {/* Left side - Image */}
+      {/* Left side - Image placeholder */}
       <Box
         sx={{
           display: { xs: 'none', lg: 'flex' },
           width: { lg: '50%' },
-          background: '#43BEAC',
+          background: '#f5f5f5',
           alignItems: 'center',
           justifyContent: 'center',
         }}
         role="img"
-        aria-label={language === 'de' ? 'Willkommensbild mit Logo' : language === 'es' ? 'Imagen de bienvenida con logo' : 'Welcome image with logo'}
+        aria-label={language === 'de' ? 'Bild-Platzhalter' : language === 'es' ? 'Marcador de posición de imagen' : 'Image placeholder'}
       >
-        <Box sx={{ maxWidth: 400, textAlign: 'center', px: 4 }}>
-          <Box
-            sx={{
-              width: 256,
-              height: 256,
-              background: 'linear-gradient(135deg, #30A39D 0%, #252A2E 100%)',
-              borderRadius: '50%',
-              mx: 'auto',
-              mb: 4,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-            role="img"
-            aria-label="Logo"
-          >
-            <Typography 
-              variant="h3" 
-              sx={{ 
-                color: 'white', 
-                fontWeight: 'bold',
-                fontFamily: 'Inter, sans-serif'
-              }}
-            >
-              Logo
-            </Typography>
-          </Box>
-          <Typography 
-            variant="h4" 
-            sx={{ 
-              color: 'white', 
-              mb: 2, 
-              fontWeight: 'bold',
-              fontFamily: 'Inter, sans-serif'
-            }}
-          >
-            {t('serviceWelcome')}
-          </Typography>
-          <Typography 
-            variant="h6" 
-            sx={{ 
-              color: 'white',
-              fontFamily: 'Inter, sans-serif'
-            }}
-          >
-            {t('serviceSubtitle')}
-          </Typography>
+        <Box sx={{ 
+          width: '100%', 
+          height: '100%', 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'center',
+          color: '#999',
+          fontSize: '1.5rem',
+          fontFamily: 'Inter, sans-serif'
+        }}>
+          {/* Hier kann später ein Bild eingefügt werden */}
+          Bild
         </Box>
       </Box>
 
