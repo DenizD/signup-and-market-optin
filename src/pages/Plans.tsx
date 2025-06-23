@@ -1,6 +1,6 @@
 
 import { Box, Container, Typography, Button, Card, CardContent, CardActions, Stack, Chip, Tooltip, Grow, Collapse } from '@mui/material';
-import { Check, HelpOutline, PlayCircle, ShoppingCart, ExpandMore, ExpandLess, Phone } from '@mui/icons-material';
+import { Check, HelpOutline, ExpandMore, ExpandLess, Phone } from '@mui/icons-material';
 import { useState } from 'react';
 import { useTranslations } from '@/hooks/useTranslations';
 
@@ -12,14 +12,13 @@ const Plans = () => {
     {
       id: 'starter-clips',
       name: 'Starter Clips',
-      description: t('starterClipsDescription'),
-      subtitle: t('videoModule'),
+      description: t('starterDescription'),
+      subtitle: 'Video Modul',
       monthlyPrice: 495,
       popular: false,
       color: 'default' as const,
-      icon: <PlayCircle sx={{ fontSize: 24, color: '#43BEAC' }} />,
       features: [
-        { text: t('clipsModule'), tooltip: t('clipsModuleTooltip') },
+        { text: 'Clips Modul', tooltip: 'Video-Clips erstellen und verwalten' },
         { text: t('starterViews'), tooltip: null },
         { text: t('starterUploads'), tooltip: null },
         { text: t('starterAccounts'), tooltip: null },
@@ -38,14 +37,13 @@ const Plans = () => {
     {
       id: 'starter-live-shopping',
       name: 'Starter Live Shopping',
-      description: t('starterLiveShoppingDescription'),
-      subtitle: t('commerceModule'),
+      description: t('starterDescription'),
+      subtitle: 'Commerce Modul',
       monthlyPrice: 495,
       popular: false,
       color: 'default' as const,
-      icon: <ShoppingCart sx={{ fontSize: 24, color: '#43BEAC' }} />,
       features: [
-        { text: t('liveShoppingModule'), tooltip: t('liveShoppingModuleTooltip') },
+        { text: 'Live Shopping Modul', tooltip: 'Live-Shopping Events durchführen' },
         { text: t('starterViews'), tooltip: null },
         { text: t('starterUploads'), tooltip: null },
         { text: t('starterAccounts'), tooltip: null },
@@ -65,13 +63,12 @@ const Plans = () => {
       id: 'advanced',
       name: 'Advanced',
       description: t('advancedDescription'),
-      subtitle: t('fullSolution'),
+      subtitle: 'Vollständige Lösung',
       monthlyPrice: 1195,
       popular: true,
       color: 'primary' as const,
-      icon: <Check sx={{ fontSize: 24, color: '#43BEAC' }} />,
       features: [
-        { text: t('allModulesIncluded'), tooltip: null },
+        { text: 'Alle Module inklusive', tooltip: null },
         { text: t('fullVideoCommerce'), tooltip: t('fullVideoCommerceTooltip') },
         { text: t('advancedViews'), tooltip: null },
         { text: t('advancedUploads'), tooltip: null },
@@ -91,11 +88,10 @@ const Plans = () => {
       id: 'enterprise',
       name: 'Enterprise',
       description: t('enterpriseDescription'),
-      subtitle: t('enterpriseSolution'),
+      subtitle: 'Enterprise Lösung',
       monthlyPrice: null,
       popular: false,
       color: 'secondary' as const,
-      icon: <Phone sx={{ fontSize: 24, color: '#43BEAC' }} />,
       features: [
         { text: t('allFromAdvanced'), tooltip: null },
         { text: t('aiBot'), tooltip: t('aiBotTooltip') },
@@ -116,7 +112,7 @@ const Plans = () => {
   ];
 
   const formatPrice = (price: number | null) => {
-    if (price === null) return t('individual');
+    if (price === null) return 'Custom';
     return `${price}€`;
   };
 
@@ -249,9 +245,6 @@ const Plans = () => {
                   <CardContent sx={{ p: 3, flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
                     {/* Plan Header */}
                     <Box sx={{ textAlign: 'center', mb: 3 }}>
-                      <Box sx={{ mb: 2 }}>
-                        {plan.icon}
-                      </Box>
                       <Typography variant="h6" sx={{ 
                         fontWeight: 700, 
                         mb: 1,
@@ -294,9 +287,9 @@ const Plans = () => {
                       </Box>
                     </Box>
 
-                    {/* Features */}
-                    <Box sx={{ flexGrow: 1 }}>
-                      <Stack spacing={2}>
+                    {/* Features - Aligned for consistent height */}
+                    <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+                      <Stack spacing={2} sx={{ minHeight: '300px' }}>
                         {plan.features.map((feature, index) => (
                           <Stack key={index} direction="row" alignItems="flex-start" spacing={1.5}>
                             <Box sx={{
@@ -347,7 +340,7 @@ const Plans = () => {
                             color: '#43BEAC',
                             fontSize: '0.8rem'
                           }}>
-                            {t('additionalFeatures')}:
+                            Zusätzliche Features:
                           </Typography>
                           <Stack spacing={1.5}>
                             {plan.detailedFeatures?.map((feature, index) => (
@@ -391,7 +384,7 @@ const Plans = () => {
                           transition: 'all 0.3s ease'
                         }}
                       >
-                        {plan.id === 'enterprise' ? t('scheduleDemo') : t('selectPlan')}
+                        {plan.id === 'enterprise' ? 'Beratung vereinbaren' : t('selectPlan')}
                       </Button>
                     </Stack>
                   </CardActions>
@@ -418,7 +411,7 @@ const Plans = () => {
               }
             }}
           >
-            {expandedDetails ? t('hideDetails') : t('showAllDetails')}
+            {expandedDetails ? 'Details ausblenden' : 'Alle Details anzeigen'}
           </Button>
         </Box>
 
@@ -437,19 +430,19 @@ const Plans = () => {
             color: '#252A2E',
             textAlign: 'center'
           }}>
-            {t('additionalInformation')}
+            Zusätzliche Informationen
           </Typography>
           
           <Stack spacing={3}>
             <Box>
               <Typography variant="body1" sx={{ color: '#515558', lineHeight: 1.6 }}>
-                {t('pricingNote')} <sup>1</sup>
+                Alle Preise verstehen sich zzgl. der gesetzlichen Mehrwertsteuer. <sup>1</sup>
               </Typography>
             </Box>
             
             <Box>
               <Typography variant="body2" sx={{ color: '#737474', lineHeight: 1.5 }}>
-                <sup>1</sup> {t('footnoteExample')}
+                <sup>1</sup> Mindestlaufzeit beträgt 12 Monate. Kündigungsfrist 3 Monate zum Laufzeitende.
               </Typography>
             </Box>
             
@@ -459,7 +452,7 @@ const Plans = () => {
                 textAlign: 'center',
                 fontStyle: 'italic'
               }}>
-                {t('customSolutionsAvailable')}
+                Individuelle Lösungen und maßgeschneiderte Pakete auf Anfrage verfügbar.
               </Typography>
             </Box>
           </Stack>
