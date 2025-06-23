@@ -1,5 +1,5 @@
 
-import { Box, Container, Typography, Button, Card, CardContent, CardActions, Stack, Chip, Tooltip, ToggleButtonGroup, ToggleButton, Grow, Fade, Collapse, Grid } from '@mui/material';
+import { Box, Container, Typography, Button, Card, CardContent, CardActions, Stack, Chip, Tooltip, ToggleButtonGroup, ToggleButton, Grow, Fade, Collapse } from '@mui/material';
 import { Check, HelpOutline, PlayCircle, ShoppingCart, ExpandMore, ExpandLess } from '@mui/icons-material';
 import { useState } from 'react';
 import { useTranslations } from '@/hooks/useTranslations';
@@ -116,21 +116,21 @@ const Plans = () => {
       borderRadius: 3,
       overflow: 'visible',
       backgroundColor: '#ffffff',
-      border: '1px solid #e2e8f0',
+      border: '1px solid #D3D4D5',
       '&:hover': {
         transform: 'scale(1.02)',
-        boxShadow: '0 12px 32px rgba(14, 112, 144, 0.15)'
+        boxShadow: '0 12px 32px rgba(67, 190, 172, 0.15)'
       }
     };
 
     if (plan.popular) {
       return {
         ...baseStyles,
-        border: '2px solid rgb(14, 112, 144)',
-        boxShadow: '0 8px 24px rgba(14, 112, 144, 0.12)',
+        border: '2px solid #43BEAC',
+        boxShadow: '0 8px 24px rgba(67, 190, 172, 0.12)',
         '&:hover': {
           transform: 'scale(1.02)',
-          boxShadow: '0 16px 40px rgba(14, 112, 144, 0.2)'
+          boxShadow: '0 16px 40px rgba(67, 190, 172, 0.2)'
         }
       };
     }
@@ -152,7 +152,7 @@ const Plans = () => {
             sx={{ 
               fontWeight: 700, 
               mb: 2, 
-              color: 'rgb(14, 112, 144)',
+              color: '#252A2E',
               fontSize: { xs: '2.5rem', md: '3.5rem' },
               letterSpacing: '-0.02em'
             }}
@@ -162,7 +162,7 @@ const Plans = () => {
           <Typography 
             variant="h6" 
             sx={{ 
-              color: '#64748b', 
+              color: '#737474', 
               fontWeight: 400,
               mb: 6,
               maxWidth: '600px',
@@ -188,21 +188,21 @@ const Plans = () => {
                 backgroundColor: '#ffffff',
                 borderRadius: 50,
                 boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
-                border: '1px solid #e2e8f0',
+                border: '1px solid #D3D4D5',
                 '& .MuiToggleButton-root': {
                   border: 'none',
                   px: 4,
                   py: 1.5,
                   fontWeight: 600,
                   textTransform: 'none',
-                  color: '#64748b',
+                  color: '#737474',
                   borderRadius: 50,
                   '&.Mui-selected': {
-                    backgroundColor: 'rgb(14, 112, 144)',
+                    backgroundColor: '#43BEAC',
                     color: '#ffffff',
-                    boxShadow: '0 2px 8px rgba(14, 112, 144, 0.3)',
+                    boxShadow: '0 2px 8px rgba(67, 190, 172, 0.3)',
                     '&:hover': {
-                      backgroundColor: 'rgb(12, 100, 128)'
+                      backgroundColor: '#3AA89A'
                     }
                   },
                   '&:hover': {
@@ -219,8 +219,8 @@ const Plans = () => {
                     label={t('save15')}
                     size="small" 
                     sx={{ 
-                      backgroundColor: '#dcfce7', 
-                      color: '#16a34a',
+                      backgroundColor: '#E8FDF3', 
+                      color: '#0F7D40',
                       fontSize: '0.7rem',
                       height: '20px',
                       fontWeight: 600
@@ -233,7 +233,7 @@ const Plans = () => {
 
           {getSavings() && (
             <Fade in>
-              <Typography sx={{ color: '#16a34a', fontWeight: 600, mb: 4 }}>
+              <Typography sx={{ color: '#0F7D40', fontWeight: 600, mb: 4 }}>
                 💰 {getSavings()}
               </Typography>
             </Fade>
@@ -254,7 +254,7 @@ const Plans = () => {
               <Typography 
                 variant="overline" 
                 sx={{ 
-                  color: '#64748b',
+                  color: '#737474',
                   fontWeight: 700,
                   letterSpacing: 1.5,
                   display: 'block',
@@ -287,7 +287,7 @@ const Plans = () => {
                         top: -12,
                         left: '50%',
                         transform: 'translateX(-50%)',
-                        backgroundColor: 'rgb(14, 112, 144)',
+                        backgroundColor: '#43BEAC',
                         color: '#ffffff',
                         fontWeight: 700,
                         fontSize: '0.75rem',
@@ -308,7 +308,7 @@ const Plans = () => {
                         {plan.name}
                       </Typography>
                       <Typography variant="body2" sx={{ 
-                        color: '#64748b',
+                        color: '#737474',
                         mb: 3,
                         lineHeight: 1.6
                       }}>
@@ -320,7 +320,7 @@ const Plans = () => {
                         <Stack direction="row" alignItems="baseline" justifyContent="center" spacing={0.5}>
                           <Typography variant="h3" sx={{
                             fontWeight: 800,
-                            color: 'rgb(14, 112, 144)',
+                            color: '#43BEAC',
                             lineHeight: 1,
                             letterSpacing: '-0.02em'
                           }}>
@@ -328,7 +328,7 @@ const Plans = () => {
                           </Typography>
                           {plan.monthlyPrice !== null && (
                             <Typography variant="body2" sx={{ 
-                              color: '#64748b',
+                              color: '#737474',
                               fontWeight: 500
                             }}>
                               /{t('month')}
@@ -357,18 +357,18 @@ const Plans = () => {
                               cursor: 'pointer',
                               p: 2,
                               borderRadius: 2,
-                              border: selectedModule === 'clips' ? '2px solid rgb(14, 112, 144)' : '1px solid #e2e8f0',
-                              backgroundColor: selectedModule === 'clips' ? 'rgba(14, 112, 144, 0.05)' : '#ffffff',
+                              border: selectedModule === 'clips' ? '2px solid #43BEAC' : '1px solid #D3D4D5',
+                              backgroundColor: selectedModule === 'clips' ? 'rgba(67, 190, 172, 0.05)' : '#ffffff',
                               transition: 'all 0.2s ease',
                               '&:hover': {
-                                borderColor: 'rgb(14, 112, 144)',
-                                backgroundColor: 'rgba(14, 112, 144, 0.05)'
+                                borderColor: '#43BEAC',
+                                backgroundColor: 'rgba(67, 190, 172, 0.05)'
                               }
                             }}
                           >
                             <Stack direction="row" alignItems="center" spacing={2}>
                               <Box sx={{ 
-                                backgroundColor: selectedModule === 'clips' ? 'rgb(14, 112, 144)' : '#f1f5f9',
+                                backgroundColor: selectedModule === 'clips' ? '#43BEAC' : '#F1F1F1',
                                 borderRadius: '50%',
                                 p: 1,
                                 minWidth: 36,
@@ -379,14 +379,14 @@ const Plans = () => {
                               }}>
                                 <PlayCircle sx={{ 
                                   fontSize: 18, 
-                                  color: selectedModule === 'clips' ? '#ffffff' : '#64748b' 
+                                  color: selectedModule === 'clips' ? '#ffffff' : '#737474' 
                                 }} />
                               </Box>
                               <Box sx={{ flex: 1 }}>
                                 <Typography fontWeight={600} variant="body2" sx={{ color: '#252A2E' }}>
                                   {t('clipsModule')}
                                 </Typography>
-                                <Typography variant="caption" sx={{ color: '#64748b' }}>
+                                <Typography variant="caption" sx={{ color: '#737474' }}>
                                   {t('clipsModuleDesc')}
                                 </Typography>
                               </Box>
@@ -399,18 +399,18 @@ const Plans = () => {
                               cursor: 'pointer',
                               p: 2,
                               borderRadius: 2,
-                              border: selectedModule === 'live-shopping' ? '2px solid rgb(14, 112, 144)' : '1px solid #e2e8f0',
-                              backgroundColor: selectedModule === 'live-shopping' ? 'rgba(14, 112, 144, 0.05)' : '#ffffff',
+                              border: selectedModule === 'live-shopping' ? '2px solid #43BEAC' : '1px solid #D3D4D5',
+                              backgroundColor: selectedModule === 'live-shopping' ? 'rgba(67, 190, 172, 0.05)' : '#ffffff',
                               transition: 'all 0.2s ease',
                               '&:hover': {
-                                borderColor: 'rgb(14, 112, 144)',
-                                backgroundColor: 'rgba(14, 112, 144, 0.05)'
+                                borderColor: '#43BEAC',
+                                backgroundColor: 'rgba(67, 190, 172, 0.05)'
                               }
                             }}
                           >
                             <Stack direction="row" alignItems="center" spacing={2}>
                               <Box sx={{ 
-                                backgroundColor: selectedModule === 'live-shopping' ? 'rgb(14, 112, 144)' : '#f1f5f9',
+                                backgroundColor: selectedModule === 'live-shopping' ? '#43BEAC' : '#F1F1F1',
                                 borderRadius: '50%',
                                 p: 1,
                                 minWidth: 36,
@@ -421,14 +421,14 @@ const Plans = () => {
                               }}>
                                 <ShoppingCart sx={{ 
                                   fontSize: 18, 
-                                  color: selectedModule === 'live-shopping' ? '#ffffff' : '#64748b' 
+                                  color: selectedModule === 'live-shopping' ? '#ffffff' : '#737474' 
                                 }} />
                               </Box>
                               <Box sx={{ flex: 1 }}>
                                 <Typography fontWeight={600} variant="body2" sx={{ color: '#252A2E' }}>
                                   {t('liveShoppingModule')}
                                 </Typography>
-                                <Typography variant="caption" sx={{ color: '#64748b' }}>
+                                <Typography variant="caption" sx={{ color: '#737474' }}>
                                   {t('liveShoppingModuleDesc')}
                                 </Typography>
                               </Box>
@@ -443,7 +443,7 @@ const Plans = () => {
                       {plan.features.map((feature, index) => (
                         <Stack key={index} direction="row" alignItems="center" spacing={2}>
                           <Box sx={{
-                            backgroundColor: '#dcfce7',
+                            backgroundColor: '#E8FDF3',
                             borderRadius: '50%',
                             p: 0.5,
                             flexShrink: 0,
@@ -453,12 +453,12 @@ const Plans = () => {
                           }}>
                             <Check sx={{ 
                               fontSize: 16, 
-                              color: '#16a34a' 
+                              color: '#0F7D40' 
                             }} />
                           </Box>
                           <Stack direction="row" alignItems="center" spacing={0.5} sx={{ flexGrow: 1 }}>
                             <Typography variant="body2" sx={{ 
-                              color: '#374151',
+                              color: '#515558',
                               lineHeight: 1.5,
                               fontWeight: 500
                             }}>
@@ -468,7 +468,7 @@ const Plans = () => {
                               <Tooltip title={feature.tooltip} arrow>
                                 <HelpOutline sx={{ 
                                   fontSize: 16, 
-                                  color: '#9ca3af',
+                                  color: '#A8AAAB',
                                   cursor: 'help'
                                 }} />
                               </Tooltip>
@@ -480,11 +480,11 @@ const Plans = () => {
 
                     {/* Detailed Features Collapse */}
                     <Collapse in={expandedDetails === plan.id}>
-                      <Box sx={{ mt: 3, pt: 3, borderTop: '1px solid #e2e8f0' }}>
+                      <Box sx={{ mt: 3, pt: 3, borderTop: '1px solid #D3D4D5' }}>
                         <Typography variant="subtitle2" sx={{ 
                           fontWeight: 700, 
                           mb: 2, 
-                          color: 'rgb(14, 112, 144)' 
+                          color: '#43BEAC' 
                         }}>
                           {t('additionalFeatures')}:
                         </Typography>
@@ -502,8 +502,8 @@ const Plans = () => {
                               }}
                             >
                               <Stack direction="row" alignItems="center" spacing={1}>
-                                <Check sx={{ fontSize: 14, color: '#16a34a', flexShrink: 0 }} />
-                                <Typography variant="body2" sx={{ color: '#64748b', fontSize: '0.8rem' }}>
+                                <Check sx={{ fontSize: 14, color: '#0F7D40', flexShrink: 0 }} />
+                                <Typography variant="body2" sx={{ color: '#737474', fontSize: '0.8rem' }}>
                                   {feature}
                                 </Typography>
                               </Stack>
@@ -523,12 +523,12 @@ const Plans = () => {
                         data-track-id={`pricing-${plan.id}-click`}
                         sx={{
                           py: 1.5,
-                          backgroundColor: 'rgb(14, 112, 144)',
+                          backgroundColor: '#43BEAC',
                           color: '#ffffff',
                           '&:hover': {
-                            backgroundColor: 'rgb(12, 100, 128)',
+                            backgroundColor: '#3AA89A',
                             transform: 'translateY(-2px)',
-                            boxShadow: '0 8px 24px rgba(14, 112, 144, 0.4)'
+                            boxShadow: '0 8px 24px rgba(67, 190, 172, 0.4)'
                           },
                           fontWeight: 700,
                           textTransform: 'none',
@@ -545,13 +545,13 @@ const Plans = () => {
                         onClick={() => toggleDetails(plan.id)}
                         endIcon={expandedDetails === plan.id ? <ExpandLess /> : <ExpandMore />}
                         sx={{
-                          color: '#64748b',
+                          color: '#737474',
                           textTransform: 'none',
                           fontWeight: 500,
                           fontSize: '0.875rem',
                           '&:hover': {
                             backgroundColor: 'transparent',
-                            color: 'rgb(14, 112, 144)',
+                            color: '#43BEAC',
                           }
                         }}
                       >
