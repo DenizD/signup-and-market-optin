@@ -488,18 +488,28 @@ const Plans = () => {
                         }}>
                           {t('additionalFeatures')}:
                         </Typography>
-                        <Grid container spacing={2}>
+                        <Box sx={{ 
+                          display: 'flex', 
+                          flexWrap: 'wrap', 
+                          gap: 2 
+                        }}>
                           {plan.detailedFeatures?.map((feature, index) => (
-                            <Grid item xs={12} sm={6} key={index}>
+                            <Box 
+                              key={index} 
+                              sx={{ 
+                                flex: { xs: '1 1 100%', sm: '1 1 calc(50% - 8px)' },
+                                minWidth: 0
+                              }}
+                            >
                               <Stack direction="row" alignItems="center" spacing={1}>
-                                <Check sx={{ fontSize: 14, color: '#16a34a' }} />
+                                <Check sx={{ fontSize: 14, color: '#16a34a', flexShrink: 0 }} />
                                 <Typography variant="body2" sx={{ color: '#64748b', fontSize: '0.8rem' }}>
                                   {feature}
                                 </Typography>
                               </Stack>
-                            </Grid>
+                            </Box>
                           ))}
-                        </Grid>
+                        </Box>
                       </Box>
                     </Collapse>
                   </CardContent>
