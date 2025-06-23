@@ -1,4 +1,3 @@
-
 import { Box, Container, Typography, Button, Card, CardContent, CardActions, Stack, Chip, Tooltip, ToggleButtonGroup, ToggleButton, Grow, Fade, Collapse } from '@mui/material';
 import { Check, HelpOutline, PlayCircle, ShoppingCart, ExpandMore, ExpandLess } from '@mui/icons-material';
 import { useState } from 'react';
@@ -198,11 +197,11 @@ const Plans = () => {
                   color: '#737474',
                   borderRadius: 50,
                   '&.Mui-selected': {
-                    backgroundColor: '#43BEAC',
+                    backgroundColor: 'rgb(14, 112, 144)',
                     color: '#ffffff',
-                    boxShadow: '0 2px 8px rgba(67, 190, 172, 0.3)',
+                    boxShadow: '0 2px 8px rgba(14, 112, 144, 0.3)',
                     '&:hover': {
-                      backgroundColor: '#3AA89A'
+                      backgroundColor: 'rgb(12, 100, 128)'
                     }
                   },
                   '&:hover': {
@@ -523,12 +522,12 @@ const Plans = () => {
                         data-track-id={`pricing-${plan.id}-click`}
                         sx={{
                           py: 1.5,
-                          backgroundColor: '#43BEAC',
+                          backgroundColor: 'rgb(14, 112, 144)',
                           color: '#ffffff',
                           '&:hover': {
-                            backgroundColor: '#3AA89A',
+                            backgroundColor: 'rgb(12, 100, 128)',
                             transform: 'translateY(-2px)',
-                            boxShadow: '0 8px 24px rgba(67, 190, 172, 0.4)'
+                            boxShadow: '0 8px 24px rgba(14, 112, 144, 0.4)'
                           },
                           fontWeight: 700,
                           textTransform: 'none',
@@ -551,7 +550,7 @@ const Plans = () => {
                           fontSize: '0.875rem',
                           '&:hover': {
                             backgroundColor: 'transparent',
-                            color: '#43BEAC',
+                            color: 'rgb(14, 112, 144)',
                           }
                         }}
                       >
