@@ -1,12 +1,10 @@
-
-import { Box, Container, Typography, Button, Card, CardContent, CardActions, Stack, Chip, Tooltip, ToggleButtonGroup, ToggleButton, Grow, Fade, Collapse } from '@mui/material';
+import { Box, Container, Typography, Button, Card, CardContent, CardActions, Stack, Chip, Tooltip, Grow, Collapse } from '@mui/material';
 import { Check, HelpOutline, PlayCircle, ShoppingCart, ExpandMore, ExpandLess } from '@mui/icons-material';
 import { useState } from 'react';
 import { useTranslations } from '@/hooks/useTranslations';
 
 const Plans = () => {
   const { t } = useTranslations();
-  const [billingPeriod, setBillingPeriod] = useState<'monthly' | 'yearly'>('monthly');
   const [selectedModule, setSelectedModule] = useState('clips');
   const [expandedDetails, setExpandedDetails] = useState<string | null>(null);
 
@@ -16,8 +14,7 @@ const Plans = () => {
       name: 'Starter',
       description: t('starterDescription'),
       subtitle: t('starterSubtitle'),
-      monthlyPrice: 495,
-      yearlyPrice: 495,
+      monthlyPrice: 595,
       popular: false,
       color: 'default' as const,
       features: [
@@ -43,8 +40,7 @@ const Plans = () => {
       name: 'Advanced',
       description: t('advancedDescription'),
       subtitle: t('advancedSubtitle'),
-      monthlyPrice: 1095,
-      yearlyPrice: 1095,
+      monthlyPrice: 1195,
       popular: true,
       color: 'primary' as const,
       features: [
@@ -70,7 +66,6 @@ const Plans = () => {
       description: t('enterpriseDescription'),
       subtitle: t('enterpriseSubtitle'),
       monthlyPrice: null,
-      yearlyPrice: null,
       popular: false,
       color: 'secondary' as const,
       features: [
@@ -94,15 +89,7 @@ const Plans = () => {
 
   const formatPrice = (price: number | null) => {
     if (price === null) return t('contact');
-    const displayPrice = billingPeriod === 'yearly' ? Math.floor(price / 12) : price;
-    return `${displayPrice}€`;
-  };
-
-  const getSavings = () => {
-    if (billingPeriod === 'yearly') {
-      return t('saveWithYearly');
-    }
-    return null;
+    return `${price}€`;
   };
 
   const getCardStyles = (plan: typeof plans[0]) => {
@@ -172,72 +159,6 @@ const Plans = () => {
           >
             {t('plansSubtitle')}
           </Typography>
-
-          {/* Modern Billing Toggle */}
-          <Box sx={{ 
-            display: 'flex', 
-            alignItems: 'center', 
-            justifyContent: 'center',
-            mb: 6
-          }}>
-            <ToggleButtonGroup
-              value={billingPeriod}
-              exclusive
-              onChange={(_, value) => value && setBillingPeriod(value)}
-              sx={{
-                backgroundColor: '#ffffff',
-                borderRadius: 50,
-                boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
-                border: '1px solid #D3D4D5',
-                '& .MuiToggleButton-root': {
-                  border: 'none',
-                  px: 4,
-                  py: 1.5,
-                  fontWeight: 600,
-                  textTransform: 'none',
-                  color: '#737474',
-                  borderRadius: 50,
-                  '&.Mui-selected': {
-                    backgroundColor: 'rgb(14, 112, 144)',
-                    color: '#ffffff',
-                    boxShadow: '0 2px 8px rgba(14, 112, 144, 0.3)',
-                    '&:hover': {
-                      backgroundColor: 'rgb(12, 100, 128)'
-                    }
-                  },
-                  '&:hover': {
-                    backgroundColor: 'transparent'
-                  }
-                }
-              }}
-            >
-              <ToggleButton value="monthly">{t('monthly')}</ToggleButton>
-              <ToggleButton value="yearly">
-                <Stack direction="row" alignItems="center" spacing={1}>
-                  <span>{t('yearly')}</span>
-                  <Chip 
-                    label={t('save15')}
-                    size="small" 
-                    sx={{ 
-                      backgroundColor: '#E8FDF3', 
-                      color: '#0F7D40',
-                      fontSize: '0.7rem',
-                      height: '20px',
-                      fontWeight: 600
-                    }} 
-                  />
-                </Stack>
-              </ToggleButton>
-            </ToggleButtonGroup>
-          </Box>
-
-          {getSavings() && (
-            <Fade in>
-              <Typography sx={{ color: '#0F7D40', fontWeight: 600, mb: 4 }}>
-                💰 {getSavings()}
-              </Typography>
-            </Fade>
-          )}
         </Box>
 
         {/* Category Headers */}
