@@ -1,24 +1,25 @@
+
 import { Box, Container, Typography, Button, Card, CardContent, CardActions, Stack, Chip, Tooltip, Grow, Collapse } from '@mui/material';
-import { Check, HelpOutline, PlayCircle, ShoppingCart, ExpandMore, ExpandLess } from '@mui/icons-material';
+import { Check, HelpOutline, PlayCircle, ShoppingCart, ExpandMore, ExpandLess, Phone } from '@mui/icons-material';
 import { useState } from 'react';
 import { useTranslations } from '@/hooks/useTranslations';
 
 const Plans = () => {
   const { t } = useTranslations();
-  const [selectedModule, setSelectedModule] = useState('clips');
-  const [expandedDetails, setExpandedDetails] = useState<string | null>(null);
+  const [expandedDetails, setExpandedDetails] = useState<boolean>(false);
 
   const plans = [
     {
-      id: 'starter',
-      name: 'Starter',
-      description: t('starterDescription'),
-      subtitle: t('starterSubtitle'),
-      monthlyPrice: 595,
+      id: 'starter-clips',
+      name: 'Starter Clips',
+      description: t('starterClipsDescription'),
+      subtitle: t('videoModule'),
+      monthlyPrice: 495,
       popular: false,
       color: 'default' as const,
+      icon: <PlayCircle sx={{ fontSize: 24, color: '#43BEAC' }} />,
       features: [
-        { text: t('starterModule'), tooltip: t('starterModuleTooltip') },
+        { text: t('clipsModule'), tooltip: t('clipsModuleTooltip') },
         { text: t('starterViews'), tooltip: null },
         { text: t('starterUploads'), tooltip: null },
         { text: t('starterAccounts'), tooltip: null },
@@ -32,19 +33,45 @@ const Plans = () => {
         t('basicSupport'),
         t('sslSecurity'),
         t('mobileOptimized')
+      ]
+    },
+    {
+      id: 'starter-live-shopping',
+      name: 'Starter Live Shopping',
+      description: t('starterLiveShoppingDescription'),
+      subtitle: t('commerceModule'),
+      monthlyPrice: 495,
+      popular: false,
+      color: 'default' as const,
+      icon: <ShoppingCart sx={{ fontSize: 24, color: '#43BEAC' }} />,
+      features: [
+        { text: t('liveShoppingModule'), tooltip: t('liveShoppingModuleTooltip') },
+        { text: t('starterViews'), tooltip: null },
+        { text: t('starterUploads'), tooltip: null },
+        { text: t('starterAccounts'), tooltip: null },
+        { text: t('basicAnalytics'), tooltip: null },
+        { text: t('playerIntegration'), tooltip: t('playerIntegrationTooltip') },
+        { text: t('selfBranding'), tooltip: t('selfBrandingTooltip') }
       ],
-      hasModuleSelector: true
+      detailedFeatures: [
+        t('videoHosting'),
+        t('customPlayer'),
+        t('basicSupport'),
+        t('sslSecurity'),
+        t('mobileOptimized')
+      ]
     },
     {
       id: 'advanced',
       name: 'Advanced',
       description: t('advancedDescription'),
-      subtitle: t('advancedSubtitle'),
+      subtitle: t('fullSolution'),
       monthlyPrice: 1195,
       popular: true,
       color: 'primary' as const,
+      icon: <Check sx={{ fontSize: 24, color: '#43BEAC' }} />,
       features: [
-        { text: t('allFromStarter'), tooltip: null },
+        { text: t('allModulesIncluded'), tooltip: null },
         { text: t('fullVideoCommerce'), tooltip: t('fullVideoCommerceTooltip') },
         { text: t('advancedViews'), tooltip: null },
         { text: t('advancedUploads'), tooltip: null },
@@ -64,10 +91,11 @@ const Plans = () => {
       id: 'enterprise',
       name: 'Enterprise',
       description: t('enterpriseDescription'),
-      subtitle: t('enterpriseSubtitle'),
+      subtitle: t('enterpriseSolution'),
       monthlyPrice: null,
       popular: false,
       color: 'secondary' as const,
+      icon: <Phone sx={{ fontSize: 24, color: '#43BEAC' }} />,
       features: [
         { text: t('allFromAdvanced'), tooltip: null },
         { text: t('aiBot'), tooltip: t('aiBotTooltip') },
@@ -88,7 +116,7 @@ const Plans = () => {
   ];
 
   const formatPrice = (price: number | null) => {
-    if (price === null) return t('contact');
+    if (price === null) return t('individual');
     return `${price}€`;
   };
 
@@ -125,13 +153,13 @@ const Plans = () => {
     return baseStyles;
   };
 
-  const toggleDetails = (planId: string) => {
-    setExpandedDetails(expandedDetails === planId ? null : planId);
+  const toggleDetails = () => {
+    setExpandedDetails(!expandedDetails);
   };
 
   return (
     <Box sx={{ py: 8, background: 'linear-gradient(135deg, #f8fafc 0%, #e8f4fd 100%)', minHeight: '100vh' }}>
-      <Container maxWidth="lg">
+      <Container maxWidth="xl">
         {/* Header */}
         <Box sx={{ textAlign: 'center', mb: 8 }}>
           <Typography 
@@ -163,15 +191,15 @@ const Plans = () => {
 
         {/* Category Headers */}
         <Box sx={{ 
-          display: 'flex', 
-          maxWidth: '1200px', 
+          display: 'grid',
+          gridTemplateColumns: { xs: '1fr', md: 'repeat(4, 1fr)' },
+          maxWidth: '1400px', 
           mx: 'auto', 
           mb: 2,
-          gap: 4,
-          flexDirection: { xs: 'column', md: 'row' }
+          gap: 3
         }}>
           {plans.map((plan) => (
-            <Box key={`header-${plan.id}`} sx={{ flex: 1 }}>
+            <Box key={`header-${plan.id}`}>
               <Typography 
                 variant="overline" 
                 sx={{ 
@@ -190,14 +218,15 @@ const Plans = () => {
 
         {/* Plans Grid */}
         <Box sx={{ 
-          display: 'flex', 
-          maxWidth: '1200px', 
+          display: 'grid',
+          gridTemplateColumns: { xs: '1fr', md: 'repeat(4, 1fr)' },
+          maxWidth: '1400px', 
           mx: 'auto',
-          gap: 4,
-          flexDirection: { xs: 'column', md: 'row' }
+          gap: 3,
+          mb: 8
         }}>
           {plans.map((plan, index) => (
-            <Box key={plan.id} sx={{ flex: 1 }}>
+            <Box key={plan.id}>
               <Grow in timeout={500 + index * 200}>
                 <Card sx={getCardStyles(plan)}>
                   {plan.popular && (
@@ -217,21 +246,27 @@ const Plans = () => {
                     />
                   )}
 
-                  <CardContent sx={{ p: 4, flexGrow: 1 }}>
+                  <CardContent sx={{ p: 3, flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
                     {/* Plan Header */}
-                    <Box sx={{ textAlign: 'center', mb: 4 }}>
+                    <Box sx={{ textAlign: 'center', mb: 3 }}>
+                      <Box sx={{ mb: 2 }}>
+                        {plan.icon}
+                      </Box>
                       <Typography variant="h6" sx={{ 
                         fontWeight: 700, 
                         mb: 1,
                         color: '#252A2E',
-                        letterSpacing: '-0.01em'
+                        letterSpacing: '-0.01em',
+                        fontSize: '1.1rem'
                       }}>
                         {plan.name}
                       </Typography>
                       <Typography variant="body2" sx={{ 
                         color: '#737474',
                         mb: 3,
-                        lineHeight: 1.6
+                        lineHeight: 1.5,
+                        fontSize: '0.85rem',
+                        minHeight: '40px'
                       }}>
                         {plan.description}
                       </Typography>
@@ -239,7 +274,7 @@ const Plans = () => {
                       {/* Price */}
                       <Box sx={{ mb: 3 }}>
                         <Stack direction="row" alignItems="baseline" justifyContent="center" spacing={0.5}>
-                          <Typography variant="h3" sx={{
+                          <Typography variant="h4" sx={{
                             fontWeight: 800,
                             color: '#43BEAC',
                             lineHeight: 1,
@@ -259,183 +294,81 @@ const Plans = () => {
                       </Box>
                     </Box>
 
-                    {/* Module Selector for Starter */}
-                    {plan.hasModuleSelector && (
-                      <Box sx={{ mb: 4 }}>
-                        <Typography variant="subtitle2" sx={{ 
-                          mb: 3, 
-                          fontWeight: 600, 
-                          color: '#252A2E', 
-                          textAlign: 'center',
-                          fontSize: '0.875rem'
-                        }}>
-                          {t('chooseModule')}:
-                        </Typography>
-                        <Stack spacing={1.5}>
-                          <Box
-                            onClick={() => setSelectedModule('clips')}
-                            sx={{
-                              cursor: 'pointer',
-                              p: 2,
-                              borderRadius: 2,
-                              border: selectedModule === 'clips' ? '2px solid #43BEAC' : '1px solid #D3D4D5',
-                              backgroundColor: selectedModule === 'clips' ? 'rgba(67, 190, 172, 0.05)' : '#ffffff',
-                              transition: 'all 0.2s ease',
-                              '&:hover': {
-                                borderColor: '#43BEAC',
-                                backgroundColor: 'rgba(67, 190, 172, 0.05)'
-                              }
-                            }}
-                          >
-                            <Stack direction="row" alignItems="center" spacing={2}>
-                              <Box sx={{ 
-                                backgroundColor: selectedModule === 'clips' ? '#43BEAC' : '#F1F1F1',
-                                borderRadius: '50%',
-                                p: 1,
-                                minWidth: 36,
-                                height: 36,
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center'
-                              }}>
-                                <PlayCircle sx={{ 
-                                  fontSize: 18, 
-                                  color: selectedModule === 'clips' ? '#ffffff' : '#737474' 
-                                }} />
-                              </Box>
-                              <Box sx={{ flex: 1 }}>
-                                <Typography fontWeight={600} variant="body2" sx={{ color: '#252A2E' }}>
-                                  {t('clipsModule')}
-                                </Typography>
-                                <Typography variant="caption" sx={{ color: '#737474' }}>
-                                  {t('clipsModuleDesc')}
-                                </Typography>
-                              </Box>
-                            </Stack>
-                          </Box>
-
-                          <Box
-                            onClick={() => setSelectedModule('live-shopping')}
-                            sx={{
-                              cursor: 'pointer',
-                              p: 2,
-                              borderRadius: 2,
-                              border: selectedModule === 'live-shopping' ? '2px solid #43BEAC' : '1px solid #D3D4D5',
-                              backgroundColor: selectedModule === 'live-shopping' ? 'rgba(67, 190, 172, 0.05)' : '#ffffff',
-                              transition: 'all 0.2s ease',
-                              '&:hover': {
-                                borderColor: '#43BEAC',
-                                backgroundColor: 'rgba(67, 190, 172, 0.05)'
-                              }
-                            }}
-                          >
-                            <Stack direction="row" alignItems="center" spacing={2}>
-                              <Box sx={{ 
-                                backgroundColor: selectedModule === 'live-shopping' ? '#43BEAC' : '#F1F1F1',
-                                borderRadius: '50%',
-                                p: 1,
-                                minWidth: 36,
-                                height: 36,
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center'
-                              }}>
-                                <ShoppingCart sx={{ 
-                                  fontSize: 18, 
-                                  color: selectedModule === 'live-shopping' ? '#ffffff' : '#737474' 
-                                }} />
-                              </Box>
-                              <Box sx={{ flex: 1 }}>
-                                <Typography fontWeight={600} variant="body2" sx={{ color: '#252A2E' }}>
-                                  {t('liveShoppingModule')}
-                                </Typography>
-                                <Typography variant="caption" sx={{ color: '#737474' }}>
-                                  {t('liveShoppingModuleDesc')}
-                                </Typography>
-                              </Box>
-                            </Stack>
-                          </Box>
-                        </Stack>
-                      </Box>
-                    )}
-
                     {/* Features */}
-                    <Stack spacing={2.5}>
-                      {plan.features.map((feature, index) => (
-                        <Stack key={index} direction="row" alignItems="center" spacing={2}>
-                          <Box sx={{
-                            backgroundColor: '#E8FDF3',
-                            borderRadius: '50%',
-                            p: 0.5,
-                            flexShrink: 0,
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center'
-                          }}>
-                            <Check sx={{ 
-                              fontSize: 16, 
-                              color: '#0F7D40' 
-                            }} />
-                          </Box>
-                          <Stack direction="row" alignItems="center" spacing={0.5} sx={{ flexGrow: 1 }}>
-                            <Typography variant="body2" sx={{ 
-                              color: '#515558',
-                              lineHeight: 1.5,
-                              fontWeight: 500
+                    <Box sx={{ flexGrow: 1 }}>
+                      <Stack spacing={2}>
+                        {plan.features.map((feature, index) => (
+                          <Stack key={index} direction="row" alignItems="flex-start" spacing={1.5}>
+                            <Box sx={{
+                              backgroundColor: '#E8FDF3',
+                              borderRadius: '50%',
+                              p: 0.4,
+                              flexShrink: 0,
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              mt: 0.2
                             }}>
-                              {feature.text}
-                            </Typography>
-                            {feature.tooltip && (
-                              <Tooltip title={feature.tooltip} arrow>
-                                <HelpOutline sx={{ 
-                                  fontSize: 16, 
-                                  color: '#A8AAAB',
-                                  cursor: 'help'
-                                }} />
-                              </Tooltip>
-                            )}
+                              <Check sx={{ 
+                                fontSize: 14, 
+                                color: '#0F7D40' 
+                              }} />
+                            </Box>
+                            <Stack direction="row" alignItems="flex-start" spacing={0.5} sx={{ flexGrow: 1 }}>
+                              <Typography variant="body2" sx={{ 
+                                color: '#515558',
+                                lineHeight: 1.4,
+                                fontWeight: 500,
+                                fontSize: '0.85rem'
+                              }}>
+                                {feature.text}
+                              </Typography>
+                              {feature.tooltip && (
+                                <Tooltip title={feature.tooltip} arrow>
+                                  <HelpOutline sx={{ 
+                                    fontSize: 14, 
+                                    color: '#A8AAAB',
+                                    cursor: 'help',
+                                    mt: 0.1
+                                  }} />
+                                </Tooltip>
+                              )}
+                            </Stack>
                           </Stack>
-                        </Stack>
-                      ))}
-                    </Stack>
+                        ))}
+                      </Stack>
 
-                    {/* Detailed Features Collapse */}
-                    <Collapse in={expandedDetails === plan.id}>
-                      <Box sx={{ mt: 3, pt: 3, borderTop: '1px solid #D3D4D5' }}>
-                        <Typography variant="subtitle2" sx={{ 
-                          fontWeight: 700, 
-                          mb: 2, 
-                          color: '#43BEAC' 
-                        }}>
-                          {t('additionalFeatures')}:
-                        </Typography>
-                        <Box sx={{ 
-                          display: 'flex', 
-                          flexWrap: 'wrap', 
-                          gap: 2 
-                        }}>
-                          {plan.detailedFeatures?.map((feature, index) => (
-                            <Box 
-                              key={index} 
-                              sx={{ 
-                                flex: { xs: '1 1 100%', sm: '1 1 calc(50% - 8px)' },
-                                minWidth: 0
-                              }}
-                            >
-                              <Stack direction="row" alignItems="center" spacing={1}>
-                                <Check sx={{ fontSize: 14, color: '#0F7D40', flexShrink: 0 }} />
-                                <Typography variant="body2" sx={{ color: '#737474', fontSize: '0.8rem' }}>
+                      {/* Detailed Features Collapse */}
+                      <Collapse in={expandedDetails}>
+                        <Box sx={{ mt: 3, pt: 3, borderTop: '1px solid #D3D4D5' }}>
+                          <Typography variant="subtitle2" sx={{ 
+                            fontWeight: 700, 
+                            mb: 2, 
+                            color: '#43BEAC',
+                            fontSize: '0.8rem'
+                          }}>
+                            {t('additionalFeatures')}:
+                          </Typography>
+                          <Stack spacing={1.5}>
+                            {plan.detailedFeatures?.map((feature, index) => (
+                              <Stack key={index} direction="row" alignItems="flex-start" spacing={1}>
+                                <Check sx={{ fontSize: 12, color: '#0F7D40', flexShrink: 0, mt: 0.2 }} />
+                                <Typography variant="body2" sx={{ 
+                                  color: '#737474', 
+                                  fontSize: '0.75rem',
+                                  lineHeight: 1.3
+                                }}>
                                   {feature}
                                 </Typography>
                               </Stack>
-                            </Box>
-                          ))}
+                            ))}
+                          </Stack>
                         </Box>
-                      </Box>
-                    </Collapse>
+                      </Collapse>
+                    </Box>
                   </CardContent>
 
-                  <CardActions sx={{ p: 4, pt: 0 }}>
+                  <CardActions sx={{ p: 3, pt: 0 }}>
                     <Stack spacing={2} sx={{ width: '100%' }}>
                       <Button
                         variant="contained"
@@ -453,30 +386,12 @@ const Plans = () => {
                           },
                           fontWeight: 700,
                           textTransform: 'none',
-                          fontSize: '1.1rem',
+                          fontSize: '1rem',
                           borderRadius: 2,
                           transition: 'all 0.3s ease'
                         }}
                       >
-                        {plan.id === 'enterprise' ? t('contactSales') : t('selectPlan')}
-                      </Button>
-
-                      <Button
-                        variant="text"
-                        onClick={() => toggleDetails(plan.id)}
-                        endIcon={expandedDetails === plan.id ? <ExpandLess /> : <ExpandMore />}
-                        sx={{
-                          color: '#737474',
-                          textTransform: 'none',
-                          fontWeight: 500,
-                          fontSize: '0.875rem',
-                          '&:hover': {
-                            backgroundColor: 'transparent',
-                            color: 'rgb(14, 112, 144)',
-                          }
-                        }}
-                      >
-                        {t('allDetails')}
+                        {plan.id === 'enterprise' ? t('scheduleDemo') : t('selectPlan')}
                       </Button>
                     </Stack>
                   </CardActions>
@@ -484,6 +399,70 @@ const Plans = () => {
               </Grow>
             </Box>
           ))}
+        </Box>
+
+        {/* Global Details Toggle */}
+        <Box sx={{ textAlign: 'center', mb: 8 }}>
+          <Button
+            variant="text"
+            onClick={toggleDetails}
+            endIcon={expandedDetails ? <ExpandLess /> : <ExpandMore />}
+            sx={{
+              color: '#737474',
+              textTransform: 'none',
+              fontWeight: 500,
+              fontSize: '0.875rem',
+              '&:hover': {
+                backgroundColor: 'transparent',
+                color: 'rgb(14, 112, 144)',
+              }
+            }}
+          >
+            {expandedDetails ? t('hideDetails') : t('showAllDetails')}
+          </Button>
+        </Box>
+
+        {/* Additional Information Section */}
+        <Box sx={{ 
+          maxWidth: '1000px', 
+          mx: 'auto',
+          backgroundColor: '#ffffff',
+          borderRadius: 3,
+          p: 6,
+          boxShadow: '0 4px 20px rgba(0,0,0,0.08)'
+        }}>
+          <Typography variant="h5" sx={{ 
+            fontWeight: 700, 
+            mb: 4, 
+            color: '#252A2E',
+            textAlign: 'center'
+          }}>
+            {t('additionalInformation')}
+          </Typography>
+          
+          <Stack spacing={3}>
+            <Box>
+              <Typography variant="body1" sx={{ color: '#515558', lineHeight: 1.6 }}>
+                {t('pricingNote')} <sup>1</sup>
+              </Typography>
+            </Box>
+            
+            <Box>
+              <Typography variant="body2" sx={{ color: '#737474', lineHeight: 1.5 }}>
+                <sup>1</sup> {t('footnoteExample')}
+              </Typography>
+            </Box>
+            
+            <Box sx={{ pt: 2, borderTop: '1px solid #D3D4D5' }}>
+              <Typography variant="body2" sx={{ 
+                color: '#737474', 
+                textAlign: 'center',
+                fontStyle: 'italic'
+              }}>
+                {t('customSolutionsAvailable')}
+              </Typography>
+            </Box>
+          </Stack>
         </Box>
       </Container>
     </Box>
