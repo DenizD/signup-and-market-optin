@@ -15,8 +15,8 @@ const Plans = () => {
       name: 'Starter',
       description: t('starterDescription'),
       subtitle: t('starterSubtitle'),
-      monthlyPrice: 695,
-      yearlyPrice: 6950,
+      monthlyPrice: 595€,
+      yearlyPrice: 495€,
       popular: false,
       color: 'default' as const,
       features: [
@@ -42,8 +42,8 @@ const Plans = () => {
       name: 'Advanced',
       description: t('advancedDescription'),
       subtitle: t('advancedSubtitle'),
-      monthlyPrice: 1495,
-      yearlyPrice: 14950,
+      monthlyPrice: 1.195€,
+      yearlyPrice: 1.095€,
       popular: true,
       color: 'primary' as const,
       features: [
