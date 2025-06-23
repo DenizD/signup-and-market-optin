@@ -1,3 +1,4 @@
+
 import { Box, Container, Typography, Button, Card, CardContent, CardActions, Stack, Chip, Tooltip, ToggleButtonGroup, ToggleButton, Grow, Fade, Collapse } from '@mui/material';
 import { Check, HelpOutline, PlayCircle, ShoppingCart, ExpandMore, ExpandLess } from '@mui/icons-material';
 import { useState } from 'react';
@@ -15,8 +16,8 @@ const Plans = () => {
       name: 'Starter',
       description: t('starterDescription'),
       subtitle: t('starterSubtitle'),
-      monthlyPrice: 595€,
-      yearlyPrice: 495€,
+      monthlyPrice: 595,
+      yearlyPrice: 495,
       popular: false,
       color: 'default' as const,
       features: [
@@ -42,8 +43,8 @@ const Plans = () => {
       name: 'Advanced',
       description: t('advancedDescription'),
       subtitle: t('advancedSubtitle'),
-      monthlyPrice: 1.195€,
-      yearlyPrice: 1.095€,
+      monthlyPrice: 1195,
+      yearlyPrice: 1095,
       popular: true,
       color: 'primary' as const,
       features: [
