@@ -11,55 +11,59 @@ const Plans = () => {
     {
       id: 'starter-clips',
       name: 'Starter Clips',
-      description: 'Perfekt für Video-Content',
+      description: 'LOREM IPSUM- TEXT folgt',
       subtitle: 'Video Modul',
       monthlyPrice: 495,
       popular: false,
       color: 'default' as const,
       isStarterOption: true,
       features: [
-        'Shoppable Clips',
-        '1.000 Views/Monat inklusive',
-        'HD Video Player',
-        'PiP Video Player',
-        'Mediathek & Playlisten Funktion',
-        'Tag Funktion',
+        'Shoppable Clips Modul inklusive',
+        'inkl. 1.000 kostenlose Views/Monat¹',
+        'Flexibler Shoppable Video Player (Bild in Bild Funktion)',
+        'Mediathek & Playlisten Funktion inkl. Tag Funktionen',
         'Endless Play & Swipe Funktion',
-        'Quer- und Hochformat Funktion',
-        'Basic Analytics',
         '1 Code Video Player Integration',
         'Self Branding Funktion'
       ],
       detailedFeatures: [
         'Video Importer',
-        'Featured Produktanzeige',
-        'Thumbnail Generator'
+        'Featured Produktanzeige auf dem Thumbnail',
+        'Thumbnail Generator',
+        'Basis Support über Ticketsystem'
       ]
     },
     {
       id: 'starter-live-shopping',
       name: 'Starter Live Shopping',
-      description: 'Ideal für E-Commerce Live Events',
+      description: 'LOREM IPSUM- TEXT folgt',
       subtitle: 'Commerce Modul',
       monthlyPrice: 495,
       popular: false,
       color: 'default' as const,
       isStarterOption: true,
       features: [
-        'Live Shopping Modul',
-        '100.000 Views/Monat',
-        '50 Uploads/Monat',
-        '3 User Accounts',
-        'Basic Analytics',
-        'Player Integration',
-        'Self Branding'
+        'Live Shopping Modul inklusive',
+        'inkl. 1.000 kostenlose Views/Monat¹',
+        'Flexibler Live Shopping Video Player Bild in Bild Funktion)',
+        'Mediathek & Playlisten Funktion inkl. Tag Funktionen',
+        'Endless Play & Swipe Funktion',
+        '1 Code Video Player Integration',
+        'Self Branding Funktion'
       ],
       detailedFeatures: [
-        'Live-Event Hosting',
-        'Produkt Integration',
-        'Standard Support',
-        'SSL Verschlüsselung',
-        'Mobile optimiert'
+        'Speicherung als Video-On-Demand',
+        'Add-To-Calendar Funktion',
+        'Pre-Live Countdown',
+        'Broadcasting App',
+        'Hybrid-Streaming über RTMP oder externe Apps',
+        'Live Shopping Host Funktion',
+        'Pre-Recorded Shows Upload',
+        'Show Download',
+        'Live-Chat & Moderationsfunktion',
+        'Produkt Highlighting und Timestamps',
+        'Social-Media-Multistreaming',
+        'Floating Action Video Widget'
       ]
     },
     {
