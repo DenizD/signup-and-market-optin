@@ -408,26 +408,6 @@ const Plans = () => {
           </Typography>
         </Box>
 
-        {/* Starter Hinweis */}
-        <Box sx={{ textAlign: 'center', mb: 6 }}>
-          <Typography 
-            variant="body1" 
-            sx={{ 
-              color: '#64748b',
-              fontSize: '1.1rem',
-              fontWeight: 500,
-              backgroundColor: '#f8fafc',
-              px: 4,
-              py: 2,
-              borderRadius: 3,
-              display: 'inline-block',
-              border: '1px solid #e2e8f0'
-            }}
-          >
-            Die beiden Starter-Module sind als <strong>Entweder/Oder</strong> Option verfügbar
-          </Typography>
-        </Box>
-
         {/* All Plans Section */}
         <Box sx={{ mb: { xs: 8, md: 12 } }}>
           <Box sx={{ 
@@ -529,6 +509,16 @@ const Plans = () => {
                               </Typography>
                             )}
                           </Stack>
+                          {/* VAT Notice */}
+                          {plan.monthlyPrice !== null && (
+                            <Typography variant="body2" sx={{ 
+                              color: '#94a3b8',
+                              fontSize: '0.75rem',
+                              mt: 1
+                            }}>
+                              zzgl. der gesetzlichen Mehrwertsteuer
+                            </Typography>
+                          )}
                         </Box>
                       </Box>
 
