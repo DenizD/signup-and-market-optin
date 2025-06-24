@@ -1,5 +1,6 @@
+
 import { Box, Container, Typography, Button, Card, CardContent, CardActions, Stack, Chip, Tooltip, Grow, Collapse } from '@mui/material';
-import { Check, HelpOutline, ExpandMore, ExpandLess, Phone, InfoOutlined } from '@mui/icons-material';
+import { Check, HelpOutline, ExpandMore, ExpandLess, Phone, InfoOutlined, CompareArrows, VideoLibrary, ShoppingCart } from '@mui/icons-material';
 import { useState } from 'react';
 import { useTranslations } from '@/hooks/useTranslations';
 
@@ -408,24 +409,143 @@ const Plans = () => {
           </Typography>
         </Box>
 
-        {/* Starter Hinweis */}
-        <Box sx={{ textAlign: 'center', mb: 6 }}>
-          <Typography 
-            variant="body1" 
-            sx={{ 
+        {/* Starter Module Auswahl */}
+        <Box sx={{ 
+          maxWidth: '800px', 
+          mx: 'auto', 
+          mb: 8,
+          backgroundColor: '#ffffff',
+          borderRadius: 4,
+          p: { xs: 4, md: 6 },
+          boxShadow: '0 8px 32px rgba(67, 190, 172, 0.08)',
+          border: '2px solid rgba(67, 190, 172, 0.1)'
+        }}>
+          <Box sx={{ textAlign: 'center', mb: 4 }}>
+            <Typography variant="h4" sx={{ 
+              fontWeight: 700, 
+              mb: 2,
+              color: '#1a1d21',
+              fontSize: { xs: '1.5rem', md: '2rem' }
+            }}>
+              Starter Module
+            </Typography>
+            <Typography variant="body1" sx={{ 
               color: '#64748b',
               fontSize: '1.1rem',
-              fontWeight: 500,
-              backgroundColor: '#f8fafc',
-              px: 4,
-              py: 2,
-              borderRadius: 3,
-              display: 'inline-block',
-              border: '1px solid #e2e8f0'
-            }}
+              mb: 4
+            }}>
+              Wählen Sie Ihr bevorzugtes Starter-Modul
+            </Typography>
+          </Box>
+
+          <Stack 
+            direction={{ xs: 'column', md: 'row' }} 
+            spacing={3} 
+            alignItems="center"
+            justifyContent="center"
           >
-            Die beiden Starter-Module sind als <strong>Entweder/Oder</strong> Option verfügbar
-          </Typography>
+            {/* Starter Clips */}
+            <Box sx={{ 
+              flex: 1,
+              textAlign: 'center',
+              p: 3,
+              borderRadius: 3,
+              backgroundColor: '#f8fafc',
+              border: '2px solid #e2e8f0',
+              transition: 'all 0.3s ease',
+              '&:hover': {
+                borderColor: '#43BEAC',
+                backgroundColor: '#f0fdfa'
+              }
+            }}>
+              <VideoLibrary sx={{ 
+                fontSize: 48, 
+                color: '#43BEAC', 
+                mb: 2 
+              }} />
+              <Typography variant="h6" sx={{ 
+                fontWeight: 700, 
+                mb: 1,
+                color: '#1a1d21'
+              }}>
+                Starter Clips
+              </Typography>
+              <Typography variant="body2" sx={{ 
+                color: '#64748b',
+                fontSize: '0.95rem'
+              }}>
+                Video Modul für<br />Shoppable Clips
+              </Typography>
+            </Box>
+
+            {/* ODER Trenner */}
+            <Box sx={{ 
+              display: 'flex', 
+              flexDirection: { xs: 'row', md: 'column' },
+              alignItems: 'center',
+              justifyContent: 'center',
+              px: 2
+            }}>
+              <CompareArrows sx={{ 
+                fontSize: 32, 
+                color: '#43BEAC',
+                transform: { xs: 'rotate(90deg)', md: 'none' }
+              }} />
+              <Typography variant="h6" sx={{ 
+                fontWeight: 800,
+                color: '#43BEAC',
+                mx: { xs: 2, md: 0 },
+                my: { xs: 0, md: 1 },
+                fontSize: '1.1rem'
+              }}>
+                ODER
+              </Typography>
+            </Box>
+
+            {/* Starter Live Shopping */}
+            <Box sx={{ 
+              flex: 1,
+              textAlign: 'center',
+              p: 3,
+              borderRadius: 3,
+              backgroundColor: '#f8fafc',
+              border: '2px solid #e2e8f0',
+              transition: 'all 0.3s ease',
+              '&:hover': {
+                borderColor: '#43BEAC',
+                backgroundColor: '#f0fdfa'
+              }
+            }}>
+              <ShoppingCart sx={{ 
+                fontSize: 48, 
+                color: '#43BEAC', 
+                mb: 2 
+              }} />
+              <Typography variant="h6" sx={{ 
+                fontWeight: 700, 
+                mb: 1,
+                color: '#1a1d21'
+              }}>
+                Starter Live Shopping
+              </Typography>
+              <Typography variant="body2" sx={{ 
+                color: '#64748b',
+                fontSize: '0.95rem'
+              }}>
+                Commerce Modul für<br />Live Shopping
+              </Typography>
+            </Box>
+          </Stack>
+
+          <Box sx={{ textAlign: 'center', mt: 4 }}>
+            <Typography variant="body2" sx={{ 
+              color: '#64748b',
+              fontStyle: 'italic',
+              fontSize: '0.9rem'
+            }}>
+              Beide Module haben den gleichen Preis von 495€/Monat
+            </Typography>
+          </Box>
         </Box>
 
         {/* All Plans Section */}
@@ -534,7 +654,7 @@ const Plans = () => {
 
                       {/* Features */}
                       <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-                        {/* Plus Headline for Advanced and Enterprise plans - without background */}
+                        {/* Plus Headline for Advanced and Enterprise plans */}
                         {(plan.hasStarterPlus || plan.hasAdvancedPlus) && (
                           <Box sx={{ mb: 3, textAlign: 'center', minHeight: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             <Typography variant="h6" sx={{ 
@@ -573,7 +693,7 @@ const Plans = () => {
                             }}>
                               Zusätzliche Features:
                             </Typography>
-                            <Box sx={{ minHeight: { xs: 'auto', md: '300px' } }}>
+                            <Box sx={{ minHeight: { xs: 'auto', md: '400px' } }}>
                               <Stack spacing={2}>
                                 {plan.detailedFeatures?.map((feature, index) => (
                                   <Stack key={index} direction="row" alignItems="flex-start" spacing={1.5}>
@@ -673,7 +793,7 @@ const Plans = () => {
           </Box>
         </Box>
 
-        {/* Global Details Toggle - prominenter gestaltet */}
+        {/* Global Details Toggle */}
         <Box sx={{ textAlign: 'center', mb: { xs: 8, md: 12 } }}>
           <Button
             variant="contained"
