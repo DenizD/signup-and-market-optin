@@ -75,14 +75,12 @@ const Plans = () => {
       popular: true,
       color: 'primary' as const,
       isStarterOption: false,
+      hasStarterPlus: true,
       features: [
-        'Alle Module inklusive',
-        'Video + Live Shopping',
-        '1.000.000 Views/Monat',
-        '500 Uploads/Monat',
-        '20 User Accounts',
-        'Advanced Analytics',
-        'Extended API Access'
+        'Clips & Live Shopping Modul inklusive',
+        'inkl. 2.500 kostenlose Views/Monat¹',
+        'Advanced Analytics (mit Export Funktion)',
+        'Erweiterter API-Zugriff'
       ],
       detailedFeatures: [
         'Priority Support',
@@ -350,6 +348,21 @@ const Plans = () => {
                       {/* Features */}
                       <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
                         <Stack spacing={3} sx={{ minHeight: { xs: 'auto', md: '280px' } }}>
+                          {/* Starter Plus Headline for Advanced plan */}
+                          {plan.hasStarterPlus && (
+                            <Box sx={{ mb: 2 }}>
+                              <Typography variant="body1" sx={{ 
+                                fontWeight: 700,
+                                color: '#43BEAC',
+                                fontSize: '1rem',
+                                textAlign: 'center',
+                                mb: 2
+                              }}>
+                                Alles aus Starter +
+                              </Typography>
+                            </Box>
+                          )}
+                          
                           {plan.features.map((feature, index) => (
                             <Stack key={index} direction="row" alignItems="flex-start" spacing={2}>
                               <Box sx={{
