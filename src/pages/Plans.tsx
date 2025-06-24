@@ -552,7 +552,7 @@ const Plans = () => {
                           <Box sx={{ mb: 3, minHeight: '60px' }} />
                         )}
                         
-                        <Box sx={{ minHeight: { xs: 'auto', md: '320px' } }}>
+                        <Box sx={{ minHeight: { xs: 'auto', md: '400px' } }}>
                           <Stack spacing={3}>
                             {plan.features.map((feature, index) => 
                               renderFeatureWithTooltip(feature, index, plan)
