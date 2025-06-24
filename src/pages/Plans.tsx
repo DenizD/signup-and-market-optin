@@ -19,13 +19,13 @@ const Plans = () => {
       isStarterOption: true,
       features: [
         'Shoppable Clips',
-        '1.000 Views/Monat inklusive'
-        'HD Video Player'
-  'PiP Video Player'
-  'Mediathek & Playlisten Funktion'
-  'Tag Funktion'
-        'Endless Play & Swipe Funktion'
-        'Quer- und Hochformat Funktion'
+        '1.000 Views/Monat inklusive',
+        'HD Video Player',
+        'PiP Video Player',
+        'Mediathek & Playlisten Funktion',
+        'Tag Funktion',
+        'Endless Play & Swipe Funktion',
+        'Quer- und Hochformat Funktion',
         'Basic Analytics',
         '1 Code Video Player Integration',
         'Self Branding Funktion'
@@ -34,8 +34,6 @@ const Plans = () => {
         'Video Importer',
         'Featured Produktanzeige',
         'Thumbnail Generator'
-        'Thumbnail Generator'
-        ''
       ]
     },
     {
