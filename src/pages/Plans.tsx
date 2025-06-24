@@ -404,7 +404,7 @@ const Plans = () => {
               fontSize: '1rem'
             }}
           >
-            Alle Pakete sind monatlich kündbar und beinhalten kostenlose Updates
+            Alle Pakete beinhalten kostenlose Updates
           </Typography>
         </Box>
 
@@ -529,37 +529,27 @@ const Plans = () => {
                               </Typography>
                             )}
                           </Stack>
-                          {plan.monthlyPrice !== null && (
-                            <Typography variant="body2" sx={{ 
-                              color: '#94a3b8',
-                              mt: 1,
-                              fontSize: '0.875rem'
-                            }}>
-                              Monatlich kündbar
-                            </Typography>
-                          )}
                         </Box>
                       </Box>
 
                       {/* Features */}
                       <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-                        {/* Plus Headline for Advanced and Enterprise plans */}
+                        {/* Plus Headline for Advanced and Enterprise plans - without background */}
                         {(plan.hasStarterPlus || plan.hasAdvancedPlus) && (
-                          <Box sx={{ mb: 3, textAlign: 'center' }}>
+                          <Box sx={{ mb: 3, textAlign: 'center', minHeight: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             <Typography variant="h6" sx={{ 
                               fontWeight: 800,
                               color: '#43BEAC',
-                              fontSize: '1.25rem',
-                              mb: 2,
-                              backgroundColor: 'rgba(67, 190, 172, 0.08)',
-                              px: 3,
-                              py: 1.5,
-                              borderRadius: 2,
-                              border: '1px solid rgba(67, 190, 172, 0.2)'
+                              fontSize: '1.25rem'
                             }}>
                               {plan.hasStarterPlus ? plan.starterPlusText : plan.advancedPlusText}
                             </Typography>
                           </Box>
+                        )}
+                        
+                        {/* Empty box for starter plans to maintain alignment */}
+                        {!plan.hasStarterPlus && !plan.hasAdvancedPlus && (
+                          <Box sx={{ mb: 3, minHeight: '60px' }} />
                         )}
                         
                         <Box sx={{ minHeight: { xs: 'auto', md: '320px' } }}>
@@ -583,7 +573,7 @@ const Plans = () => {
                             }}>
                               Zusätzliche Features:
                             </Typography>
-                            <Box sx={{ minHeight: { xs: 'auto', md: '250px' } }}>
+                            <Box sx={{ minHeight: { xs: 'auto', md: '300px' } }}>
                               <Stack spacing={2}>
                                 {plan.detailedFeatures?.map((feature, index) => (
                                   <Stack key={index} direction="row" alignItems="flex-start" spacing={1.5}>
@@ -694,16 +684,16 @@ const Plans = () => {
               color: '#ffffff',
               textTransform: 'none',
               fontWeight: 700,
-              fontSize: '1.2rem',
-              py: 3,
-              px: 8,
-              borderRadius: 4,
-              boxShadow: '0 8px 24px rgba(67, 190, 172, 0.3)',
+              fontSize: '1.5rem',
+              py: 4,
+              px: 12,
+              borderRadius: 6,
+              boxShadow: '0 12px 32px rgba(67, 190, 172, 0.4)',
               transition: 'all 0.3s ease',
               '&:hover': {
                 backgroundColor: '#369991',
-                transform: 'translateY(-3px)',
-                boxShadow: '0 12px 40px rgba(67, 190, 172, 0.4)'
+                transform: 'translateY(-4px)',
+                boxShadow: '0 20px 50px rgba(67, 190, 172, 0.5)'
               }
             }}
           >
