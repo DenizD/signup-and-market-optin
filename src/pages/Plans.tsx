@@ -18,20 +18,24 @@ const Plans = () => {
       color: 'default' as const,
       isStarterOption: true,
       features: [
-        'Clips Modul',
-        '100.000 Views/Monat',
-        '50 Uploads/Monat',
-        '3 User Accounts',
+        'Shoppable Clips',
+        '1.000 Views/Monat inklusive'
+        'HD Video Player'
+  'PiP Video Player'
+  'Mediathek & Playlisten Funktion'
+  'Tag Funktion'
+        'Endless Play & Swipe Funktion'
+        'Quer- und Hochformat Funktion'
         'Basic Analytics',
-        'Player Integration',
-        'Self Branding'
+        '1 Code Video Player Integration',
+        'Self Branding Funktion'
       ],
       detailedFeatures: [
-        'Video Hosting inklusive',
-        'Anpassbarer Player',
-        'Standard Support',
-        'SSL Verschlüsselung',
-        'Mobile optimiert'
+        'Video Importer',
+        'Featured Produktanzeige',
+        'Thumbnail Generator'
+        'Thumbnail Generator'
+        ''
       ]
     },
     {
