@@ -171,6 +171,7 @@ const Plans = () => {
       color: 'primary' as const,
       isStarterOption: false,
       hasStarterPlus: true,
+      starterPlusText: 'Starter+',
       features: [
         {
           text: 'Vollständiges Video Commerce Paket (Live Shopping & Clips)',
@@ -209,6 +210,8 @@ const Plans = () => {
       popular: false,
       color: 'secondary' as const,
       isStarterOption: false,
+      hasAdvancedPlus: true,
+      advancedPlusText: 'Advanced+',
       features: [
         {
           text: 'KI-Bot Integration',
@@ -541,13 +544,13 @@ const Plans = () => {
 
                       {/* Features */}
                       <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-                        {/* Starter Plus Headline for Advanced plan */}
-                        {plan.hasStarterPlus && (
+                        {/* Plus Headline for Advanced and Enterprise plans */}
+                        {(plan.hasStarterPlus || plan.hasAdvancedPlus) && (
                           <Box sx={{ mb: 3, textAlign: 'center' }}>
-                            <Typography variant="body1" sx={{ 
-                              fontWeight: 700,
+                            <Typography variant="h6" sx={{ 
+                              fontWeight: 800,
                               color: '#43BEAC',
-                              fontSize: '1rem',
+                              fontSize: '1.25rem',
                               mb: 2,
                               backgroundColor: 'rgba(67, 190, 172, 0.08)',
                               px: 3,
@@ -555,16 +558,18 @@ const Plans = () => {
                               borderRadius: 2,
                               border: '1px solid rgba(67, 190, 172, 0.2)'
                             }}>
-                              Enthält alle Funktionen aus Starter Clips & Starter Live Shopping, plus:
+                              {plan.hasStarterPlus ? plan.starterPlusText : plan.advancedPlusText}
                             </Typography>
                           </Box>
                         )}
                         
-                        <Stack spacing={3} sx={{ minHeight: { xs: 'auto', md: '320px' } }}>
-                          {plan.features.map((feature, index) => 
-                            renderFeatureWithTooltip(feature, index, plan)
-                          )}
-                        </Stack>
+                        <Box sx={{ minHeight: { xs: 'auto', md: '320px' } }}>
+                          <Stack spacing={3}>
+                            {plan.features.map((feature, index) => 
+                              renderFeatureWithTooltip(feature, index, plan)
+                            )}
+                          </Stack>
+                        </Box>
 
                         {/* Detailed Features Collapse */}
                         <Collapse in={expandedDetails}>
@@ -579,62 +584,64 @@ const Plans = () => {
                             }}>
                               Zusätzliche Features:
                             </Typography>
-                            <Stack spacing={2}>
-                              {plan.detailedFeatures?.map((feature, index) => (
-                                <Stack key={index} direction="row" alignItems="flex-start" spacing={1.5}>
-                                  <Box sx={{
-                                    width: 14,
-                                    height: 14,
-                                    backgroundColor: '#43BEAC',
-                                    borderRadius: '50%',
-                                    flexShrink: 0,
-                                    mt: 0.25
-                                  }} />
-                                  <Stack direction="row" alignItems="flex-start" spacing={1} sx={{ flexGrow: 1 }}>
-                                    <Typography variant="body2" sx={{ 
-                                      color: '#64748b', 
-                                      fontSize: '0.875rem',
-                                      lineHeight: 1.4,
-                                      flexGrow: 1
-                                    }}>
-                                      {feature.text}
-                                    </Typography>
-                                    {feature.tooltip && (
-                                      <Tooltip 
-                                        title={feature.tooltip}
-                                        placement="top"
-                                        arrow
-                                        sx={{
-                                          '& .MuiTooltip-tooltip': {
-                                            backgroundColor: '#1a1d21',
-                                            color: '#ffffff',
-                                            fontSize: '0.875rem',
-                                            maxWidth: '300px',
-                                            padding: '12px',
-                                            borderRadius: '8px',
-                                            lineHeight: 1.4
-                                          },
-                                          '& .MuiTooltip-arrow': {
-                                            color: '#1a1d21'
-                                          }
-                                        }}
-                                      >
-                                        <InfoOutlined sx={{ 
-                                          color: '#64748b', 
-                                          fontSize: '14px',
-                                          cursor: 'help',
-                                          flexShrink: 0,
-                                          mt: 0.125,
-                                          '&:hover': {
-                                            color: '#43BEAC'
-                                          }
-                                        }} />
-                                      </Tooltip>
-                                    )}
+                            <Box sx={{ minHeight: { xs: 'auto', md: '250px' } }}>
+                              <Stack spacing={2}>
+                                {plan.detailedFeatures?.map((feature, index) => (
+                                  <Stack key={index} direction="row" alignItems="flex-start" spacing={1.5}>
+                                    <Box sx={{
+                                      width: 14,
+                                      height: 14,
+                                      backgroundColor: '#43BEAC',
+                                      borderRadius: '50%',
+                                      flexShrink: 0,
+                                      mt: 0.25
+                                    }} />
+                                    <Stack direction="row" alignItems="flex-start" spacing={1} sx={{ flexGrow: 1 }}>
+                                      <Typography variant="body2" sx={{ 
+                                        color: '#64748b', 
+                                        fontSize: '0.875rem',
+                                        lineHeight: 1.4,
+                                        flexGrow: 1
+                                      }}>
+                                        {feature.text}
+                                      </Typography>
+                                      {feature.tooltip && (
+                                        <Tooltip 
+                                          title={feature.tooltip}
+                                          placement="top"
+                                          arrow
+                                          sx={{
+                                            '& .MuiTooltip-tooltip': {
+                                              backgroundColor: '#1a1d21',
+                                              color: '#ffffff',
+                                              fontSize: '0.875rem',
+                                              maxWidth: '300px',
+                                              padding: '12px',
+                                              borderRadius: '8px',
+                                              lineHeight: 1.4
+                                            },
+                                            '& .MuiTooltip-arrow': {
+                                              color: '#1a1d21'
+                                            }
+                                          }}
+                                        >
+                                          <InfoOutlined sx={{ 
+                                            color: '#64748b', 
+                                            fontSize: '14px',
+                                            cursor: 'help',
+                                            flexShrink: 0,
+                                            mt: 0.125,
+                                            '&:hover': {
+                                              color: '#43BEAC'
+                                            }
+                                          }} />
+                                        </Tooltip>
+                                      )}
+                                    </Stack>
                                   </Stack>
-                                </Stack>
-                              ))}
-                            </Stack>
+                                ))}
+                              </Stack>
+                            </Box>
                           </Box>
                         </Collapse>
                       </Box>
@@ -688,16 +695,16 @@ const Plans = () => {
               color: '#ffffff',
               textTransform: 'none',
               fontWeight: 700,
-              fontSize: '1.1rem',
-              py: 2.5,
-              px: 6,
+              fontSize: '1.2rem',
+              py: 3,
+              px: 8,
               borderRadius: 4,
-              boxShadow: '0 6px 20px rgba(67, 190, 172, 0.3)',
+              boxShadow: '0 8px 24px rgba(67, 190, 172, 0.3)',
               transition: 'all 0.3s ease',
               '&:hover': {
                 backgroundColor: '#369991',
-                transform: 'translateY(-2px)',
-                boxShadow: '0 8px 32px rgba(67, 190, 172, 0.4)'
+                transform: 'translateY(-3px)',
+                boxShadow: '0 12px 40px rgba(67, 190, 172, 0.4)'
               }
             }}
           >
