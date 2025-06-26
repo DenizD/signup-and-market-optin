@@ -26,11 +26,6 @@ import {
   Card,
   CardContent,
   CardHeader,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemSecondaryAction,
-  IconButton
 } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
@@ -40,10 +35,8 @@ import {
   faCog, 
   faGlobe, 
   faRobot, 
-  faCreditCard,
   faShield,
   faTrash,
-  faEdit
 } from '@fortawesome/free-solid-svg-icons';
 
 interface TabPanelProps {
@@ -72,6 +65,46 @@ function TabPanel(props: TabPanelProps) {
   );
 }
 
+// Complete list of countries
+const countries = [
+  "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria",
+  "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan",
+  "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia",
+  "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Costa Rica",
+  "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt",
+  "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia", "Fiji", "Finland", "France", "Gabon",
+  "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana",
+  "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel",
+  "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kuwait", "Kyrgyzstan", "Laos",
+  "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar", "Malawi",
+  "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova",
+  "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands",
+  "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "North Macedonia", "Norway", "Oman", "Pakistan", "Palau",
+  "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania",
+  "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal",
+  "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Korea",
+  "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan",
+  "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu",
+  "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela",
+  "Vietnam", "Yemen", "Zambia", "Zimbabwe"
+];
+
+// Complete list of timezones
+const timezones = [
+  "UTC", "Europe/London", "Europe/Berlin", "Europe/Paris", "Europe/Rome", "Europe/Madrid", "Europe/Amsterdam", "Europe/Brussels", "Europe/Vienna", "Europe/Prague",
+  "Europe/Warsaw", "Europe/Budapest", "Europe/Bucharest", "Europe/Athens", "Europe/Helsinki", "Europe/Stockholm", "Europe/Oslo", "Europe/Copenhagen", "Europe/Dublin", "Europe/Lisbon",
+  "Europe/Zurich", "Europe/Moscow", "Europe/Kiev", "Europe/Istanbul", "America/New_York", "America/Chicago", "America/Denver", "America/Los_Angeles", "America/Toronto", "America/Vancouver",
+  "America/Montreal", "America/Mexico_City", "America/Sao_Paulo", "America/Buenos_Aires", "America/Lima", "America/Bogota", "America/Caracas", "America/Santiago", "America/La_Paz", "America/Asuncion",
+  "America/Montevideo", "America/Guatemala", "America/Costa_Rica", "America/Panama", "America/Havana", "America/Jamaica", "America/Santo_Domingo", "America/Puerto_Rico", "America/Barbados", "America/Port_of_Spain",
+  "Asia/Tokyo", "Asia/Seoul", "Asia/Shanghai", "Asia/Hong_Kong", "Asia/Singapore", "Asia/Bangkok", "Asia/Jakarta", "Asia/Manila", "Asia/Kuala_Lumpur", "Asia/Mumbai",
+  "Asia/Delhi", "Asia/Kolkata", "Asia/Dhaka", "Asia/Karachi", "Asia/Kabul", "Asia/Tehran", "Asia/Dubai", "Asia/Riyadh", "Asia/Kuwait", "Asia/Qatar",
+  "Asia/Bahrain", "Asia/Jerusalem", "Asia/Beirut", "Asia/Damascus", "Asia/Baghdad", "Asia/Amman", "Asia/Yerevan", "Asia/Baku", "Asia/Tbilisi", "Asia/Tashkent",
+  "Asia/Almaty", "Asia/Bishkek", "Asia/Dushanbe", "Asia/Ashgabat", "Asia/Ulaanbaatar", "Asia/Pyongyang", "Australia/Sydney", "Australia/Melbourne", "Australia/Brisbane", "Australia/Perth",
+  "Australia/Adelaide", "Australia/Darwin", "Pacific/Auckland", "Pacific/Fiji", "Pacific/Tahiti", "Pacific/Honolulu", "Pacific/Samoa", "Pacific/Guam", "Pacific/Port_Moresby", "Pacific/Noumea",
+  "Africa/Cairo", "Africa/Lagos", "Africa/Nairobi", "Africa/Johannesburg", "Africa/Cape_Town", "Africa/Casablanca", "Africa/Algiers", "Africa/Tunis", "Africa/Tripoli", "Africa/Khartoum",
+  "Africa/Addis_Ababa", "Africa/Dar_es_Salaam", "Africa/Kampala", "Africa/Kigali", "Africa/Lusaka", "Africa/Harare", "Africa/Maputo", "Africa/Windhoek", "Africa/Gaborone", "Africa/Maseru"
+];
+
 const CompanySettings = () => {
   const [tabValue, setTabValue] = useState(0);
   const [transferOwnershipOpen, setTransferOwnershipOpen] = useState(false);
@@ -89,7 +122,11 @@ const CompanySettings = () => {
     country: '',
     taxNumber: '',
     contactEmail: '',
-    contactPhone: ''
+    contactPhone: '',
+    industry: '',
+    companySize: '',
+    foundedYear: '',
+    description: ''
   });
 
   // Settings State
@@ -97,6 +134,7 @@ const CompanySettings = () => {
     pipEnabled: false,
     mfaEnabled: false,
     aiBotEnabled: false,
+    loremIpsumEnabled: false,
     playerLanguage: 'de',
     timezone: 'Europe/Berlin'
   });
@@ -107,7 +145,6 @@ const CompanySettings = () => {
 
   const handleSave = () => {
     console.log('Saving company settings...', { companyData, settings });
-    // Hier würde die Speicherlogik implementiert werden
   };
 
   return (
@@ -214,6 +251,42 @@ const CompanySettings = () => {
                   onChange={(e) => setCompanyData({...companyData, taxNumber: e.target.value})}
                   placeholder="DE123456789"
                 />
+
+                <FormControl fullWidth>
+                  <InputLabel>Industry</InputLabel>
+                  <Select
+                    value={companyData.industry}
+                    label="Industry"
+                    onChange={(e) => setCompanyData({...companyData, industry: e.target.value})}
+                  >
+                    <MenuItem value="Technology">Technology</MenuItem>
+                    <MenuItem value="Finance">Finance</MenuItem>
+                    <MenuItem value="Healthcare">Healthcare</MenuItem>
+                    <MenuItem value="Education">Education</MenuItem>
+                    <MenuItem value="Manufacturing">Manufacturing</MenuItem>
+                    <MenuItem value="Retail">Retail</MenuItem>
+                    <MenuItem value="Consulting">Consulting</MenuItem>
+                    <MenuItem value="Media">Media</MenuItem>
+                    <MenuItem value="Real Estate">Real Estate</MenuItem>
+                    <MenuItem value="Other">Other</MenuItem>
+                  </Select>
+                </FormControl>
+
+                <FormControl fullWidth>
+                  <InputLabel>Company Size</InputLabel>
+                  <Select
+                    value={companyData.companySize}
+                    label="Company Size"
+                    onChange={(e) => setCompanyData({...companyData, companySize: e.target.value})}
+                  >
+                    <MenuItem value="1-10">1-10 employees</MenuItem>
+                    <MenuItem value="11-50">11-50 employees</MenuItem>
+                    <MenuItem value="51-200">51-200 employees</MenuItem>
+                    <MenuItem value="201-500">201-500 employees</MenuItem>
+                    <MenuItem value="501-1000">501-1000 employees</MenuItem>
+                    <MenuItem value="1000+">1000+ employees</MenuItem>
+                  </Select>
+                </FormControl>
               </Box>
             </Grid>
 
@@ -266,13 +339,33 @@ const CompanySettings = () => {
                     label="Country"
                     onChange={(e) => setCompanyData({...companyData, country: e.target.value})}
                   >
-                    <MenuItem value="Germany">Germany</MenuItem>
-                    <MenuItem value="Austria">Austria</MenuItem>
-                    <MenuItem value="Switzerland">Switzerland</MenuItem>
-                    <MenuItem value="France">France</MenuItem>
-                    <MenuItem value="Netherlands">Netherlands</MenuItem>
+                    {countries.map((country) => (
+                      <MenuItem key={country} value={country}>
+                        {country}
+                      </MenuItem>
+                    ))}
                   </Select>
                 </FormControl>
+
+                <TextField
+                  fullWidth
+                  label="Founded Year"
+                  type="number"
+                  value={companyData.foundedYear}
+                  onChange={(e) => setCompanyData({...companyData, foundedYear: e.target.value})}
+                  placeholder="2020"
+                  inputProps={{ min: 1800, max: new Date().getFullYear() }}
+                />
+
+                <TextField
+                  fullWidth
+                  label="Company Description"
+                  multiline
+                  rows={4}
+                  value={companyData.description}
+                  onChange={(e) => setCompanyData({...companyData, description: e.target.value})}
+                  placeholder="Brief description of your company..."
+                />
               </Box>
             </Grid>
           </Grid>
@@ -283,44 +376,9 @@ const CompanySettings = () => {
           <Typography variant="h6" sx={{ mb: 3, fontWeight: 600 }}>
             User Management
           </Typography>
-          
-          <Card>
-            <CardHeader 
-              title="Team Members"
-              action={
-                <Button variant="contained" sx={{ backgroundColor: '#43BEAC' }}>
-                  Add User
-                </Button>
-              }
-            />
-            <CardContent>
-              <List>
-                <ListItem>
-                  <ListItemText 
-                    primary="John Doe" 
-                    secondary="john.doe@company.com • Admin"
-                  />
-                  <ListItemSecondaryAction>
-                    <IconButton edge="end" aria-label="edit">
-                      <FontAwesomeIcon icon={faEdit} />
-                    </IconButton>
-                  </ListItemSecondaryAction>
-                </ListItem>
-                <Divider />
-                <ListItem>
-                  <ListItemText 
-                    primary="Jane Smith" 
-                    secondary="jane.smith@company.com • User"
-                  />
-                  <ListItemSecondaryAction>
-                    <IconButton edge="end" aria-label="edit">
-                      <FontAwesomeIcon icon={faEdit} />
-                    </IconButton>
-                  </ListItemSecondaryAction>
-                </ListItem>
-              </List>
-            </CardContent>
-          </Card>
+          <Typography variant="body2" sx={{ color: '#64748b' }}>
+            User management functionality will be implemented here.
+          </Typography>
         </TabPanel>
 
         {/* Customization Tab */}
@@ -328,41 +386,9 @@ const CompanySettings = () => {
           <Typography variant="h6" sx={{ mb: 3, fontWeight: 600 }}>
             Customization
           </Typography>
-          <Typography variant="body2" sx={{ mb: 3, color: '#64748b' }}>
-            Personalize your videos to fit your brand's style.
+          <Typography variant="body2" sx={{ color: '#64748b' }}>
+            Video player and brand customization options will be available here.
           </Typography>
-          
-          <Box sx={{ mb: 4 }}>
-            <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
-              Shows/Clips
-            </Typography>
-            
-            <Card sx={{ maxWidth: 400 }}>
-              <CardContent>
-                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
-                  <Typography variant="subtitle2">Default style</Typography>
-                  <Button size="small" variant="outlined" sx={{ textTransform: 'none' }}>
-                    New Profile
-                  </Button>
-                </Box>
-                
-                <Box sx={{ 
-                  width: '100%', 
-                  height: 200, 
-                  border: '2px solid #e0e0e0', 
-                  borderRadius: 2,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  backgroundColor: '#f5f5f5'
-                }}>
-                  <Typography variant="body2" color="textSecondary">
-                    Video Player Preview
-                  </Typography>
-                </Box>
-              </CardContent>
-            </Card>
-          </Box>
         </TabPanel>
 
         {/* Settings Tab */}
@@ -426,6 +452,17 @@ const CompanySettings = () => {
                     AI Bot ist nur im Enterprise Paket verfügbar. Kontaktieren Sie uns für weitere Informationen.
                   </Alert>
                 </Box>
+
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={settings.loremIpsumEnabled}
+                      onChange={(e) => setSettings({...settings, loremIpsumEnabled: e.target.checked})}
+                      color="primary"
+                    />
+                  }
+                  label="Lorem Ipsum Function"
+                />
               </Box>
             </Grid>
             
@@ -459,10 +496,11 @@ const CompanySettings = () => {
                     label="Timezone"
                     onChange={(e) => setSettings({...settings, timezone: e.target.value})}
                   >
-                    <MenuItem value="Europe/Berlin">Europe/Berlin</MenuItem>
-                    <MenuItem value="Europe/London">Europe/London</MenuItem>
-                    <MenuItem value="America/New_York">America/New_York</MenuItem>
-                    <MenuItem value="Asia/Tokyo">Asia/Tokyo</MenuItem>
+                    {timezones.map((timezone) => (
+                      <MenuItem key={timezone} value={timezone}>
+                        {timezone}
+                      </MenuItem>
+                    ))}
                   </Select>
                 </FormControl>
               </Box>
