@@ -9,7 +9,7 @@ import {
   Paper,
   TextField,
   Button,
-  Grid2 as Grid,
+  Grid,
   FormControl,
   InputLabel,
   Select,
@@ -150,7 +150,7 @@ const CompanySettings = () => {
         <TabPanel value={tabValue} index={0}>
           <Grid container spacing={4}>
             {/* User Details Section */}
-            <Grid xs={12} md={6}>
+            <Grid item xs={12} md={6}>
               <Typography variant="h6" sx={{ mb: 3, fontWeight: 600 }}>
                 User Details
               </Typography>
@@ -186,7 +186,7 @@ const CompanySettings = () => {
             </Grid>
 
             {/* Company Data Section */}
-            <Grid xs={12} md={6}>
+            <Grid item xs={12} md={6}>
               <Typography variant="h6" sx={{ mb: 3, fontWeight: 600 }}>
                 Company Data
               </Typography>
@@ -229,7 +229,7 @@ const CompanySettings = () => {
                 />
                 
                 <Grid container spacing={2}>
-                  <Grid xs={6}>
+                  <Grid item xs={6}>
                     <TextField
                       fullWidth
                       label="Postal Code"
@@ -239,7 +239,7 @@ const CompanySettings = () => {
                       placeholder="400052"
                     />
                   </Grid>
-                  <Grid xs={6}>
+                  <Grid item xs={6}>
                     <TextField
                       fullWidth
                       label="City"
@@ -284,7 +284,7 @@ const CompanySettings = () => {
           </Typography>
           
           <Grid container spacing={4}>
-            <Grid xs={12} md={6}>
+            <Grid item xs={12} md={6}>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
                 <FormControl fullWidth>
                   <InputLabel>
@@ -318,7 +318,7 @@ const CompanySettings = () => {
               </Box>
             </Grid>
             
-            <Grid xs={12} md={6}>
+            <Grid item xs={12} md={6}>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
                 <FormControlLabel
                   control={
