@@ -38,12 +38,16 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
     setInputValue(value);
   }, [value]);
 
-  const handleCitySelect = (city: CityInfo | null) => {
+  const handleCitySelect = (city: CityInfo | string | null) => {
     if (city) {
-      onCityChange(city.name);
-      const suggestedPostalCode = suggestPostalCodeForCity(city.name, country);
-      if (suggestedPostalCode) {
-        onPostalCodeSuggestion(suggestedPostalCode);
+      if (typeof city === 'string') {
+        onCityChange(city);
+      } else {
+        onCityChange(city.name);
+        const suggestedPostalCode = suggestPostalCodeForCity(city.name, country);
+        if (suggestedPostalCode) {
+          onPostalCodeSuggestion(suggestedPostalCode);
+        }
       }
     }
   };
