@@ -27,6 +27,9 @@ import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { useTranslations } from '@/hooks/useTranslations';
 import { validTimezones } from '@/constants/validTimezones';
 import { validateTaxNumber, validateEmail, validatePhone, validateWebsite, validatePostalCode } from '@/utils/validation';
+import { validateCompanyData, validateCompanyWebsite } from '@/services/companyValidation';
+import { validateCityPostalCode } from '@/services/addressService';
+import AddressAutocomplete from '@/components/AddressAutocomplete';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -90,6 +93,7 @@ const CompanySettings = () => {
   const [assignOwnershipOpen, setAssignOwnershipOpen] = useState(false);
   const [deleteAccountOpen, setDeleteAccountOpen] = useState(false);
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
+  const [validationWarnings, setValidationWarnings] = useState<string[]>([]);
   
   // Company Data State
   const [companyData, setCompanyData] = useState({
@@ -125,6 +129,7 @@ const CompanySettings = () => {
 
   const validateAllFields = () => {
     const errors: Record<string, string> = {};
+    const warnings: string[] = [];
     
     // Required field checks
     if (!companyData.companyName.trim()) errors.companyName = t('requiredField');
@@ -153,14 +158,64 @@ const CompanySettings = () => {
     const postalValidation = validatePostalCode(companyData.postalCode, companyData.country);
     if (!postalValidation.isValid) errors.postalCode = postalValidation.message || 'Invalid postal code';
     
+    // City and postal code consistency check
+    if (companyData.city && companyData.postalCode && companyData.country) {
+      const isCityPostalValid = validateCityPostalCode(companyData.city, companyData.postalCode, companyData.country);
+      if (!isCityPostalValid) {
+        warnings.push('City and postal code combination seems unusual for the selected country');
+      }
+    }
+    
+    // Company data plausibility check
+    const companyValidation = validateCompanyData({
+      companyName: companyData.companyName,
+      website: companyData.website,
+      contactEmail: companyData.contactEmail,
+      contactPhone: companyData.contactPhone,
+      city: companyData.city,
+      postalCode: companyData.postalCode,
+      country: companyData.country
+    });
+    
+    warnings.push(...companyValidation.warnings);
+    companyValidation.errors.forEach(error => {
+      if (!errors.companyName && error.includes('Company name')) {
+        errors.companyName = error;
+      }
+    });
+    
     setValidationErrors(errors);
+    setValidationWarnings(warnings);
     return Object.keys(errors).length === 0;
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (validateAllFields()) {
+      // Additional website validation
+      if (companyData.website) {
+        const isWebsiteValid = await validateCompanyWebsite(companyData.website, companyData.companyName);
+        if (!isWebsiteValid) {
+          setValidationErrors(prev => ({
+            ...prev,
+            website: 'Website appears to be invalid or unreachable'
+          }));
+          return;
+        }
+      }
+      
       console.log('Saving company settings...', { companyData, settings });
       setValidationErrors({});
+      setValidationWarnings([]);
+    }
+  };
+
+  const handleCityChange = (city: string) => {
+    setCompanyData({...companyData, city});
+  };
+
+  const handlePostalCodeSuggestion = (postalCode: string) => {
+    if (!companyData.postalCode) {
+      setCompanyData({...companyData, postalCode});
     }
   };
 
@@ -212,6 +267,17 @@ const CompanySettings = () => {
       {Object.keys(validationErrors).length > 0 && (
         <Alert severity="error" sx={{ mb: 3 }}>
           {t('pleaseCompleteRequired')}
+        </Alert>
+      )}
+
+      {validationWarnings.length > 0 && (
+        <Alert severity="warning" sx={{ mb: 3 }}>
+          <Typography variant="subtitle2" sx={{ mb: 1 }}>Data Quality Warnings:</Typography>
+          <ul style={{ margin: 0, paddingLeft: '20px' }}>
+            {validationWarnings.map((warning, index) => (
+              <li key={index}>{warning}</li>
+            ))}
+          </ul>
         </Alert>
       )}
 
@@ -376,15 +442,15 @@ const CompanySettings = () => {
                     />
                   </Grid>
                   <Grid size={6}>
-                    <TextField
-                      fullWidth
+                    <AddressAutocomplete
                       label={`${t('city')} *`}
-                      required
                       value={companyData.city}
-                      onChange={(e) => setCompanyData({...companyData, city: e.target.value})}
-                      placeholder="Hamburg"
+                      country={companyData.country}
+                      onCityChange={handleCityChange}
+                      onPostalCodeSuggestion={handlePostalCodeSuggestion}
                       error={!!validationErrors.city}
-                      helperText={validationErrors.city || ''}
+                      helperText={validationErrors.city || 'Start typing for suggestions'}
+                      required
                     />
                   </Grid>
                 </Grid>
