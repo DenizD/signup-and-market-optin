@@ -135,23 +135,23 @@ const CompanySettings = () => {
     
     // Email validation
     const emailValidation = validateEmail(companyData.contactEmail);
-    if (!emailValidation.isValid) errors.contactEmail = emailValidation.message || t('invalidEmail');
+    if (!emailValidation.isValid) errors.contactEmail = emailValidation.message || 'Invalid email format';
     
     // Phone validation
     const phoneValidation = validatePhone(companyData.contactPhone);
-    if (!phoneValidation.isValid) errors.contactPhone = phoneValidation.message || t('invalidPhone');
+    if (!phoneValidation.isValid) errors.contactPhone = phoneValidation.message || 'Invalid phone format';
     
     // Website validation
     const websiteValidation = validateWebsite(companyData.website);
-    if (!websiteValidation.isValid) errors.website = websiteValidation.message || t('invalidWebsite');
+    if (!websiteValidation.isValid) errors.website = websiteValidation.message || 'Invalid website format';
     
     // Tax number validation
     const taxValidation = validateTaxNumber(companyData.taxNumber, companyData.country);
-    if (!taxValidation.isValid) errors.taxNumber = taxValidation.message || t('invalidTaxNumber');
+    if (!taxValidation.isValid) errors.taxNumber = taxValidation.message || 'Invalid tax number';
     
     // Postal code validation
     const postalValidation = validatePostalCode(companyData.postalCode, companyData.country);
-    if (!postalValidation.isValid) errors.postalCode = postalValidation.message || t('invalidPostalCode');
+    if (!postalValidation.isValid) errors.postalCode = postalValidation.message || 'Invalid postal code';
     
     setValidationErrors(errors);
     return Object.keys(errors).length === 0;
