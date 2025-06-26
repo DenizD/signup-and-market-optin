@@ -188,6 +188,10 @@ const CompanySettings = () => {
     return 'Select country first to see format';
   };
 
+  const handleContactForAI = () => {
+    window.open('mailto:sales@company.com?subject=AI Bot Enterprise Feature Inquiry', '_blank');
+  };
+
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 4 }}>
@@ -522,7 +526,20 @@ const CompanySettings = () => {
                     }
                     label={t('aiBotFeature')}
                   />
-                  <Alert severity="info" sx={{ mt: 1, fontSize: '0.875rem' }}>
+                  <Alert 
+                    severity="info" 
+                    sx={{ mt: 1, fontSize: '0.875rem' }}
+                    action={
+                      <Button 
+                        color="primary" 
+                        size="small" 
+                        onClick={handleContactForAI}
+                        sx={{ textTransform: 'none' }}
+                      >
+                        Kontakt aufnehmen
+                      </Button>
+                    }
+                  >
                     {t('aiBotEnterpriseOnly')}
                   </Alert>
                 </Box>
