@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Container,
@@ -127,6 +127,74 @@ const CompanySettings = () => {
     setTabValue(newValue);
   };
 
+  // Real-time validation function
+  const validateField = (fieldName: string, value: string) => {
+    const errors: Record<string, string> = { ...validationErrors };
+    const warnings: string[] = [...validationWarnings];
+    
+    // Clear previous errors and warnings for this field
+    delete errors[fieldName];
+    
+    switch (fieldName) {
+      case 'companyName':
+        if (!value.trim()) {
+          errors.companyName = t('requiredField');
+        } else if (value.length < 2) {
+          errors.companyName = 'Company name is too short';
+        } else {
+          // Check for fake company names
+          const fakePatterns = [/test/i, /fake/i, /dummy/i, /example/i, /temp/i];
+          if (fakePatterns.some(pattern => pattern.test(value))) {
+            const newWarnings = warnings.filter(w => !w.includes('placeholder'));
+            newWarnings.push('Company name appears to be a placeholder');
+            setValidationWarnings(newWarnings);
+          }
+        }
+        break;
+      
+      case 'contactEmail':
+        const emailValidation = validateEmail(value);
+        if (!emailValidation.isValid) {
+          errors.contactEmail = emailValidation.message || 'Invalid email format';
+        }
+        break;
+      
+      case 'contactPhone':
+        const phoneValidation = validatePhone(value);
+        if (!phoneValidation.isValid) {
+          errors.contactPhone = phoneValidation.message || 'Invalid phone format';
+        }
+        break;
+      
+      case 'website':
+        const websiteValidation = validateWebsite(value);
+        if (!websiteValidation.isValid) {
+          errors.website = websiteValidation.message || 'Invalid website format';
+        }
+        break;
+      
+      case 'taxNumber':
+        if (companyData.country) {
+          const taxValidation = validateTaxNumber(value, companyData.country);
+          if (!taxValidation.isValid) {
+            errors.taxNumber = taxValidation.message || 'Invalid tax number';
+          }
+        }
+        break;
+      
+      case 'postalCode':
+        if (companyData.country) {
+          const postalValidation = validatePostalCode(value, companyData.country);
+          if (!postalValidation.isValid) {
+            errors.postalCode = postalValidation.message || 'Invalid postal code';
+          }
+        }
+        break;
+    }
+    
+    setValidationErrors(errors);
+  };
+
   const validateAllFields = () => {
     const errors: Record<string, string> = {};
     const warnings: string[] = [];
@@ -211,12 +279,18 @@ const CompanySettings = () => {
 
   const handleCityChange = (city: string) => {
     setCompanyData({...companyData, city});
+    validateField('city', city);
   };
 
   const handlePostalCodeSuggestion = (postalCode: string) => {
     if (!companyData.postalCode) {
       setCompanyData({...companyData, postalCode});
     }
+  };
+
+  const handleInputChange = (field: string, value: string) => {
+    setCompanyData({...companyData, [field]: value});
+    validateField(field, value);
   };
 
   const isEmbargoCountry = (country: string) => {
@@ -318,7 +392,7 @@ const CompanySettings = () => {
                   label={`${t('companyName')} *`}
                   required
                   value={companyData.companyName}
-                  onChange={(e) => setCompanyData({...companyData, companyName: e.target.value})}
+                  onChange={(e) => handleInputChange('companyName', e.target.value)}
                   placeholder="ABC Corp."
                   error={!!validationErrors.companyName}
                   helperText={validationErrors.companyName || ''}
@@ -329,7 +403,7 @@ const CompanySettings = () => {
                   label={`${t('website')} *`}
                   required
                   value={companyData.website}
-                  onChange={(e) => setCompanyData({...companyData, website: e.target.value})}
+                  onChange={(e) => handleInputChange('website', e.target.value)}
                   placeholder="https://www.example.com"
                   error={!!validationErrors.website}
                   helperText={validationErrors.website || ''}
@@ -341,7 +415,7 @@ const CompanySettings = () => {
                   type="email"
                   required
                   value={companyData.contactEmail}
-                  onChange={(e) => setCompanyData({...companyData, contactEmail: e.target.value})}
+                  onChange={(e) => handleInputChange('contactEmail', e.target.value)}
                   placeholder="contact@company.com"
                   error={!!validationErrors.contactEmail}
                   helperText={validationErrors.contactEmail || ''}
@@ -352,7 +426,7 @@ const CompanySettings = () => {
                   label={`${t('contactPhone')} *`}
                   required
                   value={companyData.contactPhone}
-                  onChange={(e) => setCompanyData({...companyData, contactPhone: e.target.value})}
+                  onChange={(e) => handleInputChange('contactPhone', e.target.value)}
                   placeholder="+49 123 456 789"
                   error={!!validationErrors.contactPhone}
                   helperText={validationErrors.contactPhone || ''}
@@ -363,7 +437,7 @@ const CompanySettings = () => {
                   label={`${t('taxNumber')} *`}
                   required
                   value={companyData.taxNumber}
-                  onChange={(e) => setCompanyData({...companyData, taxNumber: e.target.value})}
+                  onChange={(e) => handleInputChange('taxNumber', e.target.value)}
                   placeholder={companyData.country === 'Germany' ? 'DE123456789' : 'Enter tax number'}
                   error={!!validationErrors.taxNumber}
                   helperText={getTaxNumberHelperText()}
@@ -414,7 +488,7 @@ const CompanySettings = () => {
                   label={`${t('companyAddress')} *`}
                   required
                   value={companyData.companyAddress}
-                  onChange={(e) => setCompanyData({...companyData, companyAddress: e.target.value})}
+                  onChange={(e) => handleInputChange('companyAddress', e.target.value)}
                   placeholder="123 Street Name"
                   error={!!validationErrors.companyAddress}
                   helperText={validationErrors.companyAddress || ''}
@@ -435,7 +509,7 @@ const CompanySettings = () => {
                       label={`${t('postalCode')} *`}
                       required
                       value={companyData.postalCode}
-                      onChange={(e) => setCompanyData({...companyData, postalCode: e.target.value})}
+                      onChange={(e) => handleInputChange('postalCode', e.target.value)}
                       placeholder="12345"
                       error={!!validationErrors.postalCode}
                       helperText={validationErrors.postalCode || ''}

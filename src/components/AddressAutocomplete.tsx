@@ -55,7 +55,7 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
   return (
     <Autocomplete
       options={options}
-      getOptionLabel={(option) => option.name}
+      getOptionLabel={(option) => typeof option === 'string' ? option : option.name}
       value={options.find(opt => opt.name === value) || null}
       onChange={(_, newValue) => handleCitySelect(newValue)}
       inputValue={inputValue}
