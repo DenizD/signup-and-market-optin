@@ -22,16 +22,28 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  DialogContentText
+  DialogContentText,
+  Card,
+  CardContent,
+  CardHeader,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemSecondaryAction,
+  IconButton
 } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faBuilding, 
-  faVideo, 
-  faUserCog, 
+  faUsers, 
+  faPalette, 
+  faCog, 
   faGlobe, 
   faRobot, 
-  faCreditCard 
+  faCreditCard,
+  faShield,
+  faTrash,
+  faEdit
 } from '@fortawesome/free-solid-svg-icons';
 
 interface TabPanelProps {
@@ -64,6 +76,7 @@ const CompanySettings = () => {
   const [tabValue, setTabValue] = useState(0);
   const [transferOwnershipOpen, setTransferOwnershipOpen] = useState(false);
   const [assignOwnershipOpen, setAssignOwnershipOpen] = useState(false);
+  const [deleteAccountOpen, setDeleteAccountOpen] = useState(false);
   
   // Company Data State
   const [companyData, setCompanyData] = useState({
@@ -74,22 +87,18 @@ const CompanySettings = () => {
     postalCode: '',
     city: '',
     country: '',
-    taxNumber: ''
+    taxNumber: '',
+    contactEmail: '',
+    contactPhone: ''
   });
 
-  // User Details State
-  const [userDetails, setUserDetails] = useState({
-    fullName: '',
-    emailAddress: '',
-    telephone: ''
-  });
-
-  // Live Shopping Settings State
-  const [liveShoppingSettings, setLiveShoppingSettings] = useState({
+  // Settings State
+  const [settings, setSettings] = useState({
+    pipEnabled: false,
+    mfaEnabled: false,
+    aiBotEnabled: false,
     playerLanguage: 'de',
-    integrationMode: 'embedded',
-    botEnabled: false,
-    stripeIntegration: false
+    timezone: 'Europe/Berlin'
   });
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -97,7 +106,7 @@ const CompanySettings = () => {
   };
 
   const handleSave = () => {
-    console.log('Saving company settings...', { companyData, userDetails, liveShoppingSettings });
+    console.log('Saving company settings...', { companyData, settings });
     // Hier würde die Speicherlogik implementiert werden
   };
 
@@ -130,67 +139,35 @@ const CompanySettings = () => {
           >
             <Tab 
               icon={<FontAwesomeIcon icon={faBuilding} />} 
-              label="Company Data" 
+              label="Company" 
               iconPosition="start"
             />
             <Tab 
-              icon={<FontAwesomeIcon icon={faVideo} />} 
-              label="Live Shopping" 
+              icon={<FontAwesomeIcon icon={faUsers} />} 
+              label="Users" 
               iconPosition="start"
             />
             <Tab 
-              icon={<FontAwesomeIcon icon={faUserCog} />} 
-              label="Ownership" 
+              icon={<FontAwesomeIcon icon={faPalette} />} 
+              label="Customization" 
+              iconPosition="start"
+            />
+            <Tab 
+              icon={<FontAwesomeIcon icon={faCog} />} 
+              label="Settings" 
               iconPosition="start"
             />
           </Tabs>
         </Box>
 
-        {/* Company Data Tab */}
+        {/* Company Tab */}
         <TabPanel value={tabValue} index={0}>
+          <Typography variant="h6" sx={{ mb: 3, fontWeight: 600 }}>
+            Company Profile
+          </Typography>
+          
           <Grid container spacing={4}>
-            {/* User Details Section */}
             <Grid size={{ xs: 12, md: 6 }}>
-              <Typography variant="h6" sx={{ mb: 3, fontWeight: 600 }}>
-                User Details
-              </Typography>
-              
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-                <TextField
-                  fullWidth
-                  label="Full Name"
-                  value={userDetails.fullName}
-                  onChange={(e) => setUserDetails({...userDetails, fullName: e.target.value})}
-                  placeholder="John Smith"
-                />
-                
-                <TextField
-                  fullWidth
-                  label="Email Address"
-                  type="email"
-                  required
-                  value={userDetails.emailAddress}
-                  onChange={(e) => setUserDetails({...userDetails, emailAddress: e.target.value})}
-                  placeholder="abc@email.com"
-                />
-                
-                <TextField
-                  fullWidth
-                  label="Telephone"
-                  required
-                  value={userDetails.telephone}
-                  onChange={(e) => setUserDetails({...userDetails, telephone: e.target.value})}
-                  placeholder="123456789"
-                />
-              </Box>
-            </Grid>
-
-            {/* Company Data Section */}
-            <Grid size={{ xs: 12, md: 6 }}>
-              <Typography variant="h6" sx={{ mb: 3, fontWeight: 600 }}>
-                Company Data
-              </Typography>
-              
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
                 <TextField
                   fullWidth
@@ -207,25 +184,56 @@ const CompanySettings = () => {
                   required
                   value={companyData.website}
                   onChange={(e) => setCompanyData({...companyData, website: e.target.value})}
-                  placeholder="abc@email.com"
+                  placeholder="https://www.example.com"
                 />
                 
+                <TextField
+                  fullWidth
+                  label="Contact Email"
+                  type="email"
+                  required
+                  value={companyData.contactEmail}
+                  onChange={(e) => setCompanyData({...companyData, contactEmail: e.target.value})}
+                  placeholder="contact@company.com"
+                />
+                
+                <TextField
+                  fullWidth
+                  label="Contact Phone"
+                  required
+                  value={companyData.contactPhone}
+                  onChange={(e) => setCompanyData({...companyData, contactPhone: e.target.value})}
+                  placeholder="+49 123 456 789"
+                />
+                
+                <TextField
+                  fullWidth
+                  label="Tax Number"
+                  required
+                  value={companyData.taxNumber}
+                  onChange={(e) => setCompanyData({...companyData, taxNumber: e.target.value})}
+                  placeholder="DE123456789"
+                />
+              </Box>
+            </Grid>
+
+            <Grid size={{ xs: 12, md: 6 }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
                 <TextField
                   fullWidth
                   label="Company Address"
                   required
                   value={companyData.companyAddress}
                   onChange={(e) => setCompanyData({...companyData, companyAddress: e.target.value})}
-                  placeholder="123 street"
+                  placeholder="123 Street Name"
                 />
                 
                 <TextField
                   fullWidth
                   label="Secondary Address"
-                  required
                   value={companyData.secondaryAddress}
                   onChange={(e) => setCompanyData({...companyData, secondaryAddress: e.target.value})}
-                  placeholder="Floor 1"
+                  placeholder="Floor 1, Suite 100"
                 />
                 
                 <Grid container spacing={2}>
@@ -236,7 +244,7 @@ const CompanySettings = () => {
                       required
                       value={companyData.postalCode}
                       onChange={(e) => setCompanyData({...companyData, postalCode: e.target.value})}
-                      placeholder="400052"
+                      placeholder="12345"
                     />
                   </Grid>
                   <Grid size={6}>
@@ -261,119 +269,217 @@ const CompanySettings = () => {
                     <MenuItem value="Germany">Germany</MenuItem>
                     <MenuItem value="Austria">Austria</MenuItem>
                     <MenuItem value="Switzerland">Switzerland</MenuItem>
+                    <MenuItem value="France">France</MenuItem>
+                    <MenuItem value="Netherlands">Netherlands</MenuItem>
                   </Select>
                 </FormControl>
-                
-                <TextField
-                  fullWidth
-                  label="Tax Number"
-                  required
-                  value={companyData.taxNumber}
-                  onChange={(e) => setCompanyData({...companyData, taxNumber: e.target.value})}
-                  placeholder="DE123456789"
-                />
               </Box>
             </Grid>
           </Grid>
         </TabPanel>
 
-        {/* Live Shopping Tab */}
+        {/* Users Tab */}
         <TabPanel value={tabValue} index={1}>
           <Typography variant="h6" sx={{ mb: 3, fontWeight: 600 }}>
-            Live Shopping Konfiguration
+            User Management
+          </Typography>
+          
+          <Card>
+            <CardHeader 
+              title="Team Members"
+              action={
+                <Button variant="contained" sx={{ backgroundColor: '#43BEAC' }}>
+                  Add User
+                </Button>
+              }
+            />
+            <CardContent>
+              <List>
+                <ListItem>
+                  <ListItemText 
+                    primary="John Doe" 
+                    secondary="john.doe@company.com • Admin"
+                  />
+                  <ListItemSecondaryAction>
+                    <IconButton edge="end" aria-label="edit">
+                      <FontAwesomeIcon icon={faEdit} />
+                    </IconButton>
+                  </ListItemSecondaryAction>
+                </ListItem>
+                <Divider />
+                <ListItem>
+                  <ListItemText 
+                    primary="Jane Smith" 
+                    secondary="jane.smith@company.com • User"
+                  />
+                  <ListItemSecondaryAction>
+                    <IconButton edge="end" aria-label="edit">
+                      <FontAwesomeIcon icon={faEdit} />
+                    </IconButton>
+                  </ListItemSecondaryAction>
+                </ListItem>
+              </List>
+            </CardContent>
+          </Card>
+        </TabPanel>
+
+        {/* Customization Tab */}
+        <TabPanel value={tabValue} index={2}>
+          <Typography variant="h6" sx={{ mb: 3, fontWeight: 600 }}>
+            Customization
+          </Typography>
+          <Typography variant="body2" sx={{ mb: 3, color: '#64748b' }}>
+            Personalize your videos to fit your brand's style.
+          </Typography>
+          
+          <Box sx={{ mb: 4 }}>
+            <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
+              Shows/Clips
+            </Typography>
+            
+            <Card sx={{ maxWidth: 400 }}>
+              <CardContent>
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
+                  <Typography variant="subtitle2">Default style</Typography>
+                  <Button size="small" variant="outlined" sx={{ textTransform: 'none' }}>
+                    New Profile
+                  </Button>
+                </Box>
+                
+                <Box sx={{ 
+                  width: '100%', 
+                  height: 200, 
+                  border: '2px solid #e0e0e0', 
+                  borderRadius: 2,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  backgroundColor: '#f5f5f5'
+                }}>
+                  <Typography variant="body2" color="textSecondary">
+                    Video Player Preview
+                  </Typography>
+                </Box>
+              </CardContent>
+            </Card>
+          </Box>
+        </TabPanel>
+
+        {/* Settings Tab */}
+        <TabPanel value={tabValue} index={3}>
+          <Typography variant="h6" sx={{ mb: 3, fontWeight: 600 }}>
+            Application Settings
           </Typography>
           
           <Grid container spacing={4}>
             <Grid size={{ xs: 12, md: 6 }}>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-                <FormControl fullWidth>
-                  <InputLabel>
-                    <FontAwesomeIcon icon={faGlobe} style={{ marginRight: 8 }} />
-                    Player-Sprache
-                  </InputLabel>
-                  <Select
-                    value={liveShoppingSettings.playerLanguage}
-                    label="Player-Sprache"
-                    onChange={(e) => setLiveShoppingSettings({...liveShoppingSettings, playerLanguage: e.target.value})}
-                  >
-                    <MenuItem value="de">Deutsch</MenuItem>
-                    <MenuItem value="en">English</MenuItem>
-                    <MenuItem value="fr">Français</MenuItem>
-                    <MenuItem value="es">Español</MenuItem>
-                  </Select>
-                </FormControl>
+                <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+                  Features
+                </Typography>
+                
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={settings.pipEnabled}
+                      onChange={(e) => setSettings({...settings, pipEnabled: e.target.checked})}
+                      color="primary"
+                    />
+                  }
+                  label="Picture-in-Picture (PiP)"
+                />
 
-                <FormControl fullWidth>
-                  <InputLabel>Integrationsmodus</InputLabel>
-                  <Select
-                    value={liveShoppingSettings.integrationMode}
-                    label="Integrationsmodus"
-                    onChange={(e) => setLiveShoppingSettings({...liveShoppingSettings, integrationMode: e.target.value})}
-                  >
-                    <MenuItem value="embedded">Embedded</MenuItem>
-                    <MenuItem value="popup">Popup</MenuItem>
-                    <MenuItem value="fullscreen">Fullscreen</MenuItem>
-                  </Select>
-                </FormControl>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={settings.mfaEnabled}
+                      onChange={(e) => setSettings({...settings, mfaEnabled: e.target.checked})}
+                      color="primary"
+                    />
+                  }
+                  label={
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <FontAwesomeIcon icon={faShield} />
+                      <span>Multi-Factor Authentication (MFA)</span>
+                    </Box>
+                  }
+                />
+
+                <Box>
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={settings.aiBotEnabled}
+                        onChange={(e) => setSettings({...settings, aiBotEnabled: e.target.checked})}
+                        color="primary"
+                        disabled
+                      />
+                    }
+                    label={
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <FontAwesomeIcon icon={faRobot} />
+                        <span>AI Bot (Enterprise)</span>
+                      </Box>
+                    }
+                  />
+                  <Alert severity="info" sx={{ mt: 1, fontSize: '0.875rem' }}>
+                    AI Bot ist nur im Enterprise Paket verfügbar. Kontaktieren Sie uns für weitere Informationen.
+                  </Alert>
+                </Box>
               </Box>
             </Grid>
             
             <Grid size={{ xs: 12, md: 6 }}>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={liveShoppingSettings.botEnabled}
-                      onChange={(e) => setLiveShoppingSettings({...liveShoppingSettings, botEnabled: e.target.checked})}
-                      color="primary"
-                    />
-                  }
-                  label={
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                      <FontAwesomeIcon icon={faRobot} />
-                      <span>Live Shopping Bot aktivieren</span>
-                    </Box>
-                  }
-                />
+                <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+                  Preferences
+                </Typography>
+                
+                <FormControl fullWidth>
+                  <InputLabel>
+                    <FontAwesomeIcon icon={faGlobe} style={{ marginRight: 8 }} />
+                    Video Player Language
+                  </InputLabel>
+                  <Select
+                    value={settings.playerLanguage}
+                    label="Video Player Language"
+                    onChange={(e) => setSettings({...settings, playerLanguage: e.target.value})}
+                  >
+                    <MenuItem value="de">Deutsch</MenuItem>
+                    <MenuItem value="en">English</MenuItem>
+                    <MenuItem value="es">Español</MenuItem>
+                    <MenuItem value="zh">中文</MenuItem>
+                  </Select>
+                </FormControl>
 
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={liveShoppingSettings.stripeIntegration}
-                      onChange={(e) => setLiveShoppingSettings({...liveShoppingSettings, stripeIntegration: e.target.checked})}
-                      color="primary"
-                    />
-                  }
-                  label={
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                      <FontAwesomeIcon icon={faCreditCard} />
-                      <span>Stripe Integration</span>
-                    </Box>
-                  }
-                />
-
-                {liveShoppingSettings.stripeIntegration && (
-                  <Alert severity="info" sx={{ mt: 1 }}>
-                    Stripe-Konfiguration erfordert zusätzliche Setup-Schritte in den Zahlungseinstellungen.
-                  </Alert>
-                )}
+                <FormControl fullWidth>
+                  <InputLabel>Timezone</InputLabel>
+                  <Select
+                    value={settings.timezone}
+                    label="Timezone"
+                    onChange={(e) => setSettings({...settings, timezone: e.target.value})}
+                  >
+                    <MenuItem value="Europe/Berlin">Europe/Berlin</MenuItem>
+                    <MenuItem value="Europe/London">Europe/London</MenuItem>
+                    <MenuItem value="America/New_York">America/New_York</MenuItem>
+                    <MenuItem value="Asia/Tokyo">Asia/Tokyo</MenuItem>
+                  </Select>
+                </FormControl>
               </Box>
             </Grid>
           </Grid>
-        </TabPanel>
 
-        {/* Ownership Tab */}
-        <TabPanel value={tabValue} index={2}>
+          <Divider sx={{ my: 4 }} />
+
+          {/* Ownership Section */}
           <Typography variant="h6" sx={{ mb: 3, fontWeight: 600 }}>
-            Unternehmensberechtigung verwalten
+            Ownership Management
           </Typography>
           
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, maxWidth: 600 }}>
             <Alert severity="warning">
               <strong>Achtung:</strong> Änderungen an der Unternehmensberechtigung können nicht rückgängig gemacht werden.
             </Alert>
-            
-            <Divider />
             
             <Box>
               <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
@@ -392,8 +498,6 @@ const CompanySettings = () => {
               </Button>
             </Box>
             
-            <Divider />
-            
             <Box>
               <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
                 Berechtigung zuweisen
@@ -408,6 +512,26 @@ const CompanySettings = () => {
                 sx={{ textTransform: 'none' }}
               >
                 Assign Company Ownership
+              </Button>
+            </Box>
+
+            <Divider />
+
+            <Box>
+              <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600, color: '#d32f2f' }}>
+                Danger Zone
+              </Typography>
+              <Typography variant="body2" sx={{ mb: 2, color: '#64748b' }}>
+                Löschen Sie Ihr Konto und alle zugehörigen Daten permanent.
+              </Typography>
+              <Button
+                variant="outlined"
+                color="error"
+                onClick={() => setDeleteAccountOpen(true)}
+                sx={{ textTransform: 'none' }}
+                startIcon={<FontAwesomeIcon icon={faTrash} />}
+              >
+                Delete Account & Data
               </Button>
             </Box>
           </Box>
@@ -426,7 +550,7 @@ const CompanySettings = () => {
               py: 1.5
             }}
           >
-            Submit
+            Save Changes
           </Button>
         </Box>
       </Paper>
@@ -472,6 +596,31 @@ const CompanySettings = () => {
         <DialogActions>
           <Button onClick={() => setAssignOwnershipOpen(false)}>Abbrechen</Button>
           <Button variant="contained" color="primary">Zuweisen</Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Delete Account Dialog */}
+      <Dialog open={deleteAccountOpen} onClose={() => setDeleteAccountOpen(false)}>
+        <DialogTitle sx={{ color: '#d32f2f' }}>Konto und Daten löschen</DialogTitle>
+        <DialogContent>
+          <DialogContentText sx={{ mb: 2 }}>
+            <strong>Warnung:</strong> Diese Aktion kann nicht rückgängig gemacht werden. Alle Ihre Daten werden permanent gelöscht.
+          </DialogContentText>
+          <DialogContentText sx={{ mb: 2 }}>
+            Geben Sie zur Bestätigung "DELETE" ein:
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            label="Bestätigung"
+            fullWidth
+            variant="outlined"
+            placeholder="DELETE"
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDeleteAccountOpen(false)}>Abbrechen</Button>
+          <Button variant="contained" color="error">Permanent löschen</Button>
         </DialogActions>
       </Dialog>
     </Container>
