@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import {
   Box,
@@ -26,6 +25,8 @@ import {
 } from '@mui/material';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { useTranslations } from '@/hooks/useTranslations';
+import { validTimezones } from '@/constants/validTimezones';
+import { validateTaxNumber, validateEmail, validatePhone, validateWebsite, validatePostalCode } from '@/utils/validation';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -82,29 +83,13 @@ const allCountries = [
   "Vietnam", "Yemen", "Zambia", "Zimbabwe"
 ];
 
-// Complete list of timezones
-const timezones = [
-  "UTC", "Europe/London", "Europe/Berlin", "Europe/Paris", "Europe/Rome", "Europe/Madrid", "Europe/Amsterdam", "Europe/Brussels", "Europe/Vienna", "Europe/Prague",
-  "Europe/Warsaw", "Europe/Budapest", "Europe/Bucharest", "Europe/Athens", "Europe/Helsinki", "Europe/Stockholm", "Europe/Oslo", "Europe/Copenhagen", "Europe/Dublin", "Europe/Lisbon",
-  "Europe/Zurich", "Europe/Moscow", "Europe/Kiev", "Europe/Istanbul", "America/New_York", "America/Chicago", "America/Denver", "America/Los_Angeles", "America/Toronto", "America/Vancouver",
-  "America/Montreal", "America/Mexico_City", "America/Sao_Paulo", "America/Buenos_Aires", "America/Lima", "America/Bogota", "America/Caracas", "America/Santiago", "America/La_Paz", "America/Asuncion",
-  "America/Montevideo", "America/Guatemala", "America/Costa_Rica", "America/Panama", "America/Havana", "America/Jamaica", "America/Santo_Domingo", "America/Puerto_Rico", "America/Barbados", "America/Port_of_Spain",
-  "Asia/Tokyo", "Asia/Seoul", "Asia/Shanghai", "Asia/Hong_Kong", "Asia/Singapore", "Asia/Bangkok", "Asia/Jakarta", "Asia/Manila", "Asia/Kuala_Lumpur", "Asia/Mumbai",
-  "Asia/Delhi", "Asia/Kolkata", "Asia/Dhaka", "Asia/Karachi", "Asia/Kabul", "Asia/Tehran", "Asia/Dubai", "Asia/Riyadh", "Asia/Kuwait", "Asia/Qatar",
-  "Asia/Bahrain", "Asia/Jerusalem", "Asia/Beirut", "Asia/Damascus", "Asia/Baghdad", "Asia/Amman", "Asia/Yerevan", "Asia/Baku", "Asia/Tbilisi", "Asia/Tashkent",
-  "Asia/Almaty", "Asia/Bishkek", "Asia/Dushanbe", "Asia/Ashgabat", "Asia/Ulaanbaatar", "Asia/Pyongyang", "Australia/Sydney", "Australia/Melbourne", "Australia/Brisbane", "Australia/Perth",
-  "Australia/Adelaide", "Australia/Darwin", "Pacific/Auckland", "Pacific/Fiji", "Pacific/Tahiti", "Pacific/Honolulu", "Pacific/Samoa", "Pacific/Guam", "Pacific/Port_Moresby", "Pacific/Noumea",
-  "Africa/Cairo", "Africa/Lagos", "Africa/Nairobi", "Africa/Johannesburg", "Africa/Cape_Town", "Africa/Casablanca", "Africa/Algiers", "Africa/Tunis", "Africa/Tripoli", "Africa/Khartoum",
-  "Africa/Addis_Ababa", "Africa/Dar_es_Salaam", "Africa/Kampala", "Africa/Kigali", "Africa/Lusaka", "Africa/Harare", "Africa/Maputo", "Africa/Windhoek", "Africa/Gaborone", "Africa/Maseru"
-];
-
 const CompanySettings = () => {
   const { t, language, setLanguage } = useTranslations();
   const [tabValue, setTabValue] = useState(0);
   const [transferOwnershipOpen, setTransferOwnershipOpen] = useState(false);
   const [assignOwnershipOpen, setAssignOwnershipOpen] = useState(false);
   const [deleteAccountOpen, setDeleteAccountOpen] = useState(false);
-  const [validationErrors, setValidationErrors] = useState<string[]>([]);
+  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
   
   // Company Data State
   const [companyData, setCompanyData] = useState({
@@ -138,32 +123,69 @@ const CompanySettings = () => {
     setTabValue(newValue);
   };
 
-  const validateRequiredFields = () => {
-    const requiredFields = [
-      'companyName', 'website', 'companyAddress', 'postalCode', 
-      'city', 'country', 'taxNumber', 'contactEmail', 'contactPhone'
-    ];
+  const validateAllFields = () => {
+    const errors: Record<string, string> = {};
     
-    const errors: string[] = [];
-    requiredFields.forEach(field => {
-      if (!companyData[field as keyof typeof companyData]) {
-        errors.push(field);
-      }
-    });
+    // Required field checks
+    if (!companyData.companyName.trim()) errors.companyName = t('requiredField');
+    if (!companyData.companyAddress.trim()) errors.companyAddress = t('requiredField');
+    if (!companyData.postalCode.trim()) errors.postalCode = t('requiredField');
+    if (!companyData.city.trim()) errors.city = t('requiredField');
+    if (!companyData.country.trim()) errors.country = t('requiredField');
+    
+    // Email validation
+    const emailValidation = validateEmail(companyData.contactEmail);
+    if (!emailValidation.isValid) errors.contactEmail = emailValidation.message || t('invalidEmail');
+    
+    // Phone validation
+    const phoneValidation = validatePhone(companyData.contactPhone);
+    if (!phoneValidation.isValid) errors.contactPhone = phoneValidation.message || t('invalidPhone');
+    
+    // Website validation
+    const websiteValidation = validateWebsite(companyData.website);
+    if (!websiteValidation.isValid) errors.website = websiteValidation.message || t('invalidWebsite');
+    
+    // Tax number validation
+    const taxValidation = validateTaxNumber(companyData.taxNumber, companyData.country);
+    if (!taxValidation.isValid) errors.taxNumber = taxValidation.message || t('invalidTaxNumber');
+    
+    // Postal code validation
+    const postalValidation = validatePostalCode(companyData.postalCode, companyData.country);
+    if (!postalValidation.isValid) errors.postalCode = postalValidation.message || t('invalidPostalCode');
     
     setValidationErrors(errors);
-    return errors.length === 0;
+    return Object.keys(errors).length === 0;
   };
 
   const handleSave = () => {
-    if (validateRequiredFields()) {
+    if (validateAllFields()) {
       console.log('Saving company settings...', { companyData, settings });
-      setValidationErrors([]);
+      setValidationErrors({});
     }
   };
 
   const isEmbargoCountry = (country: string) => {
     return embargoCountries.includes(country);
+  };
+
+  const getTaxNumberHelperText = () => {
+    if (validationErrors.taxNumber) return validationErrors.taxNumber;
+    if (companyData.country) {
+      const patterns: Record<string, string> = {
+        'Germany': 'Format: DE123456789',
+        'Austria': 'Format: ATU12345678',
+        'Switzerland': 'Format: CHE-123.456.789',
+        'United States': 'Format: 12-3456789',
+        'United Kingdom': 'Format: GB123456789',
+        'France': 'Format: FR12345678901',
+        'Italy': 'Format: IT12345678901',
+        'Spain': 'Format: ESA12345674',
+        'Netherlands': 'Format: NL123456789B01',
+        'Belgium': 'Format: BE0123456789',
+      };
+      return patterns[companyData.country] || 'Enter your tax identification number';
+    }
+    return 'Select country first to see format';
   };
 
   return (
@@ -183,7 +205,7 @@ const CompanySettings = () => {
         />
       </Box>
 
-      {validationErrors.length > 0 && (
+      {Object.keys(validationErrors).length > 0 && (
         <Alert severity="error" sx={{ mb: 3 }}>
           {t('pleaseCompleteRequired')}
         </Alert>
@@ -228,8 +250,8 @@ const CompanySettings = () => {
                   value={companyData.companyName}
                   onChange={(e) => setCompanyData({...companyData, companyName: e.target.value})}
                   placeholder="ABC Corp."
-                  error={validationErrors.includes('companyName')}
-                  helperText={validationErrors.includes('companyName') ? t('requiredField') : ''}
+                  error={!!validationErrors.companyName}
+                  helperText={validationErrors.companyName || ''}
                 />
                 
                 <TextField
@@ -239,8 +261,8 @@ const CompanySettings = () => {
                   value={companyData.website}
                   onChange={(e) => setCompanyData({...companyData, website: e.target.value})}
                   placeholder="https://www.example.com"
-                  error={validationErrors.includes('website')}
-                  helperText={validationErrors.includes('website') ? t('requiredField') : ''}
+                  error={!!validationErrors.website}
+                  helperText={validationErrors.website || ''}
                 />
                 
                 <TextField
@@ -251,8 +273,8 @@ const CompanySettings = () => {
                   value={companyData.contactEmail}
                   onChange={(e) => setCompanyData({...companyData, contactEmail: e.target.value})}
                   placeholder="contact@company.com"
-                  error={validationErrors.includes('contactEmail')}
-                  helperText={validationErrors.includes('contactEmail') ? t('requiredField') : ''}
+                  error={!!validationErrors.contactEmail}
+                  helperText={validationErrors.contactEmail || ''}
                 />
                 
                 <TextField
@@ -262,8 +284,8 @@ const CompanySettings = () => {
                   value={companyData.contactPhone}
                   onChange={(e) => setCompanyData({...companyData, contactPhone: e.target.value})}
                   placeholder="+49 123 456 789"
-                  error={validationErrors.includes('contactPhone')}
-                  helperText={validationErrors.includes('contactPhone') ? t('requiredField') : ''}
+                  error={!!validationErrors.contactPhone}
+                  helperText={validationErrors.contactPhone || ''}
                 />
                 
                 <TextField
@@ -272,9 +294,9 @@ const CompanySettings = () => {
                   required
                   value={companyData.taxNumber}
                   onChange={(e) => setCompanyData({...companyData, taxNumber: e.target.value})}
-                  placeholder="DE123456789"
-                  error={validationErrors.includes('taxNumber')}
-                  helperText={validationErrors.includes('taxNumber') ? t('requiredField') : ''}
+                  placeholder={companyData.country === 'Germany' ? 'DE123456789' : 'Enter tax number'}
+                  error={!!validationErrors.taxNumber}
+                  helperText={getTaxNumberHelperText()}
                 />
 
                 <FormControl fullWidth>
@@ -324,8 +346,8 @@ const CompanySettings = () => {
                   value={companyData.companyAddress}
                   onChange={(e) => setCompanyData({...companyData, companyAddress: e.target.value})}
                   placeholder="123 Street Name"
-                  error={validationErrors.includes('companyAddress')}
-                  helperText={validationErrors.includes('companyAddress') ? t('requiredField') : ''}
+                  error={!!validationErrors.companyAddress}
+                  helperText={validationErrors.companyAddress || ''}
                 />
                 
                 <TextField
@@ -345,8 +367,8 @@ const CompanySettings = () => {
                       value={companyData.postalCode}
                       onChange={(e) => setCompanyData({...companyData, postalCode: e.target.value})}
                       placeholder="12345"
-                      error={validationErrors.includes('postalCode')}
-                      helperText={validationErrors.includes('postalCode') ? t('requiredField') : ''}
+                      error={!!validationErrors.postalCode}
+                      helperText={validationErrors.postalCode || ''}
                     />
                   </Grid>
                   <Grid size={6}>
@@ -357,13 +379,13 @@ const CompanySettings = () => {
                       value={companyData.city}
                       onChange={(e) => setCompanyData({...companyData, city: e.target.value})}
                       placeholder="Hamburg"
-                      error={validationErrors.includes('city')}
-                      helperText={validationErrors.includes('city') ? t('requiredField') : ''}
+                      error={!!validationErrors.city}
+                      helperText={validationErrors.city || ''}
                     />
                   </Grid>
                 </Grid>
                 
-                <FormControl fullWidth required error={validationErrors.includes('country')}>
+                <FormControl fullWidth required error={!!validationErrors.country}>
                   <InputLabel>{`${t('country')} *`}</InputLabel>
                   <Select
                     value={companyData.country}
@@ -396,9 +418,9 @@ const CompanySettings = () => {
                       </MenuItem>
                     ))}
                   </Select>
-                  {validationErrors.includes('country') && (
+                  {validationErrors.country && (
                     <Typography variant="caption" color="error" sx={{ mt: 0.5, ml: 1.5 }}>
-                      {t('requiredField')}
+                      {validationErrors.country}
                     </Typography>
                   )}
                 </FormControl>
@@ -545,7 +567,7 @@ const CompanySettings = () => {
                     label={t('timezone')}
                     onChange={(e) => setSettings({...settings, timezone: e.target.value})}
                   >
-                    {timezones.map((timezone) => (
+                    {validTimezones.map((timezone) => (
                       <MenuItem key={timezone} value={timezone}>
                         {timezone}
                       </MenuItem>
