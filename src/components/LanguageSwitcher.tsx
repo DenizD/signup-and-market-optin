@@ -2,7 +2,6 @@
 import { useState } from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Languages } from 'lucide-react';
-import { Box } from '@mui/material';
 
 export type Language = {
   code: 'de' | 'en' | 'es' | 'zh';
@@ -23,7 +22,7 @@ interface LanguageSwitcherProps {
 
 const LanguageSwitcher = ({ currentLanguage, onLanguageChange }: LanguageSwitcherProps) => {
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+    <div className="flex items-center gap-2">
       <Languages size={20} />
       <Select value={currentLanguage} onValueChange={onLanguageChange}>
         <SelectTrigger className="w-[120px]">
@@ -39,7 +38,7 @@ const LanguageSwitcher = ({ currentLanguage, onLanguageChange }: LanguageSwitche
           ))}
         </SelectContent>
       </Select>
-    </Box>
+    </div>
   );
 };
 
