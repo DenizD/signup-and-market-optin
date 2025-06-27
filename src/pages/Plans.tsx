@@ -1,3 +1,4 @@
+
 import { Box, Container, Typography, Button, Card, CardContent, CardActions, Stack, Chip, Tooltip, Grow, Collapse } from '@mui/material';
 import { Check, HelpOutline, ExpandMore, ExpandLess, Phone, InfoOutlined } from '@mui/icons-material';
 import { useState } from 'react';
@@ -165,7 +166,7 @@ const Plans = () => {
       title: 'Shoppable Video Advanced',
       description: 'Die komplette Video-Commerce Lösung',
       monthlyPrice: 1195,
-      popular: true,
+      popular: false,
       isStarterOption: false,
       features: [
         {
@@ -269,15 +270,7 @@ const Plans = () => {
       return {
         ...baseStyles,
         border: '2px solid #43BEAC',
-        backgroundColor: '#ffffff',
         boxShadow: '0 8px 24px rgba(67, 190, 172, 0.15)',
-      };
-    }
-
-    if (plan.popular) {
-      return {
-        ...baseStyles,
-        border: '2px solid #43BEAC',
       };
     }
 
@@ -451,28 +444,6 @@ const Plans = () => {
               <Box key={plan.id} onClick={plan.isStarterOption ? () => handleStarterPlanClick(plan.id) : undefined}>
                 <Grow in timeout={600 + index * 150}>
                   <Card sx={getCardStyles(plan)}>
-                    {plan.popular && (
-                      <Box 
-                        sx={{
-                          position: 'absolute',
-                          top: -14,
-                          left: '50%',
-                          transform: 'translateX(-50%)',
-                          background: 'linear-gradient(135deg, #43BEAC 0%, #2dd4bf 100%)',
-                          color: '#ffffff',
-                          fontWeight: 700,
-                          fontSize: '0.75rem',
-                          px: 2,
-                          py: 0.5,
-                          zIndex: 1,
-                          boxShadow: '0 4px 12px rgba(67, 190, 172, 0.4)',
-                          borderRadius: 2
-                        }}
-                      >
-                        Beliebteste Wahl
-                      </Box>
-                    )}
-
                     <CardContent sx={{ 
                       p: { xs: 3, md: 4 }, 
                       flexGrow: 1, 
@@ -481,7 +452,7 @@ const Plans = () => {
                       height: '100%'
                     }}>
                       {/* Plan Header - Fixed Height */}
-                      <Box sx={{ mb: 4, minHeight: '140px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                      <Box sx={{ mb: 4, height: '140px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                         <Box sx={{ textAlign: 'center' }}>
                           <Typography 
                             variant="overline" 
@@ -518,7 +489,7 @@ const Plans = () => {
                       </Box>
 
                       {/* Price - Fixed Height */}
-                      <Box sx={{ mb: 4, textAlign: 'center', minHeight: '80px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                      <Box sx={{ mb: 4, textAlign: 'center', height: '80px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                         <Stack direction="row" alignItems="baseline" justifyContent="center" spacing={0.5}>
                           <Typography variant="h3" sx={{
                             fontWeight: 800,
@@ -550,9 +521,9 @@ const Plans = () => {
                         )}
                       </Box>
 
-                      {/* Features - Flexible Height */}
+                      {/* Features - Fixed Height */}
                       <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-                        <Box sx={{ minHeight: '300px' }}>
+                        <Box sx={{ height: '300px', overflow: 'hidden' }}>
                           <Stack spacing={2.5}>
                             {plan.features.map((feature, index) => 
                               renderFeatureWithTooltip(feature, index, plan)
@@ -560,9 +531,9 @@ const Plans = () => {
                           </Stack>
                         </Box>
 
-                        {/* Detailed Features Collapse */}
+                        {/* Detailed Features Collapse - Fixed Height */}
                         <Collapse in={expandedDetails}>
-                          <Box sx={{ mt: 4, pt: 4, borderTop: '1px solid #e2e8f0' }}>
+                          <Box sx={{ mt: 4, pt: 4, borderTop: '1px solid #e2e8f0', height: '250px', overflow: 'hidden' }}>
                             <Typography variant="subtitle2" sx={{ 
                               fontWeight: 700, 
                               mb: 3, 
@@ -573,64 +544,62 @@ const Plans = () => {
                             }}>
                               Zusätzliche Features:
                             </Typography>
-                            <Box sx={{ minHeight: '200px' }}>
-                              <Stack spacing={2}>
-                                {plan.detailedFeatures?.map((feature, index) => (
-                                  <Stack key={index} direction="row" alignItems="flex-start" spacing={1.5}>
-                                    <Box sx={{
-                                      width: 12,
-                                      height: 12,
-                                      backgroundColor: '#43BEAC',
-                                      borderRadius: '50%',
-                                      flexShrink: 0,
-                                      mt: 0.25
-                                    }} />
-                                    <Stack direction="row" alignItems="flex-start" spacing={1} sx={{ flexGrow: 1 }}>
-                                      <Typography variant="body2" sx={{ 
-                                        color: '#64748b', 
-                                        fontSize: '0.8rem',
-                                        lineHeight: 1.4,
-                                        flexGrow: 1
-                                      }}>
-                                        {feature.text}
-                                      </Typography>
-                                      {feature.tooltip && (
-                                        <Tooltip 
-                                          title={feature.tooltip}
-                                          placement="top"
-                                          arrow
-                                          sx={{
-                                            '& .MuiTooltip-tooltip': {
-                                              backgroundColor: '#1a1d21',
-                                              color: '#ffffff',
-                                              fontSize: '0.875rem',
-                                              maxWidth: '300px',
-                                              padding: '12px',
-                                              borderRadius: '8px',
-                                              lineHeight: 1.4
-                                            },
-                                            '& .MuiTooltip-arrow': {
-                                              color: '#1a1d21'
-                                            }
-                                          }}
-                                        >
-                                          <InfoOutlined sx={{ 
-                                            color: '#64748b', 
-                                            fontSize: '12px',
-                                            cursor: 'help',
-                                            flexShrink: 0,
-                                            mt: 0.125,
-                                            '&:hover': {
-                                              color: '#43BEAC'
-                                            }
-                                          }} />
-                                        </Tooltip>
-                                      )}
-                                    </Stack>
+                            <Stack spacing={2}>
+                              {plan.detailedFeatures?.map((feature, index) => (
+                                <Stack key={index} direction="row" alignItems="flex-start" spacing={1.5}>
+                                  <Box sx={{
+                                    width: 12,
+                                    height: 12,
+                                    backgroundColor: '#43BEAC',
+                                    borderRadius: '50%',
+                                    flexShrink: 0,
+                                    mt: 0.25
+                                  }} />
+                                  <Stack direction="row" alignItems="flex-start" spacing={1} sx={{ flexGrow: 1 }}>
+                                    <Typography variant="body2" sx={{ 
+                                      color: '#64748b', 
+                                      fontSize: '0.8rem',
+                                      lineHeight: 1.4,
+                                      flexGrow: 1
+                                    }}>
+                                      {feature.text}
+                                    </Typography>
+                                    {feature.tooltip && (
+                                      <Tooltip 
+                                        title={feature.tooltip}
+                                        placement="top"
+                                        arrow
+                                        sx={{
+                                          '& .MuiTooltip-tooltip': {
+                                            backgroundColor: '#1a1d21',
+                                            color: '#ffffff',
+                                            fontSize: '0.875rem',
+                                            maxWidth: '300px',
+                                            padding: '12px',
+                                            borderRadius: '8px',
+                                            lineHeight: 1.4
+                                          },
+                                          '& .MuiTooltip-arrow': {
+                                            color: '#1a1d21'
+                                          }
+                                        }}
+                                      >
+                                        <InfoOutlined sx={{ 
+                                          color: '#64748b', 
+                                          fontSize: '12px',
+                                          cursor: 'help',
+                                          flexShrink: 0,
+                                          mt: 0.125,
+                                          '&:hover': {
+                                            color: '#43BEAC'
+                                          }
+                                        }} />
+                                      </Tooltip>
+                                    )}
                                   </Stack>
-                                ))}
-                              </Stack>
-                            </Box>
+                                </Stack>
+                              ))}
+                            </Stack>
                           </Box>
                         </Collapse>
                       </Box>
