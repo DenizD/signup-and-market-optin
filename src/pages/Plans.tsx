@@ -1,4 +1,3 @@
-
 import { Box, Container, Typography, Button, Card, CardContent, CardActions, Stack, Chip, Tooltip, Grow, Collapse } from '@mui/material';
 import { Check, HelpOutline, ExpandMore, ExpandLess, Phone, InfoOutlined } from '@mui/icons-material';
 import { useState } from 'react';
@@ -260,22 +259,18 @@ const Plans = () => {
       backgroundColor: '#ffffff',
       border: '1px solid #e2e8f0',
       boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
-      '&:hover': {
-        transform: 'translateY(-4px)',
+      '&:hover': plan.isStarterOption ? {
+        transform: 'translateY(-2px)',
         boxShadow: '0 8px 24px rgba(0, 0, 0, 0.08)'
-      }
+      } : {}
     };
 
     if (isSelected) {
       return {
         ...baseStyles,
         border: '2px solid #43BEAC',
-        backgroundColor: '#E0F4F1',
+        backgroundColor: '#ffffff',
         boxShadow: '0 8px 24px rgba(67, 190, 172, 0.15)',
-        '&:hover': {
-          transform: 'translateY(-6px)',
-          boxShadow: '0 12px 32px rgba(67, 190, 172, 0.2)'
-        }
       };
     }
 
@@ -283,10 +278,6 @@ const Plans = () => {
       return {
         ...baseStyles,
         border: '2px solid #43BEAC',
-        '&:hover': {
-          transform: 'translateY(-6px)',
-          boxShadow: '0 12px 32px rgba(67, 190, 172, 0.15)'
-        }
       };
     }
 
@@ -416,6 +407,32 @@ const Plans = () => {
           </Typography>
         </Box>
 
+        {/* Starter Package Selection Note */}
+        <Box sx={{ 
+          textAlign: 'center', 
+          mb: 6,
+          backgroundColor: '#f0f9ff',
+          border: '1px solid #e0f2fe',
+          borderRadius: 2,
+          p: 3,
+          maxWidth: '600px',
+          mx: 'auto'
+        }}>
+          <Typography variant="body1" sx={{ 
+            color: '#0f172a', 
+            fontWeight: 500,
+            mb: 1
+          }}>
+            Starter-Pakete
+          </Typography>
+          <Typography variant="body2" sx={{ 
+            color: '#475569',
+            lineHeight: 1.6
+          }}>
+            Bitte wählen Sie <strong>eines</strong> der beiden Starter-Pakete aus. Diese sind nicht kombinierbar.
+          </Typography>
+        </Box>
+
         {/* All Plans Section */}
         <Box sx={{ mb: { xs: 8, md: 12 } }}>
           <Box sx={{ 
@@ -456,82 +473,86 @@ const Plans = () => {
                       </Box>
                     )}
 
-                    <CardContent sx={{ p: { xs: 3, md: 4 }, flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-                      {/* Plan Header */}
-                      <Box sx={{ textAlign: 'center', mb: 4 }}>
-                        <Typography 
-                          variant="overline" 
-                          sx={{ 
-                            color: '#64748b',
-                            fontWeight: 700,
-                            letterSpacing: 1,
-                            fontSize: '0.75rem',
-                            textTransform: 'uppercase',
-                            mb: 1,
-                            display: 'block'
-                          }}
-                        >
-                          {plan.title}
-                        </Typography>
-                        <Typography variant="h5" sx={{ 
-                          fontWeight: 700, 
-                          mb: 2,
-                          color: '#1a1d21',
-                          letterSpacing: '-0.015em',
-                          fontSize: { xs: '1.25rem', md: '1.5rem' }
-                        }}>
-                          {plan.name}
-                        </Typography>
-                        <Typography variant="body1" sx={{ 
-                          color: '#64748b',
-                          mb: 4,
-                          lineHeight: 1.6,
-                          fontSize: '0.875rem',
-                          minHeight: { xs: 'auto', md: '48px' },
-                          display: 'flex',
-                          alignItems: 'center',
-                          textAlign: 'center'
-                        }}>
-                          {plan.description}
-                        </Typography>
-
-                        {/* Price */}
-                        <Box sx={{ mb: 4 }}>
-                          <Stack direction="row" alignItems="baseline" justifyContent="center" spacing={0.5}>
-                            <Typography variant="h3" sx={{
-                              fontWeight: 800,
-                              color: '#1a1d21',
-                              lineHeight: 1,
-                              letterSpacing: '-0.025em',
-                              fontSize: { xs: '2rem', md: '2.5rem' }
-                            }}>
-                              {formatPrice(plan.monthlyPrice)}
-                            </Typography>
-                            {plan.monthlyPrice !== null && (
-                              <Typography variant="body1" sx={{ 
-                                color: '#64748b',
-                                fontWeight: 500,
-                                fontSize: '1rem'
-                              }}>
-                                /Monat
-                              </Typography>
-                            )}
-                          </Stack>
-                          {plan.monthlyPrice !== null && (
-                            <Typography variant="body2" sx={{ 
-                              color: '#94a3b8',
+                    <CardContent sx={{ 
+                      p: { xs: 3, md: 4 }, 
+                      flexGrow: 1, 
+                      display: 'flex', 
+                      flexDirection: 'column',
+                      height: '100%'
+                    }}>
+                      {/* Plan Header - Fixed Height */}
+                      <Box sx={{ mb: 4, minHeight: '140px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                        <Box sx={{ textAlign: 'center' }}>
+                          <Typography 
+                            variant="overline" 
+                            sx={{ 
+                              color: '#64748b',
+                              fontWeight: 700,
+                              letterSpacing: 1,
                               fontSize: '0.75rem',
-                              mt: 1
-                            }}>
-                              zzgl. der gesetzlichen Mehrwertsteuer
-                            </Typography>
-                          )}
+                              textTransform: 'uppercase',
+                              mb: 1,
+                              display: 'block'
+                            }}
+                          >
+                            {plan.title}
+                          </Typography>
+                          <Typography variant="h5" sx={{ 
+                            fontWeight: 700, 
+                            mb: 2,
+                            color: '#1a1d21',
+                            letterSpacing: '-0.015em',
+                            fontSize: { xs: '1.25rem', md: '1.5rem' }
+                          }}>
+                            {plan.name}
+                          </Typography>
+                          <Typography variant="body1" sx={{ 
+                            color: '#64748b',
+                            lineHeight: 1.6,
+                            fontSize: '0.875rem',
+                            textAlign: 'center'
+                          }}>
+                            {plan.description}
+                          </Typography>
                         </Box>
                       </Box>
 
-                      {/* Features */}
+                      {/* Price - Fixed Height */}
+                      <Box sx={{ mb: 4, textAlign: 'center', minHeight: '80px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                        <Stack direction="row" alignItems="baseline" justifyContent="center" spacing={0.5}>
+                          <Typography variant="h3" sx={{
+                            fontWeight: 800,
+                            color: '#1a1d21',
+                            lineHeight: 1,
+                            letterSpacing: '-0.025em',
+                            fontSize: { xs: '2rem', md: '2.5rem' }
+                          }}>
+                            {formatPrice(plan.monthlyPrice)}
+                          </Typography>
+                          {plan.monthlyPrice !== null && (
+                            <Typography variant="body1" sx={{ 
+                              color: '#64748b',
+                              fontWeight: 500,
+                              fontSize: '1rem'
+                            }}>
+                              /Monat
+                            </Typography>
+                          )}
+                        </Stack>
+                        {plan.monthlyPrice !== null && (
+                          <Typography variant="body2" sx={{ 
+                            color: '#94a3b8',
+                            fontSize: '0.75rem',
+                            mt: 1
+                          }}>
+                            zzgl. der gesetzlichen Mehrwertsteuer
+                          </Typography>
+                        )}
+                      </Box>
+
+                      {/* Features - Flexible Height */}
                       <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-                        <Box sx={{ minHeight: { xs: 'auto', md: '300px' } }}>
+                        <Box sx={{ minHeight: '300px' }}>
                           <Stack spacing={2.5}>
                             {plan.features.map((feature, index) => 
                               renderFeatureWithTooltip(feature, index, plan)
@@ -552,7 +573,7 @@ const Plans = () => {
                             }}>
                               Zusätzliche Features:
                             </Typography>
-                            <Box sx={{ minHeight: { xs: 'auto', md: '200px' } }}>
+                            <Box sx={{ minHeight: '200px' }}>
                               <Stack spacing={2}>
                                 {plan.detailedFeatures?.map((feature, index) => (
                                   <Stack key={index} direction="row" alignItems="flex-start" spacing={1.5}>
@@ -615,7 +636,7 @@ const Plans = () => {
                       </Box>
                     </CardContent>
 
-                    <CardActions sx={{ p: { xs: 3, md: 4 }, pt: 0 }}>
+                    <CardActions sx={{ p: { xs: 3, md: 4 }, pt: 0, mt: 'auto' }}>
                       <Button
                         variant="contained"
                         fullWidth
@@ -638,7 +659,7 @@ const Plans = () => {
                           boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)'
                         }}
                       >
-                        {plan.id === 'enterprise' ? 'Beratung vereinbaren' : 'Paket wählen'}
+                        {plan.id === 'enterprise' ? 'Beratung vereinbaren' : 'Auswählen'}
                       </Button>
                     </CardActions>
                   </Card>
