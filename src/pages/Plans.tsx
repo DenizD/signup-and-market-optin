@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Container, Box, Typography, Button, Card, CardContent, CardActions, Stack, Chip, Grid, Alert, AlertTitle, Accordion, AccordionSummary, AccordionDetails, Radio, RadioGroup, FormControlLabel, FormControl, Tooltip, IconButton } from '@mui/material';
+import { Container, Box, Typography, Button, Card, CardContent, CardActions, Stack, Chip, Alert, AlertTitle, Accordion, AccordionSummary, AccordionDetails, Radio, RadioGroup, FormControlLabel, FormControl, Tooltip, IconButton } from '@mui/material';
 import { Check, ExpandMore, Info, Security, People, Cancel, Support } from '@mui/icons-material';
 import { useTranslations } from '@/hooks/useTranslations';
 
@@ -89,9 +89,9 @@ const Plans = () => {
         </Box>
 
         {/* Main Pricing Grid */}
-        <Grid container spacing={4} sx={{ mb: 6 }}>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
           {/* Starter Packages Container */}
-          <Grid item xs={12} md={6}>
+          <div className="md:col-span-2">
             <Box sx={{ 
               p: 3, 
               backgroundColor: '#ffffff', 
@@ -115,9 +115,9 @@ const Plans = () => {
                   value={selectedStarter || ''}
                   onChange={(e) => handleStarterSelection(e.target.value as 'clips' | 'live-shopping')}
                 >
-                  <Grid container spacing={3}>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {/* Starter Clips */}
-                    <Grid item xs={12} sm={6}>
+                    <div>
                       <Card sx={getCardStyles('clips', selectedStarter === 'clips', selectedStarter === 'live-shopping')}>
                         <CardContent sx={{ p: 3 }}>
                           <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
@@ -170,10 +170,10 @@ const Plans = () => {
                           </Button>
                         </CardActions>
                       </Card>
-                    </Grid>
+                    </div>
 
                     {/* Starter Live Shopping */}
-                    <Grid item xs={12} sm={6}>
+                    <div>
                       <Card sx={getCardStyles('live-shopping', selectedStarter === 'live-shopping', selectedStarter === 'clips')}>
                         <CardContent sx={{ p: 3 }}>
                           <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
@@ -226,8 +226,8 @@ const Plans = () => {
                           </Button>
                         </CardActions>
                       </Card>
-                    </Grid>
-                  </Grid>
+                    </div>
+                  </div>
                 </RadioGroup>
               </FormControl>
 
@@ -236,10 +236,10 @@ const Plans = () => {
                 Starter Clips und Starter Live Shopping sind nicht kombinierbar.
               </Alert>
             </Box>
-          </Grid>
+          </div>
 
           {/* Advanced Package */}
-          <Grid item xs={12} md={3}>
+          <div>
             <Card sx={{
               ...getCardStyles('advanced'),
               position: 'relative',
@@ -297,10 +297,10 @@ const Plans = () => {
                 </Button>
               </CardActions>
             </Card>
-          </Grid>
+          </div>
 
           {/* Enterprise Package */}
-          <Grid item xs={12} md={3}>
+          <div>
             <Card sx={getCardStyles('enterprise')}>
               <CardContent sx={{ p: 3 }}>
                 <Typography variant="h6" sx={{ fontWeight: 700, color: '#64748b', mb: 2 }}>
@@ -344,8 +344,8 @@ const Plans = () => {
                 </Button>
               </CardActions>
             </Card>
-          </Grid>
-        </Grid>
+          </div>
+        </div>
 
         {/* Trust Elements */}
         <Box sx={{ 
@@ -358,8 +358,8 @@ const Plans = () => {
           <Typography variant="h5" sx={{ fontWeight: 700, mb: 3, textAlign: 'center' }}>
             Vertrauensanker
           </Typography>
-          <Grid container spacing={3}>
-            <Grid item xs={12} sm={6} md={3}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+            <div>
               <Stack direction="row" alignItems="center" spacing={2}>
                 <Security sx={{ color: '#27AE60', fontSize: 28 }} />
                 <Box>
@@ -371,8 +371,8 @@ const Plans = () => {
                   </Typography>
                 </Box>
               </Stack>
-            </Grid>
-            <Grid item xs={12} sm={6} md={3}>
+            </div>
+            <div>
               <Stack direction="row" alignItems="center" spacing={2}>
                 <Cancel sx={{ color: '#27AE60', fontSize: 28 }} />
                 <Box>
@@ -384,8 +384,8 @@ const Plans = () => {
                   </Typography>
                 </Box>
               </Stack>
-            </Grid>
-            <Grid item xs={12} sm={6} md={3}>
+            </div>
+            <div>
               <Stack direction="row" alignItems="center" spacing={2}>
                 <People sx={{ color: '#27AE60', fontSize: 28 }} />
                 <Box>
@@ -397,8 +397,8 @@ const Plans = () => {
                   </Typography>
                 </Box>
               </Stack>
-            </Grid>
-            <Grid item xs={12} sm={6} md={3}>
+            </div>
+            <div>
               <Stack direction="row" alignItems="center" spacing={2}>
                 <Support sx={{ color: '#27AE60', fontSize: 28 }} />
                 <Box>
@@ -410,8 +410,8 @@ const Plans = () => {
                   </Typography>
                 </Box>
               </Stack>
-            </Grid>
-          </Grid>
+            </div>
+          </div>
         </Box>
 
         {/* Feature Comparison (Optional) */}
@@ -422,8 +422,8 @@ const Plans = () => {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={3}>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+              <div>
                 <Typography variant="subtitle1" sx={{ fontWeight: 700, mb: 2, color: '#007BFF' }}>
                   Starter Clips
                 </Typography>
@@ -434,8 +434,8 @@ const Plans = () => {
                     </Typography>
                   ))}
                 </Stack>
-              </Grid>
-              <Grid item xs={12} md={3}>
+              </div>
+              <div>
                 <Typography variant="subtitle1" sx={{ fontWeight: 700, mb: 2, color: '#9B51E0' }}>
                   Starter Live Shopping
                 </Typography>
@@ -446,8 +446,8 @@ const Plans = () => {
                     </Typography>
                   ))}
                 </Stack>
-              </Grid>
-              <Grid item xs={12} md={3}>
+              </div>
+              <div>
                 <Typography variant="subtitle1" sx={{ fontWeight: 700, mb: 2, color: '#27AE60' }}>
                   Advanced
                 </Typography>
@@ -458,8 +458,8 @@ const Plans = () => {
                     </Typography>
                   ))}
                 </Stack>
-              </Grid>
-              <Grid item xs={12} md={3}>
+              </div>
+              <div>
                 <Typography variant="subtitle1" sx={{ fontWeight: 700, mb: 2, color: '#64748b' }}>
                   Enterprise
                 </Typography>
@@ -470,8 +470,8 @@ const Plans = () => {
                     </Typography>
                   ))}
                 </Stack>
-              </Grid>
-            </Grid>
+              </div>
+            </div>
           </AccordionDetails>
         </Accordion>
       </Container>
