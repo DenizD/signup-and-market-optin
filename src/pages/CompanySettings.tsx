@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import {
   Box,
@@ -380,9 +381,9 @@ const CompanySettings = () => {
             {t('companyProfile')}
           </Typography>
           
-          {/* Company Basic Information */}
+          {/* Basic Information */}
           <Typography variant="subtitle1" sx={{ mb: 3, fontWeight: 600, color: '#374151' }}>
-            Unternehmensdaten
+            Grunddaten
           </Typography>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <TextField
@@ -395,13 +396,54 @@ const CompanySettings = () => {
               helperText={validationErrors.companyName}
             />
             
+            <FormControl fullWidth required error={!!validationErrors.country}>
+              <InputLabel>{`${t('country')} *`}</InputLabel>
+              <Select
+                value={companyData.country}
+                label={`${t('country')} *`}
+                onChange={(e) => setCompanyData({...companyData, country: e.target.value})}
+              >
+                {allCountries.map((country) => (
+                  <MenuItem 
+                    key={country} 
+                    value={country}
+                    disabled={isEmbargoCountry(country)}
+                    sx={isEmbargoCountry(country) ? { 
+                      color: '#999', 
+                      '&.Mui-disabled': { 
+                        color: '#999 !important',
+                        opacity: 0.6 
+                      } 
+                    } : {}}
+                  >
+                    {country}
+                    {isEmbargoCountry(country) && (
+                      <Typography 
+                        component="span" 
+                        variant="caption" 
+                        sx={{ ml: 1, color: '#f44336', fontStyle: 'italic' }}
+                      >
+                        ({t('serviceNotAvailable')})
+                      </Typography>
+                    )}
+                  </MenuItem>
+                ))}
+              </Select>
+              {validationErrors.country && (
+                <Typography variant="caption" color="error" sx={{ mt: 0.5, ml: 1.5 }}>
+                  {validationErrors.country}
+                </Typography>
+              )}
+            </FormControl>
+
             <TextField
               fullWidth
-              label={t('website')}
-              value={companyData.website}
-              onChange={(e) => handleInputChange('website', e.target.value)}
-              error={!!validationErrors.website}
-              helperText={validationErrors.website}
+              label={`${t('taxNumber')} *`}
+              required
+              value={companyData.taxNumber}
+              onChange={(e) => handleInputChange('taxNumber', e.target.value)}
+              error={!!validationErrors.taxNumber}
+              helperText={getTaxNumberHelperText()}
             />
 
             <FormControl fullWidth>
@@ -451,14 +493,19 @@ const CompanySettings = () => {
 
             <TextField
               fullWidth
-              label={`${t('taxNumber')} *`}
-              required
-              value={companyData.taxNumber}
-              onChange={(e) => handleInputChange('taxNumber', e.target.value)}
-              error={!!validationErrors.taxNumber}
-              helperText={getTaxNumberHelperText()}
+              label={t('website')}
+              value={companyData.website}
+              onChange={(e) => handleInputChange('website', e.target.value)}
+              error={!!validationErrors.website}
+              helperText={validationErrors.website}
             />
           </div>
+
+          {companyData.country && isEmbargoCountry(companyData.country) && (
+            <Alert severity="warning" sx={{ mb: 4 }}>
+              {t('embargoCountry')}
+            </Alert>
+          )}
 
           <Divider sx={{ my: 4 }} />
 
@@ -495,52 +542,6 @@ const CompanySettings = () => {
             Firmenadresse
           </Typography>
           <div className="grid grid-cols-1 gap-6 mb-8">
-            <FormControl fullWidth required error={!!validationErrors.country}>
-              <InputLabel>{`${t('country')} *`}</InputLabel>
-              <Select
-                value={companyData.country}
-                label={`${t('country')} *`}
-                onChange={(e) => setCompanyData({...companyData, country: e.target.value})}
-              >
-                {allCountries.map((country) => (
-                  <MenuItem 
-                    key={country} 
-                    value={country}
-                    disabled={isEmbargoCountry(country)}
-                    sx={isEmbargoCountry(country) ? { 
-                      color: '#999', 
-                      '&.Mui-disabled': { 
-                        color: '#999 !important',
-                        opacity: 0.6 
-                      } 
-                    } : {}}
-                  >
-                    {country}
-                    {isEmbargoCountry(country) && (
-                      <Typography 
-                        component="span" 
-                        variant="caption" 
-                        sx={{ ml: 1, color: '#f44336', fontStyle: 'italic' }}
-                      >
-                        ({t('serviceNotAvailable')})
-                      </Typography>
-                    )}
-                  </MenuItem>
-                ))}
-              </Select>
-              {validationErrors.country && (
-                <Typography variant="caption" color="error" sx={{ mt: 0.5, ml: 1.5 }}>
-                  {validationErrors.country}
-                </Typography>
-              )}
-            </FormControl>
-
-            {companyData.country && isEmbargoCountry(companyData.country) && (
-              <Alert severity="warning">
-                {t('embargoCountry')}
-              </Alert>
-            )}
-
             <StreetAutocomplete
               label={`${t('companyAddress')} *`}
               value={companyData.companyAddress}
@@ -561,18 +562,19 @@ const CompanySettings = () => {
                 error={!!validationErrors.postalCode}
                 helperText={validationErrors.postalCode}
               />
-              <AddressAutocomplete
-                label={`${t('city')} *`}
-                value={companyData.city}
-                country={companyData.country}
-                postalCode={companyData.postalCode}
-                onCityChange={handleCityChange}
-                onPostalCodeSuggestion={handlePostalCodeSuggestion}
-                error={!!validationErrors.city}
-                helperText={validationErrors.city}
-                required
-                sx={{ gridColumn: 'span 2' }}
-              />
+              <div className="md:col-span-2">
+                <AddressAutocomplete
+                  label={`${t('city')} *`}
+                  value={companyData.city}
+                  country={companyData.country}
+                  postalCode={companyData.postalCode}
+                  onCityChange={handleCityChange}
+                  onPostalCodeSuggestion={handlePostalCodeSuggestion}
+                  error={!!validationErrors.city}
+                  helperText={validationErrors.city}
+                  required
+                />
+              </div>
             </div>
             
             <TextField
@@ -596,7 +598,7 @@ const CompanySettings = () => {
             rows={4}
             value={companyData.description}
             onChange={(e) => setCompanyData({...companyData, description: e.target.value})}
-            sx={{ mb: 3 }}
+            sx={{ mb: 6 }}
           />
 
           {/* Required fields note at bottom */}
