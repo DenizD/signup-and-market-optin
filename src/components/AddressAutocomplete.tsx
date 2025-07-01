@@ -1,12 +1,13 @@
 
 import React, { useState, useEffect } from 'react';
 import { TextField, Autocomplete, Box, Typography } from '@mui/material';
-import { searchCities, CityInfo, suggestPostalCodeForCity } from '@/services/addressService';
+import { searchCities, CityInfo, suggestPostalCodeForCity, getPostalCodesForCity } from '@/services/addressService';
 
 interface AddressAutocompleteProps {
   label: string;
   value: string;
   country: string;
+  postalCode?: string;
   onCityChange: (city: string) => void;
   onPostalCodeSuggestion: (postalCode: string) => void;
   error?: boolean;
@@ -18,6 +19,7 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
   label,
   value,
   country,
+  postalCode = '',
   onCityChange,
   onPostalCodeSuggestion,
   error,
@@ -26,6 +28,22 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
 }) => {
   const [options, setOptions] = useState<CityInfo[]>([]);
   const [inputValue, setInputValue] = useState(value);
+
+  // Auto-fill city based on postal code
+  useEffect(() => {
+    if (postalCode && postalCode.length >= 4 && country) {
+      const cities = searchCities('', country);
+      const matchingCity = cities.find(city => 
+        city.postalCodes.some(code => code.startsWith(postalCode))
+      );
+      
+      if (matchingCity && matchingCity.name !== value) {
+        console.log('Auto-filling city based on postal code:', postalCode, '→', matchingCity.name);
+        onCityChange(matchingCity.name);
+        setInputValue(matchingCity.name);
+      }
+    }
+  }, [postalCode, country, onCityChange, value]);
 
   useEffect(() => {
     if (country) {

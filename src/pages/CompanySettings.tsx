@@ -8,7 +8,6 @@ import {
   Paper,
   TextField,
   Button,
-  Grid,
   FormControl,
   InputLabel,
   Select,
@@ -30,6 +29,7 @@ import { validateTaxNumber, validateEmail, validatePhone, validateWebsite, valid
 import { validateCompanyData, validateCompanyWebsite } from '@/services/companyValidation';
 import { validateCityPostalCode } from '@/services/addressService';
 import AddressAutocomplete from '@/components/AddressAutocomplete';
+import StreetAutocomplete from '@/components/StreetAutocomplete';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -288,6 +288,16 @@ const CompanySettings = () => {
     }
   };
 
+  const handleStreetChange = (street: string) => {
+    setCompanyData({...companyData, companyAddress: street});
+    validateField('companyAddress', street);
+  };
+
+  const handlePostalCodeChange = (postalCode: string) => {
+    setCompanyData({...companyData, postalCode});
+    validateField('postalCode', postalCode);
+  };
+
   const handleInputChange = (field: string, value: string) => {
     setCompanyData({...companyData, [field]: value});
     validateField(field, value);
@@ -330,6 +340,9 @@ const CompanySettings = () => {
           </Typography>
           <Typography variant="body1" sx={{ color: '#64748b' }}>
             {t('companySettingsSubtitle')}
+          </Typography>
+          <Typography variant="body2" sx={{ color: '#64748b', mt: 1, fontStyle: 'italic' }}>
+            * = Pflichtfelder
           </Typography>
         </Box>
         <LanguageSwitcher 
@@ -384,219 +397,211 @@ const CompanySettings = () => {
             {t('companyProfile')}
           </Typography>
           
-          <Grid container spacing={4}>
-            <Grid size={{ xs: 12, md: 6 }}>
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-                <TextField
-                  fullWidth
-                  label={`${t('companyName')} *`}
-                  required
-                  value={companyData.companyName}
-                  onChange={(e) => handleInputChange('companyName', e.target.value)}
-                  placeholder="ABC Corp."
-                  error={!!validationErrors.companyName}
-                  helperText={validationErrors.companyName || ''}
-                />
-                
-                <TextField
-                  fullWidth
-                  label={`${t('website')} *`}
-                  required
-                  value={companyData.website}
-                  onChange={(e) => handleInputChange('website', e.target.value)}
-                  placeholder="https://www.example.com"
-                  error={!!validationErrors.website}
-                  helperText={validationErrors.website || ''}
-                />
-                
-                <TextField
-                  fullWidth
-                  label={`${t('contactEmail')} *`}
-                  type="email"
-                  required
-                  value={companyData.contactEmail}
-                  onChange={(e) => handleInputChange('contactEmail', e.target.value)}
-                  placeholder="contact@company.com"
-                  error={!!validationErrors.contactEmail}
-                  helperText={validationErrors.contactEmail || ''}
-                />
-                
-                <TextField
-                  fullWidth
-                  label={`${t('contactPhone')} *`}
-                  required
-                  value={companyData.contactPhone}
-                  onChange={(e) => handleInputChange('contactPhone', e.target.value)}
-                  placeholder="+49 123 456 789"
-                  error={!!validationErrors.contactPhone}
-                  helperText={validationErrors.contactPhone || ''}
-                />
-                
-                <TextField
-                  fullWidth
-                  label={`${t('taxNumber')} *`}
-                  required
-                  value={companyData.taxNumber}
-                  onChange={(e) => handleInputChange('taxNumber', e.target.value)}
-                  placeholder={companyData.country === 'Germany' ? 'DE123456789' : 'Enter tax number'}
-                  error={!!validationErrors.taxNumber}
-                  helperText={getTaxNumberHelperText()}
-                />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="flex flex-col gap-6">
+              <TextField
+                fullWidth
+                label={`${t('companyName')} *`}
+                required
+                value={companyData.companyName}
+                onChange={(e) => handleInputChange('companyName', e.target.value)}
+                placeholder="ABC Corp."
+                error={!!validationErrors.companyName}
+                helperText={validationErrors.companyName || ''}
+              />
+              
+              <TextField
+                fullWidth
+                label={`${t('website')} *`}
+                required
+                value={companyData.website}
+                onChange={(e) => handleInputChange('website', e.target.value)}
+                placeholder="https://www.example.com"
+                error={!!validationErrors.website}
+                helperText={validationErrors.website || ''}
+              />
+              
+              <TextField
+                fullWidth
+                label={`${t('contactEmail')} *`}
+                type="email"
+                required
+                value={companyData.contactEmail}
+                onChange={(e) => handleInputChange('contactEmail', e.target.value)}
+                placeholder="contact@company.com"
+                error={!!validationErrors.contactEmail}
+                helperText={validationErrors.contactEmail || ''}
+              />
+              
+              <TextField
+                fullWidth
+                label={`${t('contactPhone')} *`}
+                required
+                value={companyData.contactPhone}
+                onChange={(e) => handleInputChange('contactPhone', e.target.value)}
+                placeholder="+49 123 456 789"
+                error={!!validationErrors.contactPhone}
+                helperText={validationErrors.contactPhone || ''}
+              />
+              
+              <TextField
+                fullWidth
+                label={`${t('taxNumber')} *`}
+                required
+                value={companyData.taxNumber}
+                onChange={(e) => handleInputChange('taxNumber', e.target.value)}
+                placeholder={companyData.country === 'Germany' ? 'DE123456789' : 'Enter tax number'}
+                error={!!validationErrors.taxNumber}
+                helperText={getTaxNumberHelperText()}
+              />
 
-                <FormControl fullWidth>
-                  <InputLabel>{t('industry')}</InputLabel>
-                  <Select
-                    value={companyData.industry}
-                    label={t('industry')}
-                    onChange={(e) => setCompanyData({...companyData, industry: e.target.value})}
-                  >
-                    <MenuItem value="Technology">{t('technology')}</MenuItem>
-                    <MenuItem value="Finance">{t('finance')}</MenuItem>
-                    <MenuItem value="Healthcare">{t('healthcare')}</MenuItem>
-                    <MenuItem value="Education">{t('education')}</MenuItem>
-                    <MenuItem value="Manufacturing">{t('manufacturing')}</MenuItem>
-                    <MenuItem value="Retail">{t('retail')}</MenuItem>
-                    <MenuItem value="Consulting">{t('consulting')}</MenuItem>
-                    <MenuItem value="Media">{t('media')}</MenuItem>
-                    <MenuItem value="Real Estate">{t('realEstate')}</MenuItem>
-                    <MenuItem value="Other">{t('other')}</MenuItem>
-                  </Select>
-                </FormControl>
+              <FormControl fullWidth>
+                <InputLabel>{t('industry')}</InputLabel>
+                <Select
+                  value={companyData.industry}
+                  label={t('industry')}
+                  onChange={(e) => setCompanyData({...companyData, industry: e.target.value})}
+                >
+                  <MenuItem value="Technology">{t('technology')}</MenuItem>
+                  <MenuItem value="Finance">{t('finance')}</MenuItem>
+                  <MenuItem value="Healthcare">{t('healthcare')}</MenuItem>
+                  <MenuItem value="Education">{t('education')}</MenuItem>
+                  <MenuItem value="Manufacturing">{t('manufacturing')}</MenuItem>
+                  <MenuItem value="Retail">{t('retail')}</MenuItem>
+                  <MenuItem value="Consulting">{t('consulting')}</MenuItem>
+                  <MenuItem value="Media">{t('media')}</MenuItem>
+                  <MenuItem value="Real Estate">{t('realEstate')}</MenuItem>
+                  <MenuItem value="Other">{t('other')}</MenuItem>
+                </Select>
+              </FormControl>
 
-                <FormControl fullWidth>
-                  <InputLabel>{t('companySize')}</InputLabel>
-                  <Select
-                    value={companyData.companySize}
-                    label={t('companySize')}
-                    onChange={(e) => setCompanyData({...companyData, companySize: e.target.value})}
-                  >
-                    <MenuItem value="1-10">{t('companySize1to10')}</MenuItem>
-                    <MenuItem value="11-50">{t('companySize11to50')}</MenuItem>
-                    <MenuItem value="51-200">{t('companySize51to200')}</MenuItem>
-                    <MenuItem value="201-500">{t('companySize201to500')}</MenuItem>
-                    <MenuItem value="501-1000">{t('companySize501to1000')}</MenuItem>
-                    <MenuItem value="1000+">{t('companySize1000plus')}</MenuItem>
-                  </Select>
-                </FormControl>
-              </Box>
-            </Grid>
+              <FormControl fullWidth>
+                <InputLabel>{t('companySize')}</InputLabel>
+                <Select
+                  value={companyData.companySize}
+                  label={t('companySize')}
+                  onChange={(e) => setCompanyData({...companyData, companySize: e.target.value})}
+                >
+                  <MenuItem value="1-10">{t('companySize1to10')}</MenuItem>
+                  <MenuItem value="11-50">{t('companySize11to50')}</MenuItem>
+                  <MenuItem value="51-200">{t('companySize51to200')}</MenuItem>
+                  <MenuItem value="201-500">{t('companySize201to500')}</MenuItem>
+                  <MenuItem value="501-1000">{t('companySize501to1000')}</MenuItem>
+                  <MenuItem value="1000+">{t('companySize1000plus')}</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
 
-            <Grid size={{ xs: 12, md: 6 }}>
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+            <div className="flex flex-col gap-6">
+              <StreetAutocomplete
+                label={`${t('companyAddress')} *`}
+                value={companyData.companyAddress}
+                city={companyData.city}
+                onStreetChange={handleStreetChange}
+                error={!!validationErrors.companyAddress}
+                helperText={validationErrors.companyAddress || 'Street suggestions based on selected city'}
+                required
+              />
+              
+              <TextField
+                fullWidth
+                label={t('secondaryAddress')}
+                value={companyData.secondaryAddress}
+                onChange={(e) => setCompanyData({...companyData, secondaryAddress: e.target.value})}
+                placeholder="Floor 1, Suite 100"
+              />
+              
+              <div className="grid grid-cols-2 gap-4">
                 <TextField
                   fullWidth
-                  label={`${t('companyAddress')} *`}
+                  label={`${t('postalCode')} *`}
                   required
-                  value={companyData.companyAddress}
-                  onChange={(e) => handleInputChange('companyAddress', e.target.value)}
-                  placeholder="123 Street Name"
-                  error={!!validationErrors.companyAddress}
-                  helperText={validationErrors.companyAddress || ''}
+                  value={companyData.postalCode}
+                  onChange={(e) => handlePostalCodeChange(e.target.value)}
+                  placeholder="12345"
+                  error={!!validationErrors.postalCode}
+                  helperText={validationErrors.postalCode || ''}
                 />
-                
-                <TextField
-                  fullWidth
-                  label={t('secondaryAddress')}
-                  value={companyData.secondaryAddress}
-                  onChange={(e) => setCompanyData({...companyData, secondaryAddress: e.target.value})}
-                  placeholder="Floor 1, Suite 100"
+                <AddressAutocomplete
+                  label={`${t('city')} *`}
+                  value={companyData.city}
+                  country={companyData.country}
+                  postalCode={companyData.postalCode}
+                  onCityChange={handleCityChange}
+                  onPostalCodeSuggestion={handlePostalCodeSuggestion}
+                  error={!!validationErrors.city}
+                  helperText={validationErrors.city || 'Auto-filled based on postal code'}
+                  required
                 />
-                
-                <Grid container spacing={2}>
-                  <Grid size={6}>
-                    <TextField
-                      fullWidth
-                      label={`${t('postalCode')} *`}
-                      required
-                      value={companyData.postalCode}
-                      onChange={(e) => handleInputChange('postalCode', e.target.value)}
-                      placeholder="12345"
-                      error={!!validationErrors.postalCode}
-                      helperText={validationErrors.postalCode || ''}
-                    />
-                  </Grid>
-                  <Grid size={6}>
-                    <AddressAutocomplete
-                      label={`${t('city')} *`}
-                      value={companyData.city}
-                      country={companyData.country}
-                      onCityChange={handleCityChange}
-                      onPostalCodeSuggestion={handlePostalCodeSuggestion}
-                      error={!!validationErrors.city}
-                      helperText={validationErrors.city || 'Start typing for suggestions'}
-                      required
-                    />
-                  </Grid>
-                </Grid>
-                
-                <FormControl fullWidth required error={!!validationErrors.country}>
-                  <InputLabel>{`${t('country')} *`}</InputLabel>
-                  <Select
-                    value={companyData.country}
-                    label={`${t('country')} *`}
-                    onChange={(e) => setCompanyData({...companyData, country: e.target.value})}
-                  >
-                    {allCountries.map((country) => (
-                      <MenuItem 
-                        key={country} 
-                        value={country}
-                        disabled={isEmbargoCountry(country)}
-                        sx={isEmbargoCountry(country) ? { 
-                          color: '#999', 
-                          '&.Mui-disabled': { 
-                            color: '#999 !important',
-                            opacity: 0.6 
-                          } 
-                        } : {}}
-                      >
-                        {country}
-                        {isEmbargoCountry(country) && (
-                          <Typography 
-                            component="span" 
-                            variant="caption" 
-                            sx={{ ml: 1, color: '#f44336', fontStyle: 'italic' }}
-                          >
-                            ({t('serviceNotAvailable')})
-                          </Typography>
-                        )}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                  {validationErrors.country && (
-                    <Typography variant="caption" color="error" sx={{ mt: 0.5, ml: 1.5 }}>
-                      {validationErrors.country}
-                    </Typography>
-                  )}
-                </FormControl>
-
-                {companyData.country && isEmbargoCountry(companyData.country) && (
-                  <Alert severity="warning" sx={{ mt: 1 }}>
-                    {t('embargoCountry')}
-                  </Alert>
+              </div>
+              
+              <FormControl fullWidth required error={!!validationErrors.country}>
+                <InputLabel>{`${t('country')} *`}</InputLabel>
+                <Select
+                  value={companyData.country}
+                  label={`${t('country')} *`}
+                  onChange={(e) => setCompanyData({...companyData, country: e.target.value})}
+                >
+                  {allCountries.map((country) => (
+                    <MenuItem 
+                      key={country} 
+                      value={country}
+                      disabled={isEmbargoCountry(country)}
+                      sx={isEmbargoCountry(country) ? { 
+                        color: '#999', 
+                        '&.Mui-disabled': { 
+                          color: '#999 !important',
+                          opacity: 0.6 
+                        } 
+                      } : {}}
+                    >
+                      {country}
+                      {isEmbargoCountry(country) && (
+                        <Typography 
+                          component="span" 
+                          variant="caption" 
+                          sx={{ ml: 1, color: '#f44336', fontStyle: 'italic' }}
+                        >
+                          ({t('serviceNotAvailable')})
+                        </Typography>
+                      )}
+                    </MenuItem>
+                  ))}
+                </Select>
+                {validationErrors.country && (
+                  <Typography variant="caption" color="error" sx={{ mt: 0.5, ml: 1.5 }}>
+                    {validationErrors.country}
+                  </Typography>
                 )}
+              </FormControl>
 
-                <TextField
-                  fullWidth
-                  label={t('foundedYear')}
-                  type="number"
-                  value={companyData.foundedYear}
-                  onChange={(e) => setCompanyData({...companyData, foundedYear: e.target.value})}
-                  placeholder="2020"
-                  inputProps={{ min: 1800, max: new Date().getFullYear() }}
-                />
+              {companyData.country && isEmbargoCountry(companyData.country) && (
+                <Alert severity="warning" sx={{ mt: 1 }}>
+                  {t('embargoCountry')}
+                </Alert>
+              )}
 
-                <TextField
-                  fullWidth
-                  label={t('description')}
-                  multiline
-                  rows={4}
-                  value={companyData.description}
-                  onChange={(e) => setCompanyData({...companyData, description: e.target.value})}
-                  placeholder="Brief description of your company..."
-                />
-              </Box>
-            </Grid>
-          </Grid>
+              <TextField
+                fullWidth
+                label={t('foundedYear')}
+                type="number"
+                value={companyData.foundedYear}
+                onChange={(e) => setCompanyData({...companyData, foundedYear: e.target.value})}
+                placeholder="2020"
+                inputProps={{ min: 1800, max: new Date().getFullYear() }}
+              />
+
+              <TextField
+                fullWidth
+                label={t('description')}
+                multiline
+                rows={4}
+                value={companyData.description}
+                onChange={(e) => setCompanyData({...companyData, description: e.target.value})}
+                placeholder="Brief description of your company..."
+              />
+            </div>
+          </div>
         </TabPanel>
 
         {/* Users Tab */}

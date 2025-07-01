@@ -14,6 +14,13 @@ export interface CityInfo {
   country: string;
 }
 
+export interface StreetInfo {
+  name: string;
+  city: string;
+  postalCode: string;
+  country: string;
+}
+
 // Mock data for demonstration - in production, you'd use real APIs like Google Places, HERE, or OpenStreetMap
 const mockCityData: Record<string, CityInfo[]> = {
   'Germany': [
@@ -35,12 +42,41 @@ const mockCityData: Record<string, CityInfo[]> = {
   ]
 };
 
+// Mock street data for autocomplete
+const mockStreetData: Record<string, StreetInfo[]> = {
+  'Berlin': [
+    { name: 'Unter den Linden', city: 'Berlin', postalCode: '10117', country: 'Germany' },
+    { name: 'Friedrichstraße', city: 'Berlin', postalCode: '10117', country: 'Germany' },
+    { name: 'Alexanderplatz', city: 'Berlin', postalCode: '10178', country: 'Germany' },
+    { name: 'Potsdamer Platz', city: 'Berlin', postalCode: '10785', country: 'Germany' },
+  ],
+  'Hamburg': [
+    { name: 'Mönckebergstraße', city: 'Hamburg', postalCode: '20095', country: 'Germany' },
+    { name: 'Jungfernstieg', city: 'Hamburg', postalCode: '20354', country: 'Germany' },
+    { name: 'Reeperbahn', city: 'Hamburg', postalCode: '20359', country: 'Germany' },
+  ],
+  'Munich': [
+    { name: 'Marienplatz', city: 'Munich', postalCode: '80331', country: 'Germany' },
+    { name: 'Maximilianstraße', city: 'Munich', postalCode: '80539', country: 'Germany' },
+    { name: 'Leopoldstraße', city: 'Munich', postalCode: '80802', country: 'Germany' },
+  ]
+};
+
 export const searchCities = (query: string, country: string): CityInfo[] => {
   const cities = mockCityData[country] || [];
   if (!query || query.length < 2) return cities.slice(0, 5);
   
   return cities.filter(city => 
     city.name.toLowerCase().includes(query.toLowerCase())
+  ).slice(0, 10);
+};
+
+export const searchStreets = (query: string, city: string): StreetInfo[] => {
+  const streets = mockStreetData[city] || [];
+  if (!query || query.length < 2) return streets.slice(0, 5);
+  
+  return streets.filter(street => 
+    street.name.toLowerCase().includes(query.toLowerCase())
   ).slice(0, 10);
 };
 
@@ -63,4 +99,12 @@ export const getPostalCodesForCity = (city: string, country: string): string[] =
 export const suggestPostalCodeForCity = (city: string, country: string): string => {
   const postalCodes = getPostalCodesForCity(city, country);
   return postalCodes.length > 0 ? postalCodes[0] : '';
+};
+
+export const getCityByPostalCode = (postalCode: string, country: string): string => {
+  const cities = mockCityData[country] || [];
+  const matchingCity = cities.find(city => 
+    city.postalCodes.some(code => code === postalCode || code.startsWith(postalCode.substring(0, 3)))
+  );
+  return matchingCity ? matchingCity.name : '';
 };
