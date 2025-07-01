@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import {
   Box,
@@ -323,10 +322,10 @@ const CompanySettings = () => {
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 4 }}>
         <Box>
           <Typography variant="h3" sx={{ mb: 1, fontWeight: 700, color: '#252A2E' }}>
-            {t('companySettings')}
+            Company Settings
           </Typography>
           <Typography variant="body1" sx={{ color: '#64748b' }}>
-            {t('companySettingsSubtitle')}
+            Manage your company profile and settings
           </Typography>
         </Box>
         <LanguageSwitcher 
@@ -337,7 +336,7 @@ const CompanySettings = () => {
 
       {Object.keys(validationErrors).length > 0 && (
         <Alert severity="error" sx={{ mb: 3 }}>
-          {t('pleaseCompleteRequired')}
+          Please complete all required fields
         </Alert>
       )}
 
@@ -368,27 +367,27 @@ const CompanySettings = () => {
               }
             }}
           >
-            <Tab label={t('companyTab')} />
-            <Tab label={t('usersTab')} />
-            <Tab label={t('customizationTab')} />
-            <Tab label={t('settingsTab')} />
+            <Tab label="Company" />
+            <Tab label="Users" />
+            <Tab label="Customization" />
+            <Tab label="Settings" />
           </Tabs>
         </Box>
 
         {/* Company Tab */}
         <TabPanel value={tabValue} index={0}>
           <Typography variant="h6" sx={{ mb: 4, fontWeight: 600 }}>
-            {t('companyProfile')}
+            Company Profile
           </Typography>
           
           {/* Basic Information */}
           <Typography variant="subtitle1" sx={{ mb: 3, fontWeight: 600, color: '#374151' }}>
-            Grunddaten
+            Basic Information
           </Typography>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <TextField
               fullWidth
-              label={`${t('companyName')} *`}
+              label="Company Name *"
               required
               value={companyData.companyName}
               onChange={(e) => handleInputChange('companyName', e.target.value)}
@@ -397,10 +396,10 @@ const CompanySettings = () => {
             />
             
             <FormControl fullWidth required error={!!validationErrors.country}>
-              <InputLabel>{`${t('country')} *`}</InputLabel>
+              <InputLabel>Country *</InputLabel>
               <Select
                 value={companyData.country}
-                label={`${t('country')} *`}
+                label="Country *"
                 onChange={(e) => setCompanyData({...companyData, country: e.target.value})}
               >
                 {allCountries.map((country) => (
@@ -423,7 +422,7 @@ const CompanySettings = () => {
                         variant="caption" 
                         sx={{ ml: 1, color: '#f44336', fontStyle: 'italic' }}
                       >
-                        ({t('serviceNotAvailable')})
+                        (Service not available)
                       </Typography>
                     )}
                   </MenuItem>
@@ -438,7 +437,7 @@ const CompanySettings = () => {
 
             <TextField
               fullWidth
-              label={`${t('taxNumber')} *`}
+              label="Tax Number *"
               required
               value={companyData.taxNumber}
               onChange={(e) => handleInputChange('taxNumber', e.target.value)}
@@ -446,77 +445,9 @@ const CompanySettings = () => {
               helperText={getTaxNumberHelperText()}
             />
 
-            <FormControl fullWidth>
-              <InputLabel>{t('industry')}</InputLabel>
-              <Select
-                value={companyData.industry}
-                label={t('industry')}
-                onChange={(e) => setCompanyData({...companyData, industry: e.target.value})}
-              >
-                <MenuItem value="Technology">{t('technology')}</MenuItem>
-                <MenuItem value="Finance">{t('finance')}</MenuItem>
-                <MenuItem value="Healthcare">{t('healthcare')}</MenuItem>
-                <MenuItem value="Education">{t('education')}</MenuItem>
-                <MenuItem value="Manufacturing">{t('manufacturing')}</MenuItem>
-                <MenuItem value="Retail">{t('retail')}</MenuItem>
-                <MenuItem value="Consulting">{t('consulting')}</MenuItem>
-                <MenuItem value="Media">{t('media')}</MenuItem>
-                <MenuItem value="Real Estate">{t('realEstate')}</MenuItem>
-                <MenuItem value="Other">{t('other')}</MenuItem>
-              </Select>
-            </FormControl>
-
-            <FormControl fullWidth>
-              <InputLabel>{t('companySize')}</InputLabel>
-              <Select
-                value={companyData.companySize}
-                label={t('companySize')}
-                onChange={(e) => setCompanyData({...companyData, companySize: e.target.value})}
-              >
-                <MenuItem value="1-10">{t('companySize1to10')}</MenuItem>
-                <MenuItem value="11-50">{t('companySize11to50')}</MenuItem>
-                <MenuItem value="51-200">{t('companySize51to200')}</MenuItem>
-                <MenuItem value="201-500">{t('companySize201to500')}</MenuItem>
-                <MenuItem value="501-1000">{t('companySize501to1000')}</MenuItem>
-                <MenuItem value="1000+">{t('companySize1000plus')}</MenuItem>
-              </Select>
-            </FormControl>
-
             <TextField
               fullWidth
-              label={t('foundedYear')}
-              type="number"
-              value={companyData.foundedYear}
-              onChange={(e) => setCompanyData({...companyData, foundedYear: e.target.value})}
-              inputProps={{ min: 1800, max: new Date().getFullYear() }}
-            />
-
-            <TextField
-              fullWidth
-              label={t('website')}
-              value={companyData.website}
-              onChange={(e) => handleInputChange('website', e.target.value)}
-              error={!!validationErrors.website}
-              helperText={validationErrors.website}
-            />
-          </div>
-
-          {companyData.country && isEmbargoCountry(companyData.country) && (
-            <Alert severity="warning" sx={{ mb: 4 }}>
-              {t('embargoCountry')}
-            </Alert>
-          )}
-
-          <Divider sx={{ my: 4 }} />
-
-          {/* Contact Information */}
-          <Typography variant="subtitle1" sx={{ mb: 3, fontWeight: 600, color: '#374151' }}>
-            Kontaktdaten
-          </Typography>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            <TextField
-              fullWidth
-              label={`${t('contactEmail')} *`}
+              label="Contact Email *"
               type="email"
               required
               value={companyData.contactEmail}
@@ -524,26 +455,86 @@ const CompanySettings = () => {
               error={!!validationErrors.contactEmail}
               helperText={validationErrors.contactEmail}
             />
-            
+
+            <FormControl fullWidth>
+              <InputLabel>Industry</InputLabel>
+              <Select
+                value={companyData.industry}
+                label="Industry"
+                onChange={(e) => setCompanyData({...companyData, industry: e.target.value})}
+              >
+                <MenuItem value="Technology">Technology</MenuItem>
+                <MenuItem value="Finance">Finance</MenuItem>
+                <MenuItem value="Healthcare">Healthcare</MenuItem>
+                <MenuItem value="Education">Education</MenuItem>
+                <MenuItem value="Manufacturing">Manufacturing</MenuItem>
+                <MenuItem value="Retail">Retail</MenuItem>
+                <MenuItem value="Consulting">Consulting</MenuItem>
+                <MenuItem value="Media">Media</MenuItem>
+                <MenuItem value="Real Estate">Real Estate</MenuItem>
+                <MenuItem value="Other">Other</MenuItem>
+              </Select>
+            </FormControl>
+
             <TextField
               fullWidth
-              label={t('contactPhone')}
+              label="Contact Phone"
               value={companyData.contactPhone}
               onChange={(e) => handleInputChange('contactPhone', e.target.value)}
               error={!!validationErrors.contactPhone}
               helperText={validationErrors.contactPhone}
             />
+
+            <FormControl fullWidth>
+              <InputLabel>Company Size</InputLabel>
+              <Select
+                value={companyData.companySize}
+                label="Company Size"
+                onChange={(e) => setCompanyData({...companyData, companySize: e.target.value})}
+              >
+                <MenuItem value="1-10">1-10 employees</MenuItem>
+                <MenuItem value="11-50">11-50 employees</MenuItem>
+                <MenuItem value="51-200">51-200 employees</MenuItem>
+                <MenuItem value="201-500">201-500 employees</MenuItem>
+                <MenuItem value="501-1000">501-1000 employees</MenuItem>
+                <MenuItem value="1000+">1000+ employees</MenuItem>
+              </Select>
+            </FormControl>
+
+            <TextField
+              fullWidth
+              label="Website"
+              value={companyData.website}
+              onChange={(e) => handleInputChange('website', e.target.value)}
+              error={!!validationErrors.website}
+              helperText={validationErrors.website}
+            />
+
+            <TextField
+              fullWidth
+              label="Founded Year"
+              type="number"
+              value={companyData.foundedYear}
+              onChange={(e) => setCompanyData({...companyData, foundedYear: e.target.value})}
+              inputProps={{ min: 1800, max: new Date().getFullYear() }}
+            />
           </div>
+
+          {companyData.country && isEmbargoCountry(companyData.country) && (
+            <Alert severity="warning" sx={{ mb: 4 }}>
+              Service is not available in countries under embargo
+            </Alert>
+          )}
 
           <Divider sx={{ my: 4 }} />
 
           {/* Address Information */}
           <Typography variant="subtitle1" sx={{ mb: 3, fontWeight: 600, color: '#374151' }}>
-            Firmenadresse
+            Company Address
           </Typography>
           <div className="grid grid-cols-1 gap-6 mb-8">
             <StreetAutocomplete
-              label={`${t('companyAddress')} *`}
+              label="Street Address *"
               value={companyData.companyAddress}
               city={companyData.city}
               onStreetChange={handleStreetChange}
@@ -555,7 +546,7 @@ const CompanySettings = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <TextField
                 fullWidth
-                label={`${t('postalCode')} *`}
+                label="Postal Code *"
                 required
                 value={companyData.postalCode}
                 onChange={(e) => handlePostalCodeChange(e.target.value)}
@@ -564,7 +555,7 @@ const CompanySettings = () => {
               />
               <div className="md:col-span-2">
                 <AddressAutocomplete
-                  label={`${t('city')} *`}
+                  label="City *"
                   value={companyData.city}
                   country={companyData.country}
                   postalCode={companyData.postalCode}
@@ -579,7 +570,7 @@ const CompanySettings = () => {
             
             <TextField
               fullWidth
-              label="Adresszusatz"
+              label="Additional Address Information"
               value={companyData.secondaryAddress}
               onChange={(e) => setCompanyData({...companyData, secondaryAddress: e.target.value})}
             />
@@ -589,11 +580,11 @@ const CompanySettings = () => {
 
           {/* Company Description */}
           <Typography variant="subtitle1" sx={{ mb: 3, fontWeight: 600, color: '#374151' }}>
-            Unternehmensbeschreibung
+            Company Description
           </Typography>
           <TextField
             fullWidth
-            label="Beschreibung (optional)"
+            label="Description (optional)"
             multiline
             rows={4}
             value={companyData.description}
@@ -603,41 +594,41 @@ const CompanySettings = () => {
 
           {/* Required fields note at bottom */}
           <Typography variant="body2" sx={{ color: '#64748b', fontStyle: 'italic', textAlign: 'right' }}>
-            * Pflichtfelder
+            * Required fields
           </Typography>
         </TabPanel>
 
         {/* Users Tab */}
         <TabPanel value={tabValue} index={1}>
           <Typography variant="h6" sx={{ mb: 3, fontWeight: 600 }}>
-            {t('userManagement')}
+            User Management
           </Typography>
           <Typography variant="body2" sx={{ color: '#64748b' }}>
-            {t('userManagementPlaceholder')}
+            User management functionality will be available here
           </Typography>
         </TabPanel>
 
         {/* Customization Tab */}
         <TabPanel value={tabValue} index={2}>
           <Typography variant="h6" sx={{ mb: 3, fontWeight: 600 }}>
-            {t('customizationTab')}
+            Customization
           </Typography>
           <Typography variant="body2" sx={{ color: '#64748b' }}>
-            {t('customizationPlaceholder')}
+            Customization options will be available here
           </Typography>
         </TabPanel>
 
         {/* Settings Tab */}
         <TabPanel value={tabValue} index={3}>
           <Typography variant="h6" sx={{ mb: 3, fontWeight: 600 }}>
-            {t('applicationSettings')}
+            Application Settings
           </Typography>
           
           <Grid container spacing={4}>
             <Grid size={{ xs: 12, md: 6 }}>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
                 <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-                  {t('features')}
+                  Features
                 </Typography>
                 
                 <FormControlLabel
@@ -648,7 +639,7 @@ const CompanySettings = () => {
                       color="primary"
                     />
                   }
-                  label={t('pipFeature')}
+                  label="Picture-in-Picture Feature"
                 />
 
                 <FormControlLabel
@@ -659,7 +650,7 @@ const CompanySettings = () => {
                       color="primary"
                     />
                   }
-                  label={t('mfaFeature')}
+                  label="Multi-Factor Authentication"
                 />
 
                 <Box>
@@ -672,7 +663,7 @@ const CompanySettings = () => {
                         disabled
                       />
                     }
-                    label={t('aiBotFeature')}
+                    label="AI Bot Feature"
                   />
                   <Alert 
                     severity="info" 
@@ -684,11 +675,11 @@ const CompanySettings = () => {
                         onClick={handleContactForAI}
                         sx={{ textTransform: 'none' }}
                       >
-                        Kontakt aufnehmen
+                        Contact Us
                       </Button>
                     }
                   >
-                    {t('aiBotEnterpriseOnly')}
+                    AI Bot is available only for Enterprise plans
                   </Alert>
                 </Box>
 
@@ -700,7 +691,7 @@ const CompanySettings = () => {
                       color="primary"
                     />
                   }
-                  label={t('loremIpsumFeature')}
+                  label="Lorem Ipsum Feature"
                 />
               </Box>
             </Grid>
@@ -708,28 +699,28 @@ const CompanySettings = () => {
             <Grid size={{ xs: 12, md: 6 }}>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
                 <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-                  {t('preferences')}
+                  Preferences
                 </Typography>
                 
                 <FormControl fullWidth>
-                  <InputLabel>{t('videoPlayerLanguage')}</InputLabel>
+                  <InputLabel>Video Player Language</InputLabel>
                   <Select
                     value={settings.playerLanguage}
-                    label={t('videoPlayerLanguage')}
+                    label="Video Player Language"
                     onChange={(e) => setSettings({...settings, playerLanguage: e.target.value})}
                   >
-                    <MenuItem value="de">Deutsch</MenuItem>
+                    <MenuItem value="de">German</MenuItem>
                     <MenuItem value="en">English</MenuItem>
-                    <MenuItem value="es">Español</MenuItem>
-                    <MenuItem value="zh">中文</MenuItem>
+                    <MenuItem value="es">Spanish</MenuItem>
+                    <MenuItem value="zh">Chinese</MenuItem>
                   </Select>
                 </FormControl>
 
                 <FormControl fullWidth>
-                  <InputLabel>{t('timezone')}</InputLabel>
+                  <InputLabel>Timezone</InputLabel>
                   <Select
                     value={settings.timezone}
-                    label={t('timezone')}
+                    label="Timezone"
                     onChange={(e) => setSettings({...settings, timezone: e.target.value})}
                   >
                     {validTimezones.map((timezone) => (
@@ -747,20 +738,20 @@ const CompanySettings = () => {
 
           {/* Ownership Section */}
           <Typography variant="h6" sx={{ mb: 3, fontWeight: 600 }}>
-            {t('ownershipManagement')}
+            Ownership Management
           </Typography>
           
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, maxWidth: 600 }}>
             <Alert severity="warning">
-              <strong>{t('ownershipWarning')}</strong>
+              <strong>Warning: These actions cannot be undone</strong>
             </Alert>
             
             <Box>
               <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
-                {t('transferOwnership')}
+                Transfer Ownership
               </Typography>
               <Typography variant="body2" sx={{ mb: 2, color: '#64748b' }}>
-                {t('transferOwnershipDesc')}
+                Transfer ownership of this company to another user
               </Typography>
               <Button
                 variant="outlined"
@@ -768,16 +759,16 @@ const CompanySettings = () => {
                 onClick={() => setTransferOwnershipOpen(true)}
                 sx={{ textTransform: 'none' }}
               >
-                {t('transferOwnershipBtn')}
+                Transfer Ownership
               </Button>
             </Box>
             
             <Box>
               <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
-                {t('assignOwnership')}
+                Assign Ownership
               </Typography>
               <Typography variant="body2" sx={{ mb: 2, color: '#64748b' }}>
-                {t('assignOwnershipDesc')}
+                Assign ownership to an existing team member
               </Typography>
               <Button
                 variant="outlined"
@@ -785,7 +776,7 @@ const CompanySettings = () => {
                 onClick={() => setAssignOwnershipOpen(true)}
                 sx={{ textTransform: 'none' }}
               >
-                {t('assignOwnershipBtn')}
+                Assign Ownership
               </Button>
             </Box>
 
@@ -793,10 +784,10 @@ const CompanySettings = () => {
 
             <Box>
               <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600, color: '#d32f2f' }}>
-                {t('dangerZone')}
+                Danger Zone
               </Typography>
               <Typography variant="body2" sx={{ mb: 2, color: '#64748b' }}>
-                {t('deleteAccountDesc')}
+                Permanently delete this company account and all associated data
               </Typography>
               <Button
                 variant="outlined"
@@ -804,7 +795,7 @@ const CompanySettings = () => {
                 onClick={() => setDeleteAccountOpen(true)}
                 sx={{ textTransform: 'none' }}
               >
-                {t('deleteAccountBtn')}
+                Delete Account
               </Button>
             </Box>
           </Box>
@@ -823,77 +814,77 @@ const CompanySettings = () => {
               py: 1.5
             }}
           >
-            {t('saveChanges')}
+            Save Changes
           </Button>
         </Box>
       </Paper>
 
       {/* Transfer Ownership Dialog */}
       <Dialog open={transferOwnershipOpen} onClose={() => setTransferOwnershipOpen(false)}>
-        <DialogTitle>{t('transferOwnershipTitle')}</DialogTitle>
+        <DialogTitle>Transfer Ownership</DialogTitle>
         <DialogContent>
           <DialogContentText sx={{ mb: 2 }}>
-            {t('transferOwnershipPrompt')}
+            Enter the email address of the user you want to transfer ownership to:
           </DialogContentText>
           <TextField
             autoFocus
             margin="dense"
-            label={t('emailAddress')}
+            label="Email Address"
             type="email"
             fullWidth
             variant="outlined"
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setTransferOwnershipOpen(false)}>{t('cancel')}</Button>
-          <Button variant="contained" color="warning">{t('transferOwnership')}</Button>
+          <Button onClick={() => setTransferOwnershipOpen(false)}>Cancel</Button>
+          <Button variant="contained" color="warning">Transfer Ownership</Button>
         </DialogActions>
       </Dialog>
 
       {/* Assign Ownership Dialog */}
       <Dialog open={assignOwnershipOpen} onClose={() => setAssignOwnershipOpen(false)}>
-        <DialogTitle>{t('assignOwnershipTitle')}</DialogTitle>
+        <DialogTitle>Assign Ownership</DialogTitle>
         <DialogContent>
           <DialogContentText sx={{ mb: 2 }}>
-            {t('assignOwnershipPrompt')}
+            Select a team member to assign ownership to:
           </DialogContentText>
           <TextField
             autoFocus
             margin="dense"
-            label={t('emailAddress')}
+            label="Email Address"
             type="email"
             fullWidth
             variant="outlined"
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setAssignOwnershipOpen(false)}>{t('cancel')}</Button>
-          <Button variant="contained" color="primary">{t('assignOwnership')}</Button>
+          <Button onClick={() => setAssignOwnershipOpen(false)}>Cancel</Button>
+          <Button variant="contained" color="primary">Assign Ownership</Button>
         </DialogActions>
       </Dialog>
 
       {/* Delete Account Dialog */}
       <Dialog open={deleteAccountOpen} onClose={() => setDeleteAccountOpen(false)}>
-        <DialogTitle sx={{ color: '#d32f2f' }}>{t('deleteAccountTitle')}</DialogTitle>
+        <DialogTitle sx={{ color: '#d32f2f' }}>Delete Account</DialogTitle>
         <DialogContent>
           <DialogContentText sx={{ mb: 2 }}>
-            <strong>{t('deleteAccountWarning')}</strong>
+            <strong>Warning: This action cannot be undone!</strong>
           </DialogContentText>
           <DialogContentText sx={{ mb: 2 }}>
-            {t('deleteAccountConfirm')}
+            Type "DELETE" to confirm account deletion:
           </DialogContentText>
           <TextField
             autoFocus
             margin="dense"
-            label={t('deleteAccountConfirmPlaceholder')}
+            label="Confirmation"
             fullWidth
             variant="outlined"
-            placeholder={t('deleteAccountConfirmPlaceholder')}
+            placeholder="Type DELETE to confirm"
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setDeleteAccountOpen(false)}>{t('cancel')}</Button>
-          <Button variant="contained" color="error">{t('deleteAccountPermanent')}</Button>
+          <Button onClick={() => setDeleteAccountOpen(false)}>Cancel</Button>
+          <Button variant="contained" color="error">Delete Account Permanently</Button>
         </DialogActions>
       </Dialog>
     </Container>
