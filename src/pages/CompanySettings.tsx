@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import {
   Box,
@@ -311,22 +310,7 @@ const CompanySettings = () => {
 
   const getTaxNumberHelperText = () => {
     if (validationErrors.taxNumber) return validationErrors.taxNumber;
-    if (companyData.country) {
-      const patterns: Record<string, string> = {
-        'Germany': 'Format: DE123456789',
-        'Austria': 'Format: ATU12345678',
-        'Switzerland': 'Format: CHE-123.456.789',
-        'United States': 'Format: 12-3456789',
-        'United Kingdom': 'Format: GB123456789',
-        'France': 'Format: FR12345678901',
-        'Italy': 'Format: IT12345678901',
-        'Spain': 'Format: ESA12345674',
-        'Netherlands': 'Format: NL123456789B01',
-        'Belgium': 'Format: BE0123456789',
-      };
-      return patterns[companyData.country] || 'Enter your tax identification number';
-    }
-    return 'Select country first to see format';
+    return '';
   };
 
   const handleContactForAI = () => {
@@ -342,9 +326,6 @@ const CompanySettings = () => {
           </Typography>
           <Typography variant="body1" sx={{ color: '#64748b' }}>
             {t('companySettingsSubtitle')}
-          </Typography>
-          <Typography variant="body2" sx={{ color: '#64748b', mt: 1, fontStyle: 'italic' }}>
-            * = Pflichtfelder
           </Typography>
         </Box>
         <LanguageSwitcher 
@@ -401,7 +382,7 @@ const CompanySettings = () => {
           
           {/* Company Basic Information */}
           <Typography variant="subtitle1" sx={{ mb: 3, fontWeight: 600, color: '#374151' }}>
-            Grunddaten
+            Unternehmensdaten
           </Typography>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <TextField
@@ -410,18 +391,15 @@ const CompanySettings = () => {
               required
               value={companyData.companyName}
               onChange={(e) => handleInputChange('companyName', e.target.value)}
-              placeholder="ABC Corp."
               error={!!validationErrors.companyName}
               helperText={validationErrors.companyName}
             />
             
             <TextField
               fullWidth
-              label={`${t('website')} *`}
-              required
+              label={t('website')}
               value={companyData.website}
               onChange={(e) => handleInputChange('website', e.target.value)}
-              placeholder="https://www.example.com"
               error={!!validationErrors.website}
               helperText={validationErrors.website}
             />
@@ -468,7 +446,6 @@ const CompanySettings = () => {
               type="number"
               value={companyData.foundedYear}
               onChange={(e) => setCompanyData({...companyData, foundedYear: e.target.value})}
-              placeholder="2020"
               inputProps={{ min: 1800, max: new Date().getFullYear() }}
             />
 
@@ -478,7 +455,6 @@ const CompanySettings = () => {
               required
               value={companyData.taxNumber}
               onChange={(e) => handleInputChange('taxNumber', e.target.value)}
-              placeholder={companyData.country === 'Germany' ? 'DE123456789' : 'Enter tax number'}
               error={!!validationErrors.taxNumber}
               helperText={getTaxNumberHelperText()}
             />
@@ -498,18 +474,15 @@ const CompanySettings = () => {
               required
               value={companyData.contactEmail}
               onChange={(e) => handleInputChange('contactEmail', e.target.value)}
-              placeholder="contact@company.com"
               error={!!validationErrors.contactEmail}
               helperText={validationErrors.contactEmail}
             />
             
             <TextField
               fullWidth
-              label={`${t('contactPhone')} *`}
-              required
+              label={t('contactPhone')}
               value={companyData.contactPhone}
               onChange={(e) => handleInputChange('contactPhone', e.target.value)}
-              placeholder="+49 123 456 789"
               error={!!validationErrors.contactPhone}
               helperText={validationErrors.contactPhone}
             />
@@ -519,7 +492,7 @@ const CompanySettings = () => {
 
           {/* Address Information */}
           <Typography variant="subtitle1" sx={{ mb: 3, fontWeight: 600, color: '#374151' }}>
-            Adresse
+            Firmenadresse
           </Typography>
           <div className="grid grid-cols-1 gap-6 mb-8">
             <FormControl fullWidth required error={!!validationErrors.country}>
@@ -568,14 +541,23 @@ const CompanySettings = () => {
               </Alert>
             )}
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <StreetAutocomplete
+              label={`${t('companyAddress')} *`}
+              value={companyData.companyAddress}
+              city={companyData.city}
+              onStreetChange={handleStreetChange}
+              error={!!validationErrors.companyAddress}
+              helperText={validationErrors.companyAddress}
+              required
+            />
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <TextField
                 fullWidth
                 label={`${t('postalCode')} *`}
                 required
                 value={companyData.postalCode}
                 onChange={(e) => handlePostalCodeChange(e.target.value)}
-                placeholder="12345"
                 error={!!validationErrors.postalCode}
                 helperText={validationErrors.postalCode}
               />
@@ -589,25 +571,15 @@ const CompanySettings = () => {
                 error={!!validationErrors.city}
                 helperText={validationErrors.city}
                 required
+                sx={{ gridColumn: 'span 2' }}
               />
             </div>
-
-            <StreetAutocomplete
-              label={`${t('companyAddress')} *`}
-              value={companyData.companyAddress}
-              city={companyData.city}
-              onStreetChange={handleStreetChange}
-              error={!!validationErrors.companyAddress}
-              helperText={validationErrors.companyAddress}
-              required
-            />
             
             <TextField
               fullWidth
-              label={t('secondaryAddress')}
+              label="Adresszusatz"
               value={companyData.secondaryAddress}
               onChange={(e) => setCompanyData({...companyData, secondaryAddress: e.target.value})}
-              placeholder="Floor 1, Suite 100"
             />
           </div>
 
@@ -615,17 +587,22 @@ const CompanySettings = () => {
 
           {/* Company Description */}
           <Typography variant="subtitle1" sx={{ mb: 3, fontWeight: 600, color: '#374151' }}>
-            Beschreibung
+            Unternehmensbeschreibung
           </Typography>
           <TextField
             fullWidth
-            label={t('description')}
+            label="Beschreibung (optional)"
             multiline
             rows={4}
             value={companyData.description}
             onChange={(e) => setCompanyData({...companyData, description: e.target.value})}
-            placeholder="Brief description of your company..."
+            sx={{ mb: 3 }}
           />
+
+          {/* Required fields note at bottom */}
+          <Typography variant="body2" sx={{ color: '#64748b', fontStyle: 'italic', textAlign: 'right' }}>
+            * Pflichtfelder
+          </Typography>
         </TabPanel>
 
         {/* Users Tab */}
