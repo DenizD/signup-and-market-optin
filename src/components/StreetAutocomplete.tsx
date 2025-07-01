@@ -26,8 +26,10 @@ const StreetAutocomplete: React.FC<StreetAutocompleteProps> = ({
   const [inputValue, setInputValue] = useState(value);
 
   useEffect(() => {
-    if (city) {
+    console.log('City changed for street search:', city);
+    if (city && city.length > 1) {
       const streets = searchStreets(inputValue, city);
+      console.log('Found streets:', streets);
       setOptions(streets);
     } else {
       setOptions([]);

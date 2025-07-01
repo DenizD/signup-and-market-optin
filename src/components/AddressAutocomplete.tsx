@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { TextField, Autocomplete, Box, Typography } from '@mui/material';
-import { searchCities, CityInfo, suggestPostalCodeForCity, getPostalCodesForCity } from '@/services/addressService';
+import { searchCities, CityInfo, suggestPostalCodeForCity, getCityByPostalCode } from '@/services/addressService';
 
 interface AddressAutocompleteProps {
   label: string;
@@ -31,16 +31,15 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
 
   // Auto-fill city based on postal code
   useEffect(() => {
-    if (postalCode && postalCode.length >= 4 && country) {
-      const cities = searchCities('', country);
-      const matchingCity = cities.find(city => 
-        city.postalCodes.some(code => code.startsWith(postalCode))
-      );
+    console.log('Postal code changed:', postalCode, 'Country:', country);
+    if (postalCode && postalCode.length >= 3 && country) {
+      const cityFromPostalCode = getCityByPostalCode(postalCode, country);
+      console.log('City found for postal code:', cityFromPostalCode);
       
-      if (matchingCity && matchingCity.name !== value) {
-        console.log('Auto-filling city based on postal code:', postalCode, '→', matchingCity.name);
-        onCityChange(matchingCity.name);
-        setInputValue(matchingCity.name);
+      if (cityFromPostalCode && cityFromPostalCode !== value) {
+        console.log('Auto-filling city based on postal code:', postalCode, '→', cityFromPostalCode);
+        onCityChange(cityFromPostalCode);
+        setInputValue(cityFromPostalCode);
       }
     }
   }, [postalCode, country, onCityChange, value]);
@@ -49,6 +48,8 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
     if (country) {
       const cities = searchCities(inputValue, country);
       setOptions(cities);
+    } else {
+      setOptions([]);
     }
   }, [inputValue, country]);
 
@@ -62,9 +63,12 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
         onCityChange(city);
       } else {
         onCityChange(city.name);
-        const suggestedPostalCode = suggestPostalCodeForCity(city.name, country);
-        if (suggestedPostalCode) {
-          onPostalCodeSuggestion(suggestedPostalCode);
+        // Only suggest postal code if current one is empty
+        if (!postalCode) {
+          const suggestedPostalCode = suggestPostalCodeForCity(city.name, country);
+          if (suggestedPostalCode) {
+            onPostalCodeSuggestion(suggestedPostalCode);
+          }
         }
       }
     }
@@ -99,7 +103,8 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
           required={required}
           error={error}
           helperText={helperText}
-          placeholder="Start typing city name..."
+          placeholder={country ? "Start typing city name..." : "Select country first"}
+          disabled={!country}
         />
       )}
       freeSolo

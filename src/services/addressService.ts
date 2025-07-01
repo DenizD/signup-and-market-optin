@@ -24,9 +24,9 @@ export interface StreetInfo {
 // Mock data for demonstration - in production, you'd use real APIs like Google Places, HERE, or OpenStreetMap
 const mockCityData: Record<string, CityInfo[]> = {
   'Germany': [
-    { name: 'Berlin', postalCodes: ['10115', '10117', '10119', '10178', '10179'], country: 'Germany' },
-    { name: 'Hamburg', postalCodes: ['20095', '20097', '20099', '20144', '20146'], country: 'Germany' },
-    { name: 'Munich', postalCodes: ['80331', '80333', '80335', '80336', '80337'], country: 'Germany' },
+    { name: 'Berlin', postalCodes: ['10115', '10117', '10119', '10178', '10179', '10785', '12345'], country: 'Germany' },
+    { name: 'Hamburg', postalCodes: ['20095', '20097', '20099', '20144', '20146', '20354', '20359'], country: 'Germany' },
+    { name: 'Munich', postalCodes: ['80331', '80333', '80335', '80336', '80337', '80539', '80802'], country: 'Germany' },
     { name: 'Cologne', postalCodes: ['50667', '50668', '50670', '50672', '50674'], country: 'Germany' },
     { name: 'Frankfurt', postalCodes: ['60311', '60313', '60314', '60316', '60318'], country: 'Germany' },
   ],
@@ -49,22 +49,26 @@ const mockStreetData: Record<string, StreetInfo[]> = {
     { name: 'Friedrichstraße', city: 'Berlin', postalCode: '10117', country: 'Germany' },
     { name: 'Alexanderplatz', city: 'Berlin', postalCode: '10178', country: 'Germany' },
     { name: 'Potsdamer Platz', city: 'Berlin', postalCode: '10785', country: 'Germany' },
+    { name: 'Kurfürstendamm', city: 'Berlin', postalCode: '10719', country: 'Germany' },
+    { name: 'Hackescher Markt', city: 'Berlin', postalCode: '10178', country: 'Germany' },
   ],
   'Hamburg': [
     { name: 'Mönckebergstraße', city: 'Hamburg', postalCode: '20095', country: 'Germany' },
     { name: 'Jungfernstieg', city: 'Hamburg', postalCode: '20354', country: 'Germany' },
     { name: 'Reeperbahn', city: 'Hamburg', postalCode: '20359', country: 'Germany' },
+    { name: 'Speicherstadt', city: 'Hamburg', postalCode: '20457', country: 'Germany' },
   ],
   'Munich': [
     { name: 'Marienplatz', city: 'Munich', postalCode: '80331', country: 'Germany' },
     { name: 'Maximilianstraße', city: 'Munich', postalCode: '80539', country: 'Germany' },
     { name: 'Leopoldstraße', city: 'Munich', postalCode: '80802', country: 'Germany' },
+    { name: 'Viktualienmarkt', city: 'Munich', postalCode: '80331', country: 'Germany' },
   ]
 };
 
 export const searchCities = (query: string, country: string): CityInfo[] => {
   const cities = mockCityData[country] || [];
-  if (!query || query.length < 2) return cities.slice(0, 5);
+  if (!query || query.length < 1) return cities.slice(0, 5);
   
   return cities.filter(city => 
     city.name.toLowerCase().includes(query.toLowerCase())
@@ -73,7 +77,7 @@ export const searchCities = (query: string, country: string): CityInfo[] => {
 
 export const searchStreets = (query: string, city: string): StreetInfo[] => {
   const streets = mockStreetData[city] || [];
-  if (!query || query.length < 2) return streets.slice(0, 5);
+  if (!query || query.length < 1) return streets.slice(0, 5);
   
   return streets.filter(street => 
     street.name.toLowerCase().includes(query.toLowerCase())
@@ -86,7 +90,7 @@ export const validateCityPostalCode = (city: string, postalCode: string, country
   
   if (!cityInfo) return true; // Allow unknown cities for now
   
-  return cityInfo.postalCodes.includes(postalCode);
+  return cityInfo.postalCodes.some(code => code.startsWith(postalCode.substring(0, 3)));
 };
 
 export const getPostalCodesForCity = (city: string, country: string): string[] => {
@@ -102,9 +106,15 @@ export const suggestPostalCodeForCity = (city: string, country: string): string 
 };
 
 export const getCityByPostalCode = (postalCode: string, country: string): string => {
+  console.log('Looking for city by postal code:', postalCode, 'in country:', country);
   const cities = mockCityData[country] || [];
   const matchingCity = cities.find(city => 
-    city.postalCodes.some(code => code === postalCode || code.startsWith(postalCode.substring(0, 3)))
+    city.postalCodes.some(code => 
+      code === postalCode || 
+      code.startsWith(postalCode.substring(0, 3)) ||
+      postalCode.startsWith(code.substring(0, 3))
+    )
   );
+  console.log('Found matching city:', matchingCity?.name || 'none');
   return matchingCity ? matchingCity.name : '';
 };
