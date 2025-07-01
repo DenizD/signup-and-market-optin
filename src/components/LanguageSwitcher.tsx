@@ -1,8 +1,6 @@
 
 import { useState } from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Languages } from 'lucide-react';
-import { Box } from '@mui/material';
 
 export type Language = {
   code: 'de' | 'en' | 'es' | 'zh';
@@ -18,13 +16,12 @@ export const languages: Language[] = [
 
 interface LanguageSwitcherProps {
   currentLanguage: string;
-  onLanguageChange: (language: string) => void;
+  onLanguageChange: (language: 'de' | 'en' | 'es' | 'zh') => void;
 }
 
 const LanguageSwitcher = ({ currentLanguage, onLanguageChange }: LanguageSwitcherProps) => {
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-      <Languages size={20} />
+    <div className="flex items-center gap-2">
       <Select value={currentLanguage} onValueChange={onLanguageChange}>
         <SelectTrigger className="w-[120px]">
           <SelectValue>
@@ -39,7 +36,7 @@ const LanguageSwitcher = ({ currentLanguage, onLanguageChange }: LanguageSwitche
           ))}
         </SelectContent>
       </Select>
-    </Box>
+    </div>
   );
 };
 

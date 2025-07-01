@@ -108,7 +108,83 @@ export type TranslationKey =
   | 'slaGuarantee'
   | 'onPremiseOption'
   | 'customDevelopment'
-  | 'trainingIncluded';
+  | 'trainingIncluded'
+  | 'companySettings'
+  | 'companySettingsSubtitle'
+  | 'companyTab'
+  | 'usersTab'
+  | 'customizationTab'
+  | 'settingsTab'
+  | 'companyProfile'
+  | 'companyName'
+  | 'website'
+  | 'companyAddress'
+  | 'secondaryAddress'
+  | 'postalCode'
+  | 'city'
+  | 'country'
+  | 'taxNumber'
+  | 'contactEmail'
+  | 'contactPhone'
+  | 'industry'
+  | 'companySize'
+  | 'foundedYear'
+  | 'description'
+  | 'userManagement'
+  | 'userManagementPlaceholder'
+  | 'customizationPlaceholder'
+  | 'applicationSettings'
+  | 'features'
+  | 'pipFeature'
+  | 'mfaFeature'
+  | 'aiBotFeature'
+  | 'aiBotEnterpriseOnly'
+  | 'loremIpsumFeature'
+  | 'preferences'
+  | 'videoPlayerLanguage'
+  | 'timezone'
+  | 'ownershipManagement'
+  | 'ownershipWarning'
+  | 'transferOwnership'
+  | 'transferOwnershipDesc'
+  | 'transferOwnershipBtn'
+  | 'assignOwnership'
+  | 'assignOwnershipDesc'
+  | 'assignOwnershipBtn'
+  | 'dangerZone'
+  | 'deleteAccount'
+  | 'deleteAccountDesc'
+  | 'deleteAccountBtn'
+  | 'saveChanges'
+  | 'transferOwnershipTitle'
+  | 'transferOwnershipPrompt'
+  | 'assignOwnershipTitle'
+  | 'assignOwnershipPrompt'
+  | 'deleteAccountTitle'
+  | 'deleteAccountWarning'
+  | 'deleteAccountConfirm'
+  | 'deleteAccountConfirmPlaceholder'
+  | 'deleteAccountPermanent'
+  | 'requiredField'
+  | 'pleaseCompleteRequired'
+  | 'serviceNotAvailable'
+  | 'embargoCountry'
+  | 'technology'
+  | 'finance'
+  | 'healthcare'
+  | 'education'
+  | 'manufacturing'
+  | 'retail'
+  | 'consulting'
+  | 'media'
+  | 'realEstate'
+  | 'other'
+  | 'companySize1to10'
+  | 'companySize11to50'
+  | 'companySize51to200'
+  | 'companySize201to500'
+  | 'companySize501to1000'
+  | 'companySize1000plus';
 
 type Translations = {
   [key in TranslationKey]: string;
@@ -223,7 +299,83 @@ const translations: Record<'de' | 'en' | 'es' | 'zh', Translations> = {
     slaGuarantee: 'SLA-Garantie (99.9% Uptime)',
     onPremiseOption: 'On-Premise Option',
     customDevelopment: 'Custom Development',
-    trainingIncluded: 'Training & Onboarding inklusive'
+    trainingIncluded: 'Training & Onboarding inklusive',
+    companySettings: 'Unternehmenseinstellungen',
+    companySettingsSubtitle: 'Richten Sie Ihr Unternehmensprofil ein und konfigurieren Sie unternehmensweite Einstellungen.',
+    companyTab: 'Unternehmen',
+    usersTab: 'Benutzer',
+    customizationTab: 'Anpassung',
+    settingsTab: 'Einstellungen',
+    companyProfile: 'Unternehmensprofil',
+    companyName: 'Firmenname',
+    website: 'Website',
+    companyAddress: 'Firmenadresse',
+    secondaryAddress: 'Zusätzliche Adresse',
+    postalCode: 'Postleitzahl',
+    city: 'Stadt',
+    country: 'Land',
+    taxNumber: 'Steuernummer',
+    contactEmail: 'Kontakt E-Mail',
+    contactPhone: 'Kontakt Telefon',
+    industry: 'Branche',
+    companySize: 'Unternehmensgröße',
+    foundedYear: 'Gründungsjahr',
+    description: 'Beschreibung',
+    userManagement: 'Benutzerverwaltung',
+    userManagementPlaceholder: 'Benutzerverwaltungsfunktionen werden hier implementiert.',
+    customizationPlaceholder: 'Video-Player- und Marken-Anpassungsoptionen werden hier verfügbar sein.',
+    applicationSettings: 'Anwendungseinstellungen',
+    features: 'Funktionen',
+    pipFeature: 'Picture-in-Picture (PiP)',
+    mfaFeature: 'Multi-Faktor-Authentifizierung (MFA)',
+    aiBotFeature: 'AI Bot (Enterprise)',
+    aiBotEnterpriseOnly: 'AI Bot ist nur im Enterprise Paket verfügbar. Kontaktieren Sie uns für weitere Informationen.',
+    loremIpsumFeature: 'Lorem Ipsum Funktion',
+    preferences: 'Einstellungen',
+    videoPlayerLanguage: 'Video-Player-Sprache',
+    timezone: 'Zeitzone',
+    ownershipManagement: 'Eigentumsverwaltung',
+    ownershipWarning: 'Achtung: Änderungen an der Unternehmensberechtigung können nicht rückgängig gemacht werden.',
+    transferOwnership: 'Berechtigung übertragen',
+    transferOwnershipDesc: 'Übertragen Sie die vollständige Kontrolle über dieses Unternehmen an einen anderen Benutzer.',
+    transferOwnershipBtn: 'Unternehmensberechtigung übertragen',
+    assignOwnership: 'Berechtigung zuweisen',
+    assignOwnershipDesc: 'Weisen Sie einem anderen Benutzer Verwaltungsrechte für dieses Unternehmen zu.',
+    assignOwnershipBtn: 'Unternehmensberechtigung zuweisen',
+    dangerZone: 'Gefahrenbereich',
+    deleteAccount: 'Konto löschen',
+    deleteAccountDesc: 'Löschen Sie Ihr Konto und alle zugehörigen Daten permanent.',
+    deleteAccountBtn: 'Konto & Daten löschen',
+    saveChanges: 'Änderungen speichern',
+    transferOwnershipTitle: 'Unternehmensberechtigung übertragen',
+    transferOwnershipPrompt: 'Geben Sie die E-Mail-Adresse des Benutzers ein, an den Sie die Berechtigung übertragen möchten:',
+    assignOwnershipTitle: 'Unternehmensberechtigung zuweisen',
+    assignOwnershipPrompt: 'Geben Sie die E-Mail-Adresse des Benutzers ein, dem Sie Verwaltungsrechte zuweisen möchten:',
+    deleteAccountTitle: 'Konto und Daten löschen',
+    deleteAccountWarning: 'Warnung: Diese Aktion kann nicht rückgängig gemacht werden. Alle Ihre Daten werden permanent gelöscht.',
+    deleteAccountConfirm: 'Geben Sie zur Bestätigung "DELETE" ein:',
+    deleteAccountConfirmPlaceholder: 'DELETE',
+    deleteAccountPermanent: 'Permanent löschen',
+    requiredField: 'Pflichtfeld',
+    pleaseCompleteRequired: 'Bitte füllen Sie alle Pflichtfelder aus.',
+    serviceNotAvailable: 'Service nicht verfügbar',
+    embargoCountry: 'Unser Service ist in diesem Land derzeit nicht verfügbar.',
+    technology: 'Technologie',
+    finance: 'Finanzen',
+    healthcare: 'Gesundheitswesen',
+    education: 'Bildung',
+    manufacturing: 'Fertigung',
+    retail: 'Einzelhandel',
+    consulting: 'Beratung',
+    media: 'Medien',
+    realEstate: 'Immobilien',
+    other: 'Sonstiges',
+    companySize1to10: '1-10 Mitarbeiter',
+    companySize11to50: '11-50 Mitarbeiter',
+    companySize51to200: '51-200 Mitarbeiter',
+    companySize201to500: '201-500 Mitarbeiter',
+    companySize501to1000: '501-1000 Mitarbeiter',
+    companySize1000plus: '1000+ Mitarbeiter'
   },
   en: {
     welcome: 'Welcome',
@@ -333,7 +485,83 @@ const translations: Record<'de' | 'en' | 'es' | 'zh', Translations> = {
     slaGuarantee: 'SLA guarantee (99.9% uptime)',
     onPremiseOption: 'On-premise option',
     customDevelopment: 'Custom development',
-    trainingIncluded: 'Training & onboarding included'
+    trainingIncluded: 'Training & onboarding included',
+    companySettings: 'Company Settings',
+    companySettingsSubtitle: 'Set up your company profile and configure company-wide settings.',
+    companyTab: 'Company',
+    usersTab: 'Users',
+    customizationTab: 'Customization',
+    settingsTab: 'Settings',
+    companyProfile: 'Company Profile',
+    companyName: 'Company Name',
+    website: 'Website',
+    companyAddress: 'Company Address',
+    secondaryAddress: 'Secondary Address',
+    postalCode: 'Postal Code',
+    city: 'City',
+    country: 'Country',
+    taxNumber: 'Tax Number',
+    contactEmail: 'Contact Email',
+    contactPhone: 'Contact Phone',
+    industry: 'Industry',
+    companySize: 'Company Size',
+    foundedYear: 'Founded Year',
+    description: 'Description',
+    userManagement: 'User Management',
+    userManagementPlaceholder: 'User management functionality will be implemented here.',
+    customizationPlaceholder: 'Video player and brand customization options will be available here.',
+    applicationSettings: 'Application Settings',
+    features: 'Features',
+    pipFeature: 'Picture-in-Picture (PiP)',
+    mfaFeature: 'Multi-Factor Authentication (MFA)',
+    aiBotFeature: 'AI Bot (Enterprise)',
+    aiBotEnterpriseOnly: 'AI Bot is only available in the Enterprise package. Contact us for more information.',
+    loremIpsumFeature: 'Lorem Ipsum Function',
+    preferences: 'Preferences',
+    videoPlayerLanguage: 'Video Player Language',
+    timezone: 'Timezone',
+    ownershipManagement: 'Ownership Management',
+    ownershipWarning: 'Warning: Changes to company ownership cannot be undone.',
+    transferOwnership: 'Transfer Ownership',
+    transferOwnershipDesc: 'Transfer complete control of this company to another user.',
+    transferOwnershipBtn: 'Transfer Company Ownership',
+    assignOwnership: 'Assign Ownership',
+    assignOwnershipDesc: 'Assign administrative rights for this company to another user.',
+    assignOwnershipBtn: 'Assign Company Ownership',
+    dangerZone: 'Danger Zone',
+    deleteAccount: 'Delete Account',
+    deleteAccountDesc: 'Permanently delete your account and all associated data.',
+    deleteAccountBtn: 'Delete Account & Data',
+    saveChanges: 'Save Changes',
+    transferOwnershipTitle: 'Transfer Company Ownership',
+    transferOwnershipPrompt: 'Enter the email address of the user you want to transfer ownership to:',
+    assignOwnershipTitle: 'Assign Company Ownership',
+    assignOwnershipPrompt: 'Enter the email address of the user you want to assign administrative rights to:',
+    deleteAccountTitle: 'Delete Account and Data',
+    deleteAccountWarning: 'Warning: This action cannot be undone. All your data will be permanently deleted.',
+    deleteAccountConfirm: 'Type "DELETE" to confirm:',
+    deleteAccountConfirmPlaceholder: 'DELETE',
+    deleteAccountPermanent: 'Permanently Delete',
+    requiredField: 'Required',
+    pleaseCompleteRequired: 'Please complete all required fields.',
+    serviceNotAvailable: 'Service not available',
+    embargoCountry: 'Our service is currently not available in this country.',
+    technology: 'Technology',
+    finance: 'Finance',
+    healthcare: 'Healthcare',
+    education: 'Education',
+    manufacturing: 'Manufacturing',
+    retail: 'Retail',
+    consulting: 'Consulting',
+    media: 'Media',
+    realEstate: 'Real Estate',
+    other: 'Other',
+    companySize1to10: '1-10 employees',
+    companySize11to50: '11-50 employees',
+    companySize51to200: '51-200 employees',
+    companySize201to500: '201-500 employees',
+    companySize501to1000: '501-1000 employees',
+    companySize1000plus: '1000+ employees'
   },
   es: {
     welcome: 'Bienvenido',
@@ -443,7 +671,83 @@ const translations: Record<'de' | 'en' | 'es' | 'zh', Translations> = {
     slaGuarantee: 'Garantía SLA (99.9% uptime)',
     onPremiseOption: 'Opción on-premise',
     customDevelopment: 'Desarrollo personalizado',
-    trainingIncluded: 'Entrenamiento e integración incluidos'
+    trainingIncluded: 'Entrenamiento e integración incluidos',
+    companySettings: 'Configuraciones de Empresa',
+    companySettingsSubtitle: 'Configure el perfil de su empresa y ajuste las configuraciones a nivel de empresa.',
+    companyTab: 'Empresa',
+    usersTab: 'Usuarios',
+    customizationTab: 'Personalización',
+    settingsTab: 'Configuraciones',
+    companyProfile: 'Perfil de Empresa',
+    companyName: 'Nombre de la Empresa',
+    website: 'Sitio Web',
+    companyAddress: 'Dirección de la Empresa',
+    secondaryAddress: 'Dirección Secundaria',
+    postalCode: 'Código Postal',
+    city: 'Ciudad',
+    country: 'País',
+    taxNumber: 'Número de Impuesto',
+    contactEmail: 'Email de Contacto',
+    contactPhone: 'Teléfono de Contacto',
+    industry: 'Industria',
+    companySize: 'Tamaño de la Empresa',
+    foundedYear: 'Año de Fundación',
+    description: 'Descripción',
+    userManagement: 'Gestión de Usuarios',
+    userManagementPlaceholder: 'La funcionalidad de gestión de usuarios se implementará aquí.',
+    customizationPlaceholder: 'Las opciones de personalización del reproductor de video y marca estarán disponibles aquí.',
+    applicationSettings: 'Configuraciones de Aplicación',
+    features: 'Funciones',
+    pipFeature: 'Picture-in-Picture (PiP)',
+    mfaFeature: 'Autenticación Multi-Factor (MFA)',
+    aiBotFeature: 'Bot de IA (Enterprise)',
+    aiBotEnterpriseOnly: 'El Bot de IA solo está disponible en el paquete Enterprise. Contáctanos para más información.',
+    loremIpsumFeature: 'Función Lorem Ipsum',
+    preferences: 'Preferencias',
+    videoPlayerLanguage: 'Idioma del Reproductor de Video',
+    timezone: 'Zona Horaria',
+    ownershipManagement: 'Gestión de Propiedad',
+    ownershipWarning: 'Advertencia: Los cambios en la propiedad de la empresa no se pueden deshacer.',
+    transferOwnership: 'Transferir Propiedad',
+    transferOwnershipDesc: 'Transfiera el control completo de esta empresa a otro usuario.',
+    transferOwnershipBtn: 'Transferir Propiedad de la Empresa',
+    assignOwnership: 'Asignar Propiedad',
+    assignOwnershipDesc: 'Asigne derechos administrativos para esta empresa a otro usuario.',
+    assignOwnershipBtn: 'Asignar Propiedad de la Empresa',
+    dangerZone: 'Zona de Peligro',
+    deleteAccount: 'Eliminar Cuenta',
+    deleteAccountDesc: 'Elimine permanentemente su cuenta y todos los datos asociados.',
+    deleteAccountBtn: 'Eliminar Cuenta y Datos',
+    saveChanges: 'Guardar Cambios',
+    transferOwnershipTitle: 'Transferir Propiedad de la Empresa',
+    transferOwnershipPrompt: 'Ingrese la dirección de email del usuario al que desea transferir la propiedad:',
+    assignOwnershipTitle: 'Asignar Propiedad de la Empresa',
+    assignOwnershipPrompt: 'Ingrese la dirección de email del usuario al que desea asignar derechos administrativos:',
+    deleteAccountTitle: 'Eliminar Cuenta y Datos',
+    deleteAccountWarning: 'Advertencia: Esta acción no se puede deshacer. Todos sus datos serán eliminados permanentemente.',
+    deleteAccountConfirm: 'Escriba "DELETE" para confirmar:',
+    deleteAccountConfirmPlaceholder: 'DELETE',
+    deleteAccountPermanent: 'Eliminar Permanentemente',
+    requiredField: 'Requerido',
+    pleaseCompleteRequired: 'Por favor complete todos los campos requeridos.',
+    serviceNotAvailable: 'Servicio no disponible',
+    embargoCountry: 'Nuestro servicio actualmente no está disponible en este país.',
+    technology: 'Tecnología',
+    finance: 'Finanzas',
+    healthcare: 'Salud',
+    education: 'Educación',
+    manufacturing: 'Manufactura',
+    retail: 'Ventas al por menor',
+    consulting: 'Consultoría',
+    media: 'Medios',
+    realEstate: 'Bienes Raíces',
+    other: 'Otro',
+    companySize1to10: '1-10 empleados',
+    companySize11to50: '11-50 empleados',
+    companySize51to200: '51-200 empleados',
+    companySize201to500: '201-500 empleados',
+    companySize501to1000: '501-1000 empleados',
+    companySize1000plus: '1000+ empleados'
   },
   zh: {
     welcome: '欢迎',
@@ -553,7 +857,83 @@ const translations: Record<'de' | 'en' | 'es' | 'zh', Translations> = {
     slaGuarantee: 'SLA保证（99.9%正常运行时间）',
     onPremiseOption: '本地部署选项',
     customDevelopment: '定制开发',
-    trainingIncluded: '包含培训和入门指导'
+    trainingIncluded: '包含培训和入门指导',
+    companySettings: '公司设置',
+    companySettingsSubtitle: '设置您的公司资料并配置公司范围的设置。',
+    companyTab: '公司',
+    usersTab: '用户',
+    customizationTab: '定制',
+    settingsTab: '设置',
+    companyProfile: '公司资料',
+    companyName: '公司名称',
+    website: '网站',
+    companyAddress: '公司地址',
+    secondaryAddress: '第二地址',
+    postalCode: '邮政编码',
+    city: '城市',
+    country: '国家',
+    taxNumber: '税号',
+    contactEmail: '联系邮箱',
+    contactPhone: '联系电话',
+    industry: '行业',
+    companySize: '公司规模',
+    foundedYear: '成立年份',
+    description: '描述',
+    userManagement: '用户管理',
+    userManagementPlaceholder: '用户管理功能将在此处实现。',
+    customizationPlaceholder: '视频播放器和品牌定制选项将在此处提供。',
+    applicationSettings: '应用程序设置',
+    features: '功能',
+    pipFeature: '画中画 (PiP)',
+    mfaFeature: '多因素认证 (MFA)',
+    aiBotFeature: 'AI机器人 (企业版)',
+    aiBotEnterpriseOnly: 'AI机器人仅在企业版中提供。请联系我们获取更多信息。',
+    loremIpsumFeature: 'Lorem Ipsum功能',
+    preferences: '偏好设置',
+    videoPlayerLanguage: '视频播放器语言',
+    timezone: '时区',
+    ownershipManagement: '所有权管理',
+    ownershipWarning: '警告：公司所有权的更改无法撤销。',
+    transferOwnership: '转移所有权',
+    transferOwnershipDesc: '将此公司的完全控制权转移给另一个用户。',
+    transferOwnershipBtn: '转移公司所有权',
+    assignOwnership: '分配所有权',
+    assignOwnershipDesc: '为另一个用户分配此公司的管理权限。',
+    assignOwnershipBtn: '分配公司所有权',
+    dangerZone: '危险区域',
+    deleteAccount: '删除账户',
+    deleteAccountDesc: '永久删除您的账户和所有相关数据。',
+    deleteAccountBtn: '删除账户和数据',
+    saveChanges: '保存更改',
+    transferOwnershipTitle: '转移公司所有权',
+    transferOwnershipPrompt: '输入您要转移所有权的用户的电子邮件地址：',
+    assignOwnershipTitle: '分配公司所有权',
+    assignOwnershipPrompt: '输入您要分配管理权限的用户的电子邮件地址：',
+    deleteAccountTitle: '删除账户和数据',
+    deleteAccountWarning: '警告：此操作无法撤销。您的所有数据将被永久删除。',
+    deleteAccountConfirm: '输入"DELETE"确认：',
+    deleteAccountConfirmPlaceholder: 'DELETE',
+    deleteAccountPermanent: '永久删除',
+    requiredField: '必填',
+    pleaseCompleteRequired: '请完成所有必填字段。',
+    serviceNotAvailable: '服务不可用',
+    embargoCountry: '我们的服务目前在该国不可用。',
+    technology: '技术',
+    finance: '金融',
+    healthcare: '医疗保健',
+    education: '教育',
+    manufacturing: '制造业',
+    retail: '零售',
+    consulting: '咨询',
+    media: '媒体',
+    realEstate: '房地产',
+    other: '其他',
+    companySize1to10: '1-10名员工',
+    companySize11to50: '11-50名员工',
+    companySize51to200: '51-200名员工',
+    companySize201to500: '201-500名员工',
+    companySize501to1000: '501-1000名员工',
+    companySize1000plus: '1000+名员工'
   }
 };
 
