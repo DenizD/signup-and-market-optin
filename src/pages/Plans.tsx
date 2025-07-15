@@ -10,92 +10,108 @@ const Plans = () => {
 
   const starterModules = {
     clips: {
-      name: t('clipsModule'),
-      description: t('clipsModuleDesc'),
+      name: 'Clips Modul',
+      nameEN: 'Clips Module',
+      description: 'Ideal für Highlight-Videos',
+      descriptionEN: 'Perfect for highlight videos',
       features: [
         {
-          text: 'Shoppable Clips Module',
-          textDE: 'Shoppable Clips Modul',
-          tooltip: 'Create and manage interactive video clips with direct purchase options',
-          tooltipDE: 'Erstelle und verwalte interaktive Video-Clips mit direkten Kaufoptionen'
+          text: 'Video-Import',
+          textEN: 'Video Import',
+          tooltip: 'Import und Verwaltung von Videos',
+          tooltipEN: 'Import and management of videos'
         },
         {
-          text: 'Video Import & Management',
-          textDE: 'Video Import & Verwaltung',
-          tooltip: 'Import and manage videos (max. 1 GB/video)',
-          tooltipDE: 'Import und Verwaltung von Videos (max. 1 GB/Video)'
+          text: 'Produkt-Thumbnail-Anzeige',
+          textEN: 'Product Thumbnail Display',
+          tooltip: 'Anzeige von Produkt-Vorschaubildern auf Videos',
+          tooltipEN: 'Display of product thumbnails on videos'
         },
         {
-          text: 'Product Thumbnail Display',
-          textDE: 'Produkt-Thumbnail Anzeige',
-          tooltip: 'Featured product display on video covers',
-          tooltipDE: 'Hervorgehobene Produktanzeige auf Video-Covern'
-        },
-        {
-          text: 'Thumbnail Generator',
-          textDE: 'Thumbnail Generator',
-          tooltip: 'Automatic creation of 15 random preview images',
-          tooltipDE: 'Automatische Erstellung von 15 zufälligen Vorschaubildern'
-        },
-        {
-          text: 'Smart Product Tagging',
-          textDE: 'Intelligente Produkt-Tags',
-          tooltip: 'AI-powered automatic product recognition and tagging in videos',
-          tooltipDE: 'KI-gestützte automatische Produkterkennung und -markierung in Videos'
-        },
-        {
-          text: 'Interactive Hotspots',
-          textDE: 'Interaktive Hotspots',
-          tooltip: 'Clickable product points within videos for instant shopping',
-          tooltipDE: 'Klickbare Produktpunkte in Videos für sofortiges Shopping'
+          text: 'Thumbnail-Generator',
+          textEN: 'Thumbnail Generator',
+          tooltip: 'Automatische Erstellung von Video-Vorschaubildern',
+          tooltipEN: 'Automatic creation of video preview images'
         }
       ]
     },
     'live-shopping': {
-      name: t('liveShoppingModule'),
-      description: t('liveShoppingModuleDesc'),
+      name: 'Live Shopping Modul',
+      nameEN: 'Live Shopping Module',
+      description: 'Ideal für Livestream Sales',
+      descriptionEN: 'Perfect for livestream sales',
       features: [
         {
-          text: 'Live Shopping Module',
-          textDE: 'Live Shopping Modul',
-          tooltip: 'Complete live streaming solution with e-commerce integration',
-          tooltipDE: 'Komplette Live-Streaming-Lösung mit E-Commerce-Integration'
+          text: 'Video-on-Demand-Speicherung',
+          textEN: 'Video-on-Demand Storage',
+          tooltip: 'Speicherung von Live-Streams für spätere Wiedergabe',
+          tooltipEN: 'Storage of live streams for later playback'
         },
         {
-          text: 'Broadcasting App & RTMP',
-          textDE: 'Broadcasting App & RTMP',
-          tooltip: 'Web app and professional streaming with external cameras',
-          tooltipDE: 'Web-App und professionelles Streaming mit externen Kameras'
+          text: 'Kalenderintegration (Add-to-Calendar)',
+          textEN: 'Calendar Integration (Add-to-Calendar)',
+          tooltip: 'Integration mit Kalendersystemen für Event-Planung',
+          tooltipEN: 'Integration with calendar systems for event planning'
         },
         {
-          text: 'Live Chat & Moderation',
-          textDE: 'Live Chat & Moderation',
-          tooltip: 'Interactive chat functions with moderation tools',
-          tooltipDE: 'Interaktive Chat-Funktionen mit Moderations-Tools'
+          text: 'Pre-Live Countdown',
+          textEN: 'Pre-Live Countdown',
+          tooltip: 'Countdown-Timer vor Live-Events',
+          tooltipEN: 'Countdown timer before live events'
+        },
+        {
+          text: 'Broadcasting-App',
+          textEN: 'Broadcasting App',
+          tooltip: 'Dedizierte App für Live-Übertragungen',
+          tooltipEN: 'Dedicated app for live broadcasts'
+        },
+        {
+          text: 'Hybrid-Streaming (RTMP/externe Apps)',
+          textEN: 'Hybrid Streaming (RTMP/External Apps)',
+          tooltip: 'Unterstützung für RTMP und externe Streaming-Apps',
+          tooltipEN: 'Support for RTMP and external streaming apps'
+        },
+        {
+          text: 'Host-Funktion für Live Shopping',
+          textEN: 'Host Function for Live Shopping',
+          tooltip: 'Spezielle Host-Tools für Live Shopping Events',
+          tooltipEN: 'Special host tools for live shopping events'
+        },
+        {
+          text: 'Upload voraufgezeichneter Shows',
+          textEN: 'Upload Pre-recorded Shows',
+          tooltip: 'Möglichkeit, voraufgezeichnete Shows hochzuladen',
+          tooltipEN: 'Ability to upload pre-recorded shows'
+        },
+        {
+          text: 'Show-Download',
+          textEN: 'Show Download',
+          tooltip: 'Download-Funktion für gespeicherte Shows',
+          tooltipEN: 'Download function for saved shows'
+        },
+        {
+          text: 'Live-Chat & Moderation',
+          textEN: 'Live Chat & Moderation',
+          tooltip: 'Interaktiver Chat mit Moderations-Tools',
+          tooltipEN: 'Interactive chat with moderation tools'
+        },
+        {
+          text: 'Produkt-Highlighting & Timestamps',
+          textEN: 'Product Highlighting & Timestamps',
+          tooltip: 'Hervorhebung von Produkten mit Zeitstempeln',
+          tooltipEN: 'Product highlighting with timestamps'
         },
         {
           text: 'Social Media Multistreaming',
-          textDE: 'Social Media Multistreaming',
-          tooltip: 'Simultaneous streaming to one social media platform',
-          tooltipDE: 'Gleichzeitiges Streaming auf eine Social Media Plattform'
+          textEN: 'Social Media Multistreaming',
+          tooltip: 'Gleichzeitiges Streaming auf mehrere Plattformen',
+          tooltipEN: 'Simultaneous streaming to multiple platforms'
         },
         {
-          text: 'Real-time Product Showcase',
-          textDE: 'Echtzeit Produkt-Showcase',
-          tooltip: 'Live product demonstrations with instant purchase options',
-          tooltipDE: 'Live Produktvorführungen mit sofortigen Kaufoptionen'
-        },
-        {
-          text: 'Audience Interaction Tools',
-          textDE: 'Publikums-Interaktions-Tools',
-          tooltip: 'Polls, Q&A sessions, and viewer engagement features',
-          tooltipDE: 'Umfragen, Q&A-Sessions und Zuschauer-Engagement-Features'
-        },
-        {
-          text: 'Stream Recording & Replay',
-          textDE: 'Stream-Aufzeichnung & Wiedergabe',
-          tooltip: 'Automatic recording and replay functionality for missed shows',
-          tooltipDE: 'Automatische Aufzeichnung und Wiedergabe-Funktion für verpasste Shows'
+          text: 'Floating Action Video Widget',
+          textEN: 'Floating Action Video Widget',
+          tooltip: 'Schwebendes Video-Widget für Aktionen',
+          tooltipEN: 'Floating video widget for actions'
         }
       ]
     }
@@ -104,178 +120,162 @@ const Plans = () => {
   const plans = [
     {
       id: 'starter',
-      name: t('starterDescription').split(' ')[0], // 'Starter'
-      description: t('starterDescription'),
-      subtitle: t('starterSubtitle'),
+      name: 'Starter',
+      description: 'Einstieg in professionellen Video Commerce',
+      descriptionEN: 'Getting started with professional video commerce',
+      subtitle: 'Für Einsteiger',
+      subtitleEN: 'For Beginners',
       monthlyPrice: 495,
       popular: false,
       color: 'default' as const,
       isStarterOption: true,
       coreFeatures: [
         {
-          text: t('starterViews'),
-          tooltip: language === 'de' 
-            ? 'Ein Viewer wird gezählt, wenn ein Video/Stream länger als 5 Sekunden angeschaut wird'
-            : 'A viewer is counted when a video/stream is watched for more than 5 seconds'
+          text: '1.000 inklusive Aufrufe/Monat¹',
+          textEN: '1,000 included views/month¹',
+          tooltip: 'Ein Aufruf wird gezählt, wenn ein Video/Stream länger als 5 Sekunden angeschaut wird',
+          tooltipEN: 'A view is counted when a video/stream is watched for more than 5 seconds'
         },
         {
-          text: t('playerIntegration'),
-          tooltip: t('playerIntegrationTooltip')
+          text: 'Flexibler Video Shopping Player (Bild-in-Bild)',
+          textEN: 'Flexible Video Shopping Player (Picture-in-Picture)',
+          tooltip: 'Anpassbarer Video-Player mit Bild-in-Bild-Funktion',
+          tooltipEN: 'Customizable video player with picture-in-picture function'
         },
         {
-          text: 'Media Library & Playlists with Tagging',
-          textDE: 'Medien-Bibliothek & Playlists mit Tagging',
-          tooltip: 'Central management of all content without code changes',
-          tooltipDE: 'Zentrale Verwaltung aller Inhalte ohne Code-Änderungen'
+          text: 'Mediathek & Playlists mit Tagging',
+          textEN: 'Media Library & Playlists with Tagging',
+          tooltip: 'Zentrale Verwaltung aller Inhalte mit Tagging-System',
+          tooltipEN: 'Central management of all content with tagging system'
         },
         {
-          text: 'Endless Play & Swipe',
-          textDE: 'Endless Play & Swipe',
-          tooltip: 'Uninterrupted scrolling and playback of content',
-          tooltipDE: 'Ununterbrochenes Scrollen und Abspielen von Inhalten'
+          text: 'Endlos-Play & Swipe',
+          textEN: 'Endless Play & Swipe',
+          tooltip: 'Ununterbrochenes Abspielen und Wischen durch Inhalte',
+          tooltipEN: 'Uninterrupted playback and swiping through content'
         },
         {
-          text: t('playerIntegration'),
-          tooltip: t('playerIntegrationTooltip')
+          text: 'Einfache Player-Integration (1-Code)',
+          textEN: 'Simple Player Integration (1-Code)',
+          tooltip: 'Ein-Code-Integration in Ihre Website',
+          tooltipEN: 'One-code integration into your website'
         },
         {
-          text: t('selfBranding'),
-          tooltip: t('selfBrandingTooltip')
+          text: 'Self-Branding',
+          textEN: 'Self-Branding',
+          tooltip: 'Anpassung des Players an Ihr Corporate Design',
+          tooltipEN: 'Customization of the player to your corporate design'
         },
         {
-          text: t('basicSupport'),
-          tooltip: language === 'de' 
-            ? 'Technischer Support über unser Ticket-System'
-            : 'Technical support via our ticket system'
+          text: 'Basis-Support (Ticketsystem)',
+          textEN: 'Basic Support (Ticket System)',
+          tooltip: 'Technischer Support über unser Ticket-System',
+          tooltipEN: 'Technical support via our ticket system'
         }
       ]
     },
     {
       id: 'advanced',
-      name: t('advancedDescription').split(' ')[0], // 'Advanced'
-      description: t('advancedDescription'),
-      subtitle: t('advancedSubtitle'),
+      name: 'Advanced',
+      description: 'Die komplette Video-Commerce Lösung',
+      descriptionEN: 'The complete video commerce solution',
+      subtitle: 'Für Teams',
+      subtitleEN: 'For Teams',
       monthlyPrice: 1195,
       popular: true,
       color: 'primary' as const,
       isStarterOption: false,
-      includesPrevious: t('allFromStarter'),
+      includesPrevious: 'Alles aus Starter +',
+      includesPreviousEN: 'All from Starter +',
       features: [
         {
-          text: t('fullVideoCommerce'),
-          tooltip: t('fullVideoCommerceTooltip')
+          text: 'Vollständiges Video Commerce Paket (Live Shopping & Clips)',
+          textEN: 'Complete Video Commerce Package (Live Shopping & Clips)',
+          tooltip: 'Beide Module: Live Shopping und Clips inklusive',
+          tooltipEN: 'Both modules: Live Shopping and Clips included'
         },
         {
-          text: t('advancedViews'),
-          tooltip: language === 'de' 
-            ? 'Erweiterte Viewer-Kapazität für höhere Reichweite'
-            : 'Extended viewer capacity for higher reach'
+          text: '2.500 inklusive Aufrufe/Monat¹',
+          textEN: '2,500 included views/month¹',
+          tooltip: 'Erweiterte Viewer-Kapazität für höhere Reichweite',
+          tooltipEN: 'Extended viewer capacity for higher reach'
         },
         {
-          text: t('extendedApiAccess'),
-          tooltip: t('extendedApiAccessTooltip')
+          text: 'Erweiterter API-Zugriff',
+          textEN: 'Extended API Access',
+          tooltip: 'Zugriff auf erweiterte API-Funktionen',
+          tooltipEN: 'Access to extended API functions'
         },
         {
-          text: 'Product Detail Page Integration',
-          textDE: 'Produktdetailseiten Integration',
-          tooltip: 'Automatic video snippets on product pages',
-          tooltipDE: 'Automatische Video-Snippets auf Produktseiten'
+          text: 'Integration von Produktdetailseiten (PDS)',
+          textEN: 'Product Detail Page Integration (PDP)',
+          tooltip: 'Automatische Integration auf Produktdetailseiten',
+          tooltipEN: 'Automatic integration on product detail pages'
         },
         {
-          text: 'Custom Embed Codes',
-          textDE: 'Custom Embed Codes',
-          tooltip: 'Individual embedding codes for special requirements',
-          tooltipDE: 'Individuelle Einbettungs-Codes für spezielle Anforderungen'
-        },
-        {
-          text: t('advancedAnalytics'),
-          tooltip: t('advancedAnalyticsTooltip')
-        },
-        {
-          text: 'Multi-Platform Broadcasting',
-          textDE: 'Multi-Plattform Broadcasting',
-          tooltip: 'Stream simultaneously to multiple social media platforms',
-          tooltipDE: 'Stream gleichzeitig auf mehrere Social Media Plattformen'
-        },
-        {
-          text: 'Advanced Moderation Tools',
-          textDE: 'Erweiterte Moderations-Tools',
-          tooltip: 'Professional moderation features for large-scale events',
-          tooltipDE: 'Professionelle Moderations-Features für große Events'
-        },
-        {
-          text: t('prioritySupport'),
-          tooltip: language === 'de' 
-            ? 'Bevorzugter technischer Support mit kürzeren Antwortzeiten'
-            : 'Preferred technical support with shorter response times'
+          text: 'Advanced Analytics',
+          textEN: 'Advanced Analytics',
+          tooltip: 'Detaillierte Berichte und Analysen mit Export-Funktion',
+          tooltipEN: 'Detailed reports and analytics with export function'
         }
       ]
     },
     {
       id: 'enterprise',
-      name: t('enterpriseDescription').split(' ')[0], // 'Enterprise'
-      description: t('enterpriseDescription'),
-      subtitle: t('enterpriseSubtitle'),
+      name: 'Enterprise',
+      description: 'Maßgeschneiderte Unternehmenslösung',
+      descriptionEN: 'Tailored enterprise solution',
+      subtitle: 'Für Konzerne',
+      subtitleEN: 'For Enterprises',
       monthlyPrice: null,
       popular: false,
       color: 'secondary' as const,
       isStarterOption: false,
-      includesPrevious: t('allFromAdvanced'),
+      includesPrevious: 'Alles aus Advanced plus:',
+      includesPreviousEN: 'All from Advanced plus:',
       features: [
         {
-          text: t('aiBot'),
-          tooltip: t('aiBotTooltip')
+          text: 'KI-Bot Integration',
+          textEN: 'AI Bot Integration',
+          tooltip: 'Intelligente Chatbot-Integration für Kundenservice',
+          tooltipEN: 'Intelligent chatbot integration for customer service'
         },
         {
-          text: t('enterpriseViews'),
-          tooltip: language === 'de' 
-            ? 'Keine Limits bei Viewern oder Nutzeranzahl'
-            : 'No limits on viewers or user count'
+          text: 'Custom Viewer Pakete',
+          textEN: 'Custom Viewer Packages',
+          tooltip: 'Individuell angepasste Viewer-Pakete nach Bedarf',
+          tooltipEN: 'Individually customized viewer packages as needed'
         },
         {
-          text: 'Multi-Company Management',
-          textDE: 'Multi-Company Management',
-          tooltip: 'Manage multiple companies and markets in one platform',
-          tooltipDE: 'Verwalten Sie mehrere Unternehmen und Märkte in einer Plattform'
+          text: 'Multi-Company-Funktionen',
+          textEN: 'Multi-Company Functions',
+          tooltip: 'Verwaltung mehrerer Unternehmen in einer Plattform',
+          tooltipEN: 'Management of multiple companies in one platform'
         },
         {
-          text: t('successManager'),
-          tooltip: t('successManagerTooltip')
+          text: 'Enterprise Support',
+          textEN: 'Enterprise Support',
+          tooltip: 'Bevorzugter 24/7 Enterprise-Support',
+          tooltipEN: 'Priority 24/7 enterprise support'
         },
         {
-          text: t('enterpriseSupport'),
-          tooltip: t('enterpriseSupportTooltip')
+          text: 'Persönlicher Success Manager',
+          textEN: 'Personal Success Manager',
+          tooltip: 'Dedizierter Ansprechpartner für Ihren Erfolg',
+          tooltipEN: 'Dedicated contact person for your success'
         },
         {
-          text: t('customDevelopment'),
-          tooltip: language === 'de' 
-            ? 'Maßgeschneiderte Features und umfassende Team-Schulungen'
-            : 'Custom features and comprehensive team training'
-        },
-        {
-          text: 'White-Label Solutions',
-          textDE: 'White-Label Lösungen',
-          tooltip: 'Complete customization to your brand and corporate identity',
-          tooltipDE: 'Vollständige Anpassung an Ihre Marke und Corporate Identity'
-        },
-        {
-          text: 'Advanced AI Analytics',
-          textDE: 'Erweiterte KI Analytics',
-          tooltip: 'AI-powered insights and predictive analytics for optimal performance',
-          tooltipDE: 'KI-gestützte Insights und prädiktive Analytics für optimale Performance'
-        },
-        {
-          text: 'Custom API Development',
-          textDE: 'Custom API Entwicklung',
-          tooltip: 'Bespoke API solutions tailored to your specific business needs',
-          tooltipDE: 'Maßgeschneiderte API-Lösungen für Ihre spezifischen Geschäftsanforderungen'
+          text: 'Individuelle Trainings',
+          textEN: 'Individual Training',
+          tooltip: 'Maßgeschneiderte Schulungen für Ihr Team',
+          tooltipEN: 'Tailored training for your team'
         }
       ]
     }
   ];
 
   const formatPrice = (price: number | null) => {
-    if (price === null) return t('custom');
+    if (price === null) return language === 'de' ? 'Individuell' : 'Custom';
     return `${price.toLocaleString('en-US')}€`;
   };
 
@@ -316,9 +316,9 @@ const Plans = () => {
     return baseStyles;
   };
 
-  const renderFeatureWithTooltip = (feature: { text: string; textDE?: string; tooltip?: string; tooltipDE?: string }, index: number, plan: typeof plans[0]) => {
-    const displayText = language === 'de' && feature.textDE ? feature.textDE : feature.text;
-    const tooltipText = language === 'de' && feature.tooltipDE ? feature.tooltipDE : feature.tooltip;
+  const renderFeatureWithTooltip = (feature: { text: string; textEN?: string; tooltip?: string; tooltipEN?: string }, index: number, plan: typeof plans[0]) => {
+    const displayText = language === 'de' ? feature.text : (feature.textEN || feature.text);
+    const tooltipText = language === 'de' ? feature.tooltip : (feature.tooltipEN || feature.tooltip);
 
     return (
       <Stack key={index} direction="row" alignItems="flex-start" spacing={2}>
@@ -408,7 +408,7 @@ const Plans = () => {
               lineHeight: 1.1
             }}
           >
-            {t('discoverPlans')}
+            {language === 'de' ? 'Entdecken Sie unsere Pläne' : 'Discover our Plans'}
           </Typography>
           <Typography 
             variant="h5" 
@@ -422,7 +422,10 @@ const Plans = () => {
               fontSize: { xs: '1.1rem', md: '1.25rem' }
             }}
           >
-            {t('plansSubtitle')}
+            {language === 'de' 
+              ? 'Wählen Sie den perfekten Plan für Ihr Unternehmen und starten Sie noch heute'
+              : 'Choose the perfect plan for your business and get started today'
+            }
           </Typography>
           <Typography 
             variant="body1" 
@@ -475,7 +478,7 @@ const Plans = () => {
                           borderRadius: 2
                         }}
                       >
-                        {t('recommended')}
+                        {language === 'de' ? 'EMPFOHLEN' : 'RECOMMENDED'}
                       </Box>
                     )}
 
@@ -494,7 +497,7 @@ const Plans = () => {
                             display: 'block'
                           }}
                         >
-                          {plan.subtitle}
+                          {language === 'de' ? plan.subtitle : plan.subtitleEN}
                         </Typography>
                         <Typography variant="h5" sx={{ 
                           fontWeight: 700, 
@@ -515,7 +518,7 @@ const Plans = () => {
                           alignItems: 'center',
                           textAlign: 'center'
                         }}>
-                          {plan.description}
+                          {language === 'de' ? plan.description : plan.descriptionEN}
                         </Typography>
 
                         {/* Pricing */}
@@ -555,7 +558,7 @@ const Plans = () => {
                             textAlign: 'center',
                             fontSize: '0.9rem'
                           }}>
-                            {plan.includesPrevious}
+                            {language === 'de' ? plan.includesPrevious : plan.includesPreviousEN}
                           </Typography>
                         </Box>
                       )}
@@ -569,7 +572,7 @@ const Plans = () => {
                             mb: 2,
                             textAlign: 'center'
                           }}>
-                            {t('chooseModule')}:
+                            {language === 'de' ? 'Wählen Sie Ihr Modul:' : 'Choose your module:'}
                           </Typography>
                           <RadioGroup
                             value={starterModule}
@@ -587,10 +590,10 @@ const Plans = () => {
                               label={
                                 <Box>
                                   <Typography variant="subtitle2" sx={{ fontWeight: 600, color: '#1a1d21' }}>
-                                    {starterModules.clips.name}
+                                    {language === 'de' ? starterModules.clips.name : starterModules.clips.nameEN}
                                   </Typography>
                                   <Typography variant="body2" sx={{ color: '#64748b', fontSize: '0.85rem' }}>
-                                    {starterModules.clips.description}
+                                    {language === 'de' ? starterModules.clips.description : starterModules.clips.descriptionEN}
                                   </Typography>
                                 </Box>
                               }
@@ -601,10 +604,10 @@ const Plans = () => {
                               label={
                                 <Box>
                                   <Typography variant="subtitle2" sx={{ fontWeight: 600, color: '#1a1d21' }}>
-                                    {starterModules['live-shopping'].name}
+                                    {language === 'de' ? starterModules['live-shopping'].name : starterModules['live-shopping'].nameEN}
                                   </Typography>
                                   <Typography variant="body2" sx={{ color: '#64748b', fontSize: '0.85rem' }}>
-                                    {starterModules['live-shopping'].description}
+                                    {language === 'de' ? starterModules['live-shopping'].description : starterModules['live-shopping'].descriptionEN}
                                   </Typography>
                                 </Box>
                               }
@@ -623,7 +626,7 @@ const Plans = () => {
                             mb: 2
                           }}>
                             {language === 'de' 
-                              ? 'Kern-Features (in beiden Modulen):'
+                              ? 'Basis-Features (in beiden Modulen):'
                               : 'Core features (in both modules):'
                             }
                           </Typography>
@@ -638,7 +641,10 @@ const Plans = () => {
                             color: '#1a1d21',
                             mb: 2
                           }}>
-                            {starterModules[starterModule].name} {language === 'de' ? 'Features:' : 'features:'}
+                            {language === 'de' 
+                              ? `Zusätzliche ${starterModules[starterModule].name} Features:`
+                              : `Additional ${starterModules[starterModule].nameEN} features:`
+                            }
                           </Typography>
                           <Stack spacing={2}>
                             {starterModules[starterModule].features.map((feature, idx) => 
@@ -751,8 +757,8 @@ const Plans = () => {
                 fontSize: '0.95rem'
               }}>
                 <sup>1</sup> {language === 'de' 
-                  ? 'Kostenlose Views pro Monat im jeweiligen Plan enthalten. Zusätzliche Views werden mit 0,15€ pro Viewer berechnet und automatisch über die hinterlegte Zahlungsmethode nutzungsbasiert abgerechnet.'
-                  : 'Free views per month included in the respective plan. Additional views are charged at €0.15 per viewer and automatically debited via the stored payment method according to usage.'
+                  ? 'Kostenlose Aufrufe pro Monat im jeweiligen Plan enthalten. Zusätzliche Aufrufe werden mit 0,15€ pro Aufruf berechnet und automatisch über die hinterlegte Zahlungsmethode nutzungsbasiert abgerechnet.'
+                  : 'Free views per month included in the respective plan. Additional views are charged at €0.15 per view and automatically debited via the stored payment method according to usage.'
                 }
               </Typography>
             </Box>
