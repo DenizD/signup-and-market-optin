@@ -5,15 +5,13 @@ import { useState } from 'react';
 import { useTranslations } from '@/hooks/useTranslations';
 
 const Plans = () => {
-  const { t } = useTranslations();
+  const { t, language } = useTranslations();
   const [starterModule, setStarterModule] = useState<'clips' | 'live-shopping'>('clips');
 
   const starterModules = {
     clips: {
-      name: 'Clips Module',
-      nameDE: 'Clips Modul',
-      description: 'Perfect for shoppable video content and product presentations',
-      descriptionDE: 'Perfekt für shoppable Video-Inhalte und Produktpräsentationen',
+      name: t('clipsModule'),
+      description: t('clipsModuleDesc'),
       features: [
         {
           text: 'Shoppable Clips Module',
@@ -54,10 +52,8 @@ const Plans = () => {
       ]
     },
     'live-shopping': {
-      name: 'Live Shopping Module',
-      nameDE: 'Live Shopping Modul',
-      description: 'Ideal for live streams with direct sales opportunities',
-      descriptionDE: 'Ideal für Live-Streams mit direkten Verkaufsmöglichkeiten',
+      name: t('liveShoppingModule'),
+      description: t('liveShoppingModuleDesc'),
       features: [
         {
           text: 'Live Shopping Module',
@@ -108,28 +104,23 @@ const Plans = () => {
   const plans = [
     {
       id: 'starter',
-      name: 'Starter',
-      nameDE: 'Starter',
-      description: 'Your entry into video commerce - choose your focus',
-      descriptionDE: 'Ihr Einstieg in Video Commerce - wählen Sie Ihren Schwerpunkt',
-      subtitle: 'Entry Package',
-      subtitleDE: 'Einstiegspaket',
+      name: t('starterDescription').split(' ')[0], // 'Starter'
+      description: t('starterDescription'),
+      subtitle: t('starterSubtitle'),
       monthlyPrice: 495,
       popular: false,
       color: 'default' as const,
       isStarterOption: true,
       coreFeatures: [
         {
-          text: '1,000 included views/month¹',
-          textDE: '1.000 inklusive Views/Monat¹',
-          tooltip: 'A viewer is counted when a video/stream is watched for more than 5 seconds',
-          tooltipDE: 'Ein Viewer wird gezählt, wenn ein Video/Stream länger als 5 Sekunden angeschaut wird'
+          text: t('starterViews'),
+          tooltip: language === 'de' 
+            ? 'Ein Viewer wird gezählt, wenn ein Video/Stream länger als 5 Sekunden angeschaut wird'
+            : 'A viewer is counted when a video/stream is watched for more than 5 seconds'
         },
         {
-          text: 'Flexible Video Player (Picture-in-Picture)',
-          textDE: 'Flexibler Video Player (Bild-in-Bild)',
-          tooltip: 'Resizable, movable mini-window for optimal user experience',
-          tooltipDE: 'Größenveränderbares, bewegliches Mini-Fenster für optimale Nutzererfahrung'
+          text: t('playerIntegration'),
+          tooltip: t('playerIntegrationTooltip')
         },
         {
           text: 'Media Library & Playlists with Tagging',
@@ -144,57 +135,45 @@ const Plans = () => {
           tooltipDE: 'Ununterbrochenes Scrollen und Abspielen von Inhalten'
         },
         {
-          text: 'Simple Integration (1-Code)',
-          textDE: 'Einfache Integration (1-Code)',
-          tooltip: 'Integration through a single code snippet',
-          tooltipDE: 'Integration durch einen einzigen Code-Schnipsel'
+          text: t('playerIntegration'),
+          tooltip: t('playerIntegrationTooltip')
         },
         {
-          text: 'Self-Branding',
-          textDE: 'Eigenes Branding',
-          tooltip: 'Customization to your brand guidelines',
-          tooltipDE: 'Anpassung an Ihre Marken-Richtlinien'
+          text: t('selfBranding'),
+          tooltip: t('selfBrandingTooltip')
         },
         {
-          text: 'Basic Support (Ticket System)',
-          textDE: 'Basis Support (Ticket System)',
-          tooltip: 'Technical support via our ticket system',
-          tooltipDE: 'Technischer Support über unser Ticket-System'
+          text: t('basicSupport'),
+          tooltip: language === 'de' 
+            ? 'Technischer Support über unser Ticket-System'
+            : 'Technical support via our ticket system'
         }
       ]
     },
     {
       id: 'advanced',
-      name: 'Advanced',
-      nameDE: 'Advanced',
-      description: 'The complete video commerce solution for professional applications',
-      descriptionDE: 'Die komplette Video Commerce Lösung für professionelle Anwendungen',
-      subtitle: 'Complete Solution',
-      subtitleDE: 'Komplettlösung',
+      name: t('advancedDescription').split(' ')[0], // 'Advanced'
+      description: t('advancedDescription'),
+      subtitle: t('advancedSubtitle'),
       monthlyPrice: 1195,
       popular: true,
       color: 'primary' as const,
       isStarterOption: false,
-      includesPrevious: 'Everything from Starter plus',
-      includesPreviousDE: 'Alles aus Starter plus',
+      includesPrevious: t('allFromStarter'),
       features: [
         {
-          text: 'Both Modules: Live Shopping AND Clips',
-          textDE: 'Beide Module: Live Shopping UND Clips',
-          tooltip: 'Complete access to both Live Shopping and Clips modules with all features',
-          tooltipDE: 'Vollzugriff auf beide Module Live Shopping und Clips mit allen Features'
+          text: t('fullVideoCommerce'),
+          tooltip: t('fullVideoCommerceTooltip')
         },
         {
-          text: '2,500 included views/month¹',
-          textDE: '2.500 inklusive Views/Monat¹',
-          tooltip: 'Extended viewer capacity for higher reach',
-          tooltipDE: 'Erweiterte Viewer-Kapazität für höhere Reichweite'
+          text: t('advancedViews'),
+          tooltip: language === 'de' 
+            ? 'Erweiterte Viewer-Kapazität für höhere Reichweite'
+            : 'Extended viewer capacity for higher reach'
         },
         {
-          text: 'Advanced API Integration',
-          textDE: 'Erweiterte API Integration',
-          tooltip: 'Full access to all API functions for seamless system integration',
-          tooltipDE: 'Vollzugriff auf alle API-Funktionen für nahtlose System-Integration'
+          text: t('extendedApiAccess'),
+          tooltip: t('extendedApiAccessTooltip')
         },
         {
           text: 'Product Detail Page Integration',
@@ -209,10 +188,8 @@ const Plans = () => {
           tooltipDE: 'Individuelle Einbettungs-Codes für spezielle Anforderungen'
         },
         {
-          text: 'Detailed Analytics & Reports',
-          textDE: 'Detaillierte Analytics & Reports',
-          tooltip: 'Comprehensive dashboard with KPI analysis for shows and clips',
-          tooltipDE: 'Umfassendes Dashboard mit KPI-Analyse für Shows und Clips'
+          text: t('advancedAnalytics'),
+          tooltip: t('advancedAnalyticsTooltip')
         },
         {
           text: 'Multi-Platform Broadcasting',
@@ -227,39 +204,33 @@ const Plans = () => {
           tooltipDE: 'Professionelle Moderations-Features für große Events'
         },
         {
-          text: 'Priority Support',
-          textDE: 'Priority Support',
-          tooltip: 'Preferred technical support with shorter response times',
-          tooltipDE: 'Bevorzugter technischer Support mit kürzeren Antwortzeiten'
+          text: t('prioritySupport'),
+          tooltip: language === 'de' 
+            ? 'Bevorzugter technischer Support mit kürzeren Antwortzeiten'
+            : 'Preferred technical support with shorter response times'
         }
       ]
     },
     {
       id: 'enterprise',
-      name: 'Enterprise',
-      nameDE: 'Enterprise',
-      description: 'Custom enterprise solution with AI and unlimited possibilities',
-      descriptionDE: 'Maßgeschneiderte Enterprise-Lösung mit KI und unbegrenzten Möglichkeiten',
-      subtitle: 'Enterprise Solution',
-      subtitleDE: 'Enterprise Lösung',
+      name: t('enterpriseDescription').split(' ')[0], // 'Enterprise'
+      description: t('enterpriseDescription'),
+      subtitle: t('enterpriseSubtitle'),
       monthlyPrice: null,
       popular: false,
       color: 'secondary' as const,
       isStarterOption: false,
-      includesPrevious: 'Everything from Advanced plus',
-      includesPreviousDE: 'Alles aus Advanced plus',
+      includesPrevious: t('allFromAdvanced'),
       features: [
         {
-          text: 'AI Bot Integration & Shopping Assistant',
-          textDE: 'KI Bot Integration & Shopping Assistent',
-          tooltip: 'AI-based bot for moderation and personalized shopping support',
-          tooltipDE: 'KI-basierter Bot für Moderation und personalisierten Shopping-Support'
+          text: t('aiBot'),
+          tooltip: t('aiBotTooltip')
         },
         {
-          text: 'Unlimited Views & Accounts',
-          textDE: 'Unbegrenzte Views & Accounts',
-          tooltip: 'No limits on viewers or user count',
-          tooltipDE: 'Keine Limits bei Viewern oder Nutzeranzahl'
+          text: t('enterpriseViews'),
+          tooltip: language === 'de' 
+            ? 'Keine Limits bei Viewern oder Nutzeranzahl'
+            : 'No limits on viewers or user count'
         },
         {
           text: 'Multi-Company Management',
@@ -268,22 +239,18 @@ const Plans = () => {
           tooltipDE: 'Verwalten Sie mehrere Unternehmen und Märkte in einer Plattform'
         },
         {
-          text: 'Personal Success Manager',
-          textDE: 'Persönlicher Success Manager',
-          tooltip: 'Dedicated expert for onboarding and continuous optimization',
-          tooltipDE: 'Dedicated Experte für Onboarding und kontinuierliche Optimierung'
+          text: t('successManager'),
+          tooltip: t('successManagerTooltip')
         },
         {
-          text: '24/7 Enterprise Support',
-          textDE: '24/7 Enterprise Support',
-          tooltip: 'Premium support around the clock with guaranteed response times',
-          tooltipDE: 'Premium Support rund um die Uhr mit garantierten Antwortzeiten'
+          text: t('enterpriseSupport'),
+          tooltip: t('enterpriseSupportTooltip')
         },
         {
-          text: 'Individual Development & Training',
-          textDE: 'Individuelle Entwicklung & Schulungen',
-          tooltip: 'Custom features and comprehensive team training',
-          tooltipDE: 'Maßgeschneiderte Features und umfassende Team-Schulungen'
+          text: t('customDevelopment'),
+          tooltip: language === 'de' 
+            ? 'Maßgeschneiderte Features und umfassende Team-Schulungen'
+            : 'Custom features and comprehensive team training'
         },
         {
           text: 'White-Label Solutions',
@@ -308,7 +275,7 @@ const Plans = () => {
   ];
 
   const formatPrice = (price: number | null) => {
-    if (price === null) return 'Custom';
+    if (price === null) return t('custom');
     return `${price.toLocaleString('en-US')}€`;
   };
 
@@ -349,72 +316,77 @@ const Plans = () => {
     return baseStyles;
   };
 
-  const renderFeatureWithTooltip = (feature: { text: string; textDE?: string; tooltip?: string; tooltipDE?: string }, index: number, plan: typeof plans[0]) => (
-    <Stack key={index} direction="row" alignItems="flex-start" spacing={2}>
-      <Box sx={{
-        backgroundColor: plan.popular ? '#E8FDF3' : '#f1f5f9',
-        borderRadius: '50%',
-        p: 0.5,
-        flexShrink: 0,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        mt: 0.25,
-        width: 20,
-        height: 20
-      }}>
+  const renderFeatureWithTooltip = (feature: { text: string; textDE?: string; tooltip?: string; tooltipDE?: string }, index: number, plan: typeof plans[0]) => {
+    const displayText = language === 'de' && feature.textDE ? feature.textDE : feature.text;
+    const tooltipText = language === 'de' && feature.tooltipDE ? feature.tooltipDE : feature.tooltip;
+
+    return (
+      <Stack key={index} direction="row" alignItems="flex-start" spacing={2}>
         <Box sx={{
-          width: 8,
-          height: 8,
-          backgroundColor: plan.popular ? '#059669' : '#43BEAC',
-          borderRadius: '50%'
-        }} />
-      </Box>
-      <Stack direction="row" alignItems="flex-start" spacing={1} sx={{ flexGrow: 1 }}>
-        <Typography variant="body1" sx={{ 
-          color: '#334155',
-          lineHeight: 1.5,
-          fontWeight: 500,
-          fontSize: '0.95rem',
-          flexGrow: 1
+          backgroundColor: plan.popular ? '#E8FDF3' : '#f1f5f9',
+          borderRadius: '50%',
+          p: 0.5,
+          flexShrink: 0,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          mt: 0.25,
+          width: 20,
+          height: 20
         }}>
-          {feature.text}
-        </Typography>
-        {feature.tooltip && (
-          <Tooltip 
-            title={feature.tooltip}
-            placement="top"
-            arrow
-            sx={{
-              '& .MuiTooltip-tooltip': {
-                backgroundColor: '#1a1d21',
-                color: '#ffffff',
-                fontSize: '0.875rem',
-                maxWidth: '300px',
-                padding: '12px',
-                borderRadius: '8px',
-                lineHeight: 1.4
-              },
-              '& .MuiTooltip-arrow': {
-                color: '#1a1d21'
-              }
-            }}
-          >
-            <InfoOutlined sx={{ 
-              color: '#64748b', 
-              fontSize: '16px',
-              cursor: 'help',
-              flexShrink: 0,
-              mt: 0.25,
-              '&:hover': {
-                color: '#43BEAC'
-              }
-            }} />
-          </Tooltip>
-        )}
+          <Box sx={{
+            width: 8,
+            height: 8,
+            backgroundColor: plan.popular ? '#059669' : '#43BEAC',
+            borderRadius: '50%'
+          }} />
+        </Box>
+        <Stack direction="row" alignItems="flex-start" spacing={1} sx={{ flexGrow: 1 }}>
+          <Typography variant="body1" sx={{ 
+            color: '#334155',
+            lineHeight: 1.5,
+            fontWeight: 500,
+            fontSize: '0.95rem',
+            flexGrow: 1
+          }}>
+            {displayText}
+          </Typography>
+          {tooltipText && (
+            <Tooltip 
+              title={tooltipText}
+              placement="top"
+              arrow
+              sx={{
+                '& .MuiTooltip-tooltip': {
+                  backgroundColor: '#1a1d21',
+                  color: '#ffffff',
+                  fontSize: '0.875rem',
+                  maxWidth: '300px',
+                  padding: '12px',
+                  borderRadius: '8px',
+                  lineHeight: 1.4
+                },
+                '& .MuiTooltip-arrow': {
+                  color: '#1a1d21'
+                }
+              }}
+            >
+              <InfoOutlined sx={{ 
+                color: '#64748b', 
+                fontSize: '16px',
+                cursor: 'help',
+                flexShrink: 0,
+                mt: 0.25,
+                '&:hover': {
+                  color: '#43BEAC'
+                }
+              }} />
+            </Tooltip>
+          )}
+        </Stack>
       </Stack>
-    </Stack>
-  );
+    );
+  };
 
   return (
     <Box sx={{ 
@@ -436,7 +408,7 @@ const Plans = () => {
               lineHeight: 1.1
             }}
           >
-            Pricing & Packages
+            {t('discoverPlans')}
           </Typography>
           <Typography 
             variant="h5" 
@@ -450,7 +422,7 @@ const Plans = () => {
               fontSize: { xs: '1.1rem', md: '1.25rem' }
             }}
           >
-            Choose the perfect package for your video commerce strategy
+            {t('plansSubtitle')}
           </Typography>
           <Typography 
             variant="body1" 
@@ -461,7 +433,10 @@ const Plans = () => {
               fontSize: '1rem'
             }}
           >
-            All packages include free updates
+            {language === 'de' 
+              ? 'Alle Pakete enthalten kostenlose Updates'
+              : 'All packages include free updates'
+            }
           </Typography>
         </Box>
 
@@ -500,7 +475,7 @@ const Plans = () => {
                           borderRadius: 2
                         }}
                       >
-                        Most Popular Choice
+                        {t('recommended')}
                       </Box>
                     )}
 
@@ -559,7 +534,7 @@ const Plans = () => {
                           </Typography>
                           {plan.monthlyPrice && (
                             <Typography variant="body2" sx={{ color: '#64748b', fontSize: '0.9rem' }}>
-                              per month
+                              {language === 'de' ? 'pro Monat' : 'per month'}
                             </Typography>
                           )}
                         </Box>
@@ -594,7 +569,7 @@ const Plans = () => {
                             mb: 2,
                             textAlign: 'center'
                           }}>
-                            Choose your module:
+                            {t('chooseModule')}:
                           </Typography>
                           <RadioGroup
                             value={starterModule}
@@ -647,7 +622,10 @@ const Plans = () => {
                             color: '#1a1d21',
                             mb: 2
                           }}>
-                            Core features (in both modules):
+                            {language === 'de' 
+                              ? 'Kern-Features (in beiden Modulen):'
+                              : 'Core features (in both modules):'
+                            }
                           </Typography>
                           <Stack spacing={2}>
                             {plan.coreFeatures.map((feature, idx) => 
@@ -660,7 +638,7 @@ const Plans = () => {
                             color: '#1a1d21',
                             mb: 2
                           }}>
-                            {starterModules[starterModule].name} features:
+                            {starterModules[starterModule].name} {language === 'de' ? 'Features:' : 'features:'}
                           </Typography>
                           <Stack spacing={2}>
                             {starterModules[starterModule].features.map((feature, idx) => 
@@ -713,7 +691,10 @@ const Plans = () => {
                           transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
                         }}
                       >
-                        {plan.monthlyPrice ? 'Start Now' : 'Contact Us'}
+                        {plan.monthlyPrice 
+                          ? (language === 'de' ? 'Jetzt starten' : 'Start Now')
+                          : (language === 'de' ? 'Kontakt aufnehmen' : 'Contact Us')
+                        }
                       </Button>
                     </CardActions>
                   </Card>
@@ -740,7 +721,7 @@ const Plans = () => {
             textAlign: 'center',
             fontSize: { xs: '1.75rem', md: '2.25rem' }
           }}>
-            Additional Information
+            {language === 'de' ? 'Zusätzliche Informationen' : 'Additional Information'}
           </Typography>
           
           <Stack spacing={4}>
@@ -751,7 +732,10 @@ const Plans = () => {
                 fontSize: '1.05rem',
                 fontWeight: 500
               }}>
-                All prices are subject to applicable VAT.
+                {language === 'de' 
+                  ? 'Alle Preise verstehen sich zzgl. der gesetzlichen Mehrwertsteuer.'
+                  : 'All prices are subject to applicable VAT.'
+                }
               </Typography>
             </Box>
             
@@ -766,7 +750,10 @@ const Plans = () => {
                 lineHeight: 1.6,
                 fontSize: '0.95rem'
               }}>
-                <sup>1</sup> Free views per month included in the respective plan. Additional views are charged at €0.15 per viewer and automatically debited via the stored payment method according to usage.
+                <sup>1</sup> {language === 'de' 
+                  ? 'Kostenlose Views pro Monat im jeweiligen Plan enthalten. Zusätzliche Views werden mit 0,15€ pro Viewer berechnet und automatisch über die hinterlegte Zahlungsmethode nutzungsbasiert abgerechnet.'
+                  : 'Free views per month included in the respective plan. Additional views are charged at €0.15 per viewer and automatically debited via the stored payment method according to usage.'
+                }
               </Typography>
             </Box>
             
@@ -777,7 +764,10 @@ const Plans = () => {
                 fontWeight: 600,
                 fontSize: '1rem'
               }}>
-                Individual solutions and custom packages available upon request.
+                {language === 'de' 
+                  ? 'Individuelle Lösungen und maßgeschneiderte Pakete auf Anfrage verfügbar.'
+                  : 'Individual solutions and custom packages available upon request.'
+                }
               </Typography>
             </Box>
           </Stack>
