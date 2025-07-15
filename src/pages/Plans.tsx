@@ -1,246 +1,177 @@
-import { Box, Container, Typography, Button, Card, CardContent, CardActions, Stack, Chip, Tooltip, Grow, Collapse } from '@mui/material';
-import { Check, HelpOutline, ExpandMore, ExpandLess, Phone, InfoOutlined } from '@mui/icons-material';
+import { Box, Container, Typography, Button, Card, CardContent, CardActions, Stack, Tooltip, Grow, RadioGroup, FormControlLabel, Radio, Divider } from '@mui/material';
+import { InfoOutlined } from '@mui/icons-material';
 import { useState } from 'react';
 import { useTranslations } from '@/hooks/useTranslations';
 
 const Plans = () => {
   const { t } = useTranslations();
-  const [expandedDetails, setExpandedDetails] = useState<boolean>(false);
+  const [starterModule, setStarterModule] = useState<'clips' | 'live-shopping'>('clips');
 
-  const plans = [
-    {
-      id: 'starter-clips',
-      name: 'Starter Clips',
-      description: 'LOREM IPSUM- TEXT folgt',
-      subtitle: 'Video Modul',
-      monthlyPrice: 495,
-      popular: false,
-      color: 'default' as const,
-      isStarterOption: true,
+  const starterModules = {
+    clips: {
+      name: 'Clips Module',
+      description: 'Perfect for shoppable video content and product presentations',
       features: [
         {
-          text: 'Shoppable Clips Modul',
-          tooltip: 'Freischaltung aller Video Commerce Module (Live Shopping & Clips)'
+          text: 'Shoppable Clips Module',
+          tooltip: 'Create and manage interactive video clips with direct purchase options'
         },
         {
-          text: '1.000 inklusive Aufrufe/Monat¹',
-          tooltip: 'Jedes Modell enthält ein kostenloses Viewer-Kontingent pro Monat. Ein Viewer wird gezählt, sobald ein (Live-)Video oder Clip länger als 5 Sekunden angesehen wird.'
+          text: 'Video Import & Management',
+          tooltip: 'Import and manage videos (max. 1 GB/video)'
         },
         {
-          text: 'Flexibler Video-Player (Bild-in-Bild)',
-          tooltip: 'PiP-Funktion für ein verkleinerbares, verschiebbares Mini-Fenster.'
+          text: 'Product Thumbnail Display',
+          tooltip: 'Featured product display on video covers'
         },
         {
-          text: 'Mediathek & Playlists mit Tagging',
-          tooltip: 'Zentrale Verwaltung und Erstellung von Mediatheken mit Playlisten für Shows, Videos und Clips ohne Code-Änderungen.'
-        },
-        {
-          text: 'Endlos-Play & Swipe',
-          tooltip: 'Ununterbrochenes Scrollen und Abspielen von Inhalten über die Mediathek.'
-        },
-        {
-          text: 'Einfache Player-Integration (1-Code)',
-          tooltip: 'Einfache Integration des Video Players & Mediatheken in bestehende Websites oder Anwendungen durch einen einzigen Code-Snippet.'
-        },
-        {
-          text: 'Self-Branding',
-          tooltip: 'Anpassung von Videoplayer und Mediathek an die eigenen Brand Guidelines.'
-        }
-      ],
-      detailedFeatures: [
-        {
-          text: 'Video-Import',
-          tooltip: 'Möglichkeit, Videos in die Plattform zu importieren und zu verwalten (max. 1 GB/Video).'
-        },
-        {
-          text: 'Produkt-Thumbnail-Anzeige',
-          tooltip: 'Anzeige von hervorgehobenen Produkten in Clips auf dem Cover.'
-        },
-        {
-          text: 'Thumbnail-Generator',
-          tooltip: 'Zur Erstellung und Auswahl von 15 zufälligen Vorschaubildern aus den Videos.'
-        },
-        {
-          text: 'Basis-Support (Ticketsystem)',
-          tooltip: 'Technischer Support, der im Abonnement enthalten ist über das Ticket System.'
+          text: 'Thumbnail Generator',
+          tooltip: 'Automatic creation of 15 random preview images'
         }
       ]
     },
+    'live-shopping': {
+      name: 'Live Shopping Module',
+      description: 'Ideal for live streams with direct sales opportunities',
+      features: [
+        {
+          text: 'Live Shopping Module',
+          tooltip: 'Complete live streaming solution with e-commerce integration'
+        },
+        {
+          text: 'Broadcasting App & RTMP',
+          tooltip: 'Web app and professional streaming with external cameras'
+        },
+        {
+          text: 'Live Chat & Moderation',
+          tooltip: 'Interactive chat functions with moderation tools'
+        },
+        {
+          text: 'Social Media Multistreaming',
+          tooltip: 'Simultaneous streaming to one social media platform'
+        }
+      ]
+    }
+  };
+
+  const plans = [
     {
-      id: 'starter-live-shopping',
-      name: 'Starter Live Shopping',
-      description: 'LOREM IPSUM- TEXT folgt',
-      subtitle: 'Commerce Modul',
+      id: 'starter',
+      name: 'Starter',
+      description: 'Your entry into video commerce - choose your focus',
+      subtitle: 'Entry Package',
       monthlyPrice: 495,
       popular: false,
       color: 'default' as const,
       isStarterOption: true,
-      features: [
+      coreFeatures: [
         {
-          text: 'Live Shopping Modul',
-          tooltip: 'Freischaltung aller Video Commerce Module (Live Shopping & Clips)'
+          text: '1,000 included views/month¹',
+          tooltip: 'A viewer is counted when a video/stream is watched for more than 5 seconds'
         },
         {
-          text: '1.000 inklusive Aufrufe/Monat¹',
-          tooltip: 'Jedes Modell enthält ein kostenloses Viewer-Kontingent pro Monat. Ein Viewer wird gezählt, sobald ein (Live-)Video oder Clip länger als 5 Sekunden angesehen wird.'
+          text: 'Flexible Video Player (Picture-in-Picture)',
+          tooltip: 'Resizable, movable mini-window for optimal user experience'
         },
         {
-          text: 'Flexibler Live Shopping Player (Bild-in-Bild)',
-          tooltip: 'PiP-Funktion für ein verkleinerbares, verschiebbares Mini-Fenster.'
+          text: 'Media Library & Playlists with Tagging',
+          tooltip: 'Central management of all content without code changes'
         },
         {
-          text: 'Mediathek & Playlists mit Tagging',
-          tooltip: 'Zentrale Verwaltung und Erstellung von Mediatheken mit Playlisten für Shows, Videos und Clips ohne Code-Änderungen.'
+          text: 'Endless Play & Swipe',
+          tooltip: 'Uninterrupted scrolling and playback of content'
         },
         {
-          text: 'Endlos-Play & Swipe',
-          tooltip: 'Ununterbrochenes Scrollen und Abspielen von Inhalten über die Mediathek.'
-        },
-        {
-          text: 'Einfache Player-Integration (1-Code)',
-          tooltip: 'Einfache Integration des Video Players & Mediatheken in bestehende Websites oder Anwendungen durch einen einzigen Code-Snippet.'
+          text: 'Simple Integration (1-Code)',
+          tooltip: 'Integration through a single code snippet'
         },
         {
           text: 'Self-Branding',
-          tooltip: 'Anpassung von Videoplayer und Mediathek an die eigenen Brand Guidelines.'
-        }
-      ],
-      detailedFeatures: [
-        {
-          text: 'Video-on-Demand-Speicherung',
-          tooltip: 'Bereitstellung der Live-Show als Video-on-Demand (inklusive Chat-Aufzeichnung und Produkten).'
+          tooltip: 'Customization to your brand guidelines'
         },
         {
-          text: 'Kalenderintegration (Add-to-Calendar)',
-          tooltip: 'Anzeige einer Add-To-Calendar Funktion auf dem Cover Screen.'
-        },
-        {
-          text: 'Pre-Live Countdown',
-          tooltip: 'Anzeige eines Live Countdowns auf dem Cover Screen.'
-        },
-        {
-          text: 'Broadcasting-App',
-          tooltip: 'Broadcasting als Web-App für direktes Streaming von Geräten.'
-        },
-        {
-          text: 'Hybrid-Streaming (RTMP/externe Apps)',
-          tooltip: 'Fortgeschrittenes Streaming mit externen Kameras und Apps über RTMP durch die Bereitstellung eines Streaming-Keys und einer Streaming-URL pro Show.'
-        },
-        {
-          text: 'Host-Funktion für Live Shopping',
-          tooltip: 'Zuweisung von Shows an dedizierte Hosts, die diese live streamen und während der Live-Shopping-Shows mit dem Publikum interagieren können.'
-        },
-        {
-          text: 'Upload voraufgezeichneter Shows',
-          tooltip: 'Hochladen und Abspielen vorab aufgezeichneter Shows (max. 3 GB).'
-        },
-        {
-          text: 'Show-Download',
-          tooltip: 'Bereitstellung der Live aufgezeichneten Shows als mp4 zur Weiterverarbeitung außerhalb der Plattform.'
-        },
-        {
-          text: 'Live-Chat & Moderation',
-          tooltip: 'Verwaltung und Moderation von Live-Chats und Produktdarstellung während der Übertragungen inklusive After-Chat-Editierung.'
-        },
-        {
-          text: 'Produkt-Highlighting & Timestamps',
-          tooltip: 'Highlighten von Produkten während Live Shows mit automatischer Speicherung der Timestamps.'
-        },
-        {
-          text: 'Social Media Multistreaming',
-          tooltip: 'Möglichkeit, Live-Shows gleichzeitig auf Social-Media-Plattformen zu streamen (1 Kanal).'
-        },
-        {
-          text: 'Floating Action Video Widget',
-          tooltip: 'Widget zur Anzeige der aktuellen Live-Übertragung auf jeder Seite der Website. Das Widget zeigt automatisch eine Videovorschau der Show als Miniplayer an.'
-        },
-        {
-          text: 'Basis-Support (Ticketsystem)',
-          tooltip: 'Technischer Support, der im Abonnement enthalten ist über das Ticket System.'
+          text: 'Basic Support (Ticket System)',
+          tooltip: 'Technical support via our ticket system'
         }
       ]
     },
     {
       id: 'advanced',
       name: 'Advanced',
-      description: 'Die komplette Video-Commerce Lösung',
-      subtitle: 'Vollständige Lösung',
+      description: 'The complete video commerce solution for professional applications',
+      subtitle: 'Complete Solution',
       monthlyPrice: 1195,
       popular: true,
       color: 'primary' as const,
       isStarterOption: false,
-      hasStarterPlus: true,
-      starterPlusText: 'Starter+',
       features: [
         {
-          text: 'Vollständiges Video Commerce Paket (Live Shopping & Clips)',
-          tooltip: 'Freischaltung aller Video Commerce Module (Live Shopping & Clips).'
+          text: 'Complete Video Commerce Package',
+          tooltip: 'All modules: Live Shopping AND Clips included'
         },
         {
-          text: '2.500 inklusive Aufrufe/Monat¹',
-          tooltip: 'Jedes Modell enthält ein kostenloses Viewer-Kontingent pro Monat. Ein Viewer wird gezählt, sobald ein (Live-)Video oder Clip länger als 5 Sekunden angesehen wird.'
-        }
-      ],
-      detailedFeatures: [
-        {
-          text: 'Erweiterter API-Zugriff',
-          tooltip: 'Zugang zu allen API-Funktionen, um die Plattform nahtlos in andere Systeme und Anwendungen zu integrieren.'
+          text: '2,500 included views/month¹',
+          tooltip: 'Extended viewer capacity for higher reach'
         },
         {
-          text: 'Integration von Produktdetailseiten (PDS)',
-          tooltip: 'Automatisierte Integration von Produkthighlights als Video Snippet auf Produktdetailseiten (PDS).'
+          text: 'Advanced API Integration',
+          tooltip: 'Full access to all API functions for seamless system integration'
+        },
+        {
+          text: 'Product Detail Page Integration',
+          tooltip: 'Automatic video snippets on product pages'
         },
         {
           text: 'Custom Embed Codes',
-          tooltip: 'Individuelle Einbettungs-Codes für spezielle Anforderungen.'
+          tooltip: 'Individual embedding codes for special requirements'
         },
         {
-          text: 'Detaillierte Reports',
-          tooltip: 'Dashboard zur Analyse von Key Performance Indicators (KPIs) der Live Shopping Shows und Clips.'
+          text: 'Detailed Analytics & Reports',
+          tooltip: 'Comprehensive dashboard with KPI analysis for shows and clips'
+        },
+        {
+          text: 'Priority Support',
+          tooltip: 'Preferred technical support with shorter response times'
         }
       ]
     },
     {
       id: 'enterprise',
       name: 'Enterprise',
-      description: 'Maßgeschneiderte Unternehmenslösung',
-      subtitle: 'Enterprise Lösung',
+      description: 'Custom enterprise solution with AI and unlimited possibilities',
+      subtitle: 'Enterprise Solution',
       monthlyPrice: null,
       popular: false,
       color: 'secondary' as const,
       isStarterOption: false,
-      hasAdvancedPlus: true,
-      advancedPlusText: 'Advanced+',
       features: [
         {
-          text: 'KI-Bot Integration',
-          tooltip: 'KI-basierter Bot für Moderation und als Shopping-Assistent. Initiale Integration mindestens einer Datenquelle erforderlich.'
+          text: 'AI Bot Integration & Shopping Assistant',
+          tooltip: 'AI-based bot for moderation and personalized shopping support'
         },
         {
-          text: 'Unbegrenzte Aufrufe',
-          tooltip: 'Unbegrenztes Viewer-Kontingent.'
+          text: 'Unlimited Views & Accounts',
+          tooltip: 'No limits on viewers or user count'
         },
         {
-          text: 'Multi-Company-Funktionen',
-          tooltip: 'Nutzung für mehrere Unternehmen/Märkte.'
+          text: 'Multi-Company Management',
+          tooltip: 'Manage multiple companies and markets in one platform'
         },
         {
-          text: 'Unbegrenzte Accounts',
-          tooltip: 'Unbegrenzte Anzahl an Benutzern pro Lizenz.'
+          text: 'Personal Success Manager',
+          tooltip: 'Dedicated expert for onboarding and continuous optimization'
         },
         {
-          text: 'Enterprise Support',
-          tooltip: 'Premium-Support rund um die Uhr.'
+          text: '24/7 Enterprise Support',
+          tooltip: 'Premium support around the clock with guaranteed response times'
         },
         {
-          text: 'Persönlicher Success Manager',
-          tooltip: 'Experte für Onboarding und kontinuierliche Optimierung, regelmäßiger Check-in.'
-        }
-      ],
-      detailedFeatures: [
+          text: 'Individual Development & Training',
+          tooltip: 'Custom features and comprehensive team training'
+        },
         {
-          text: 'Individuelle Trainings',
-          tooltip: 'Maßgeschneiderte Trainings für Teams und Nutzer.'
+          text: 'White-Label Solutions',
+          tooltip: 'Complete customization to your brand and corporate identity'
         }
       ]
     }
@@ -248,7 +179,7 @@ const Plans = () => {
 
   const formatPrice = (price: number | null) => {
     if (price === null) return 'Custom';
-    return `${price.toLocaleString('de-DE')}€`;
+    return `${price.toLocaleString('en-US')}€`;
   };
 
   const getCardStyles = (plan: typeof plans[0]) => {
@@ -286,10 +217,6 @@ const Plans = () => {
     }
 
     return baseStyles;
-  };
-
-  const toggleDetails = () => {
-    setExpandedDetails(!expandedDetails);
   };
 
   const renderFeatureWithTooltip = (feature: { text: string; tooltip?: string }, index: number, plan: typeof plans[0]) => (
@@ -379,7 +306,7 @@ const Plans = () => {
               lineHeight: 1.1
             }}
           >
-            Preise & Pakete
+            Pricing & Packages
           </Typography>
           <Typography 
             variant="h5" 
@@ -393,7 +320,7 @@ const Plans = () => {
               fontSize: { xs: '1.1rem', md: '1.25rem' }
             }}
           >
-            Wählen Sie das perfekte Paket für Ihre Video-Commerce Strategie
+            Choose the perfect package for your video commerce strategy
           </Typography>
           <Typography 
             variant="body1" 
@@ -404,7 +331,7 @@ const Plans = () => {
               fontSize: '1rem'
             }}
           >
-            Alle Pakete beinhalten kostenlose Updates
+            All packages include free updates
           </Typography>
         </Box>
 
@@ -414,11 +341,10 @@ const Plans = () => {
             display: 'grid',
             gridTemplateColumns: { 
               xs: '1fr', 
-              sm: 'repeat(2, 1fr)', 
-              lg: 'repeat(4, 1fr)' 
+              md: 'repeat(3, 1fr)' 
             },
             gap: { xs: 3, md: 4 },
-            maxWidth: '1400px',
+            maxWidth: '1200px',
             mx: 'auto',
             alignItems: 'stretch'
           }}>
@@ -444,7 +370,7 @@ const Plans = () => {
                           borderRadius: 2
                         }}
                       >
-                        Beliebteste Wahl
+                        Most Popular Choice
                       </Box>
                     )}
 
@@ -470,7 +396,7 @@ const Plans = () => {
                           mb: 2,
                           color: '#1a1d21',
                           letterSpacing: '-0.015em',
-                          fontSize: { xs: '1.25rem', md: '1.5rem' }
+                          fontSize: { xs: '1.5rem', md: '1.75rem' }
                         }}>
                           {plan.name}
                         </Typography>
@@ -479,7 +405,7 @@ const Plans = () => {
                           mb: 4,
                           lineHeight: 1.6,
                           fontSize: '0.95rem',
-                          minHeight: { xs: 'auto', md: '48px' },
+                          minHeight: { xs: 'auto', md: '60px' },
                           display: 'flex',
                           alignItems: 'center',
                           textAlign: 'center'
@@ -487,173 +413,157 @@ const Plans = () => {
                           {plan.description}
                         </Typography>
 
-                        {/* Price */}
+                        {/* Pricing */}
                         <Box sx={{ mb: 4 }}>
-                          <Stack direction="row" alignItems="baseline" justifyContent="center" spacing={0.5}>
-                            <Typography variant="h3" sx={{
+                          <Typography 
+                            variant="h3" 
+                            sx={{ 
                               fontWeight: 800,
                               color: plan.popular ? '#43BEAC' : '#1a1d21',
+                              fontSize: { xs: '2.25rem', md: '2.75rem' },
                               lineHeight: 1,
-                              letterSpacing: '-0.025em',
-                              fontSize: { xs: '2.5rem', md: '3rem' }
-                            }}>
-                              {formatPrice(plan.monthlyPrice)}
-                            </Typography>
-                            {plan.monthlyPrice !== null && (
-                              <Typography variant="body1" sx={{ 
-                                color: '#64748b',
-                                fontWeight: 500,
-                                fontSize: '1rem'
-                              }}>
-                                /Monat
-                              </Typography>
-                            )}
-                          </Stack>
-                          {/* VAT Notice */}
-                          {plan.monthlyPrice !== null && (
-                            <Typography variant="body2" sx={{ 
-                              color: '#94a3b8',
-                              fontSize: '0.75rem',
-                              mt: 1
-                            }}>
-                              zzgl. der gesetzlichen Mehrwertsteuer
+                              mb: 0.5
+                            }}
+                          >
+                            {formatPrice(plan.monthlyPrice)}
+                          </Typography>
+                          {plan.monthlyPrice && (
+                            <Typography variant="body2" sx={{ color: '#64748b', fontSize: '0.9rem' }}>
+                              per month
                             </Typography>
                           )}
                         </Box>
                       </Box>
 
-                      {/* Features */}
-                      <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-                        {/* Plus Headline for Advanced and Enterprise plans - without background */}
-                        {(plan.hasStarterPlus || plan.hasAdvancedPlus) && (
-                          <Box sx={{ mb: 3, textAlign: 'center', minHeight: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <Typography variant="h6" sx={{ 
-                              fontWeight: 800,
-                              color: '#43BEAC',
-                              fontSize: '1.25rem'
-                            }}>
-                              {plan.hasStarterPlus ? plan.starterPlusText : plan.advancedPlusText}
-                            </Typography>
-                          </Box>
-                        )}
-                        
-                        {/* Empty box for starter plans to maintain alignment */}
-                        {!plan.hasStarterPlus && !plan.hasAdvancedPlus && (
-                          <Box sx={{ mb: 3, minHeight: '60px' }} />
-                        )}
-                        
-                        <Box sx={{ minHeight: { xs: 'auto', md: '400px' } }}>
-                          <Stack spacing={3}>
-                            {plan.features.map((feature, index) => 
-                              renderFeatureWithTooltip(feature, index, plan)
+                      {/* Starter Module Selection */}
+                      {plan.isStarterOption && (
+                        <Box sx={{ mb: 4 }}>
+                          <Typography variant="subtitle2" sx={{ 
+                            fontWeight: 700,
+                            color: '#1a1d21',
+                            mb: 2,
+                            textAlign: 'center'
+                          }}>
+                            Choose your module:
+                          </Typography>
+                          <RadioGroup
+                            value={starterModule}
+                            onChange={(e) => setStarterModule(e.target.value as 'clips' | 'live-shopping')}
+                            sx={{ 
+                              '& .MuiFormControlLabel-root': {
+                                mx: 0,
+                                mb: 1
+                              }
+                            }}
+                          >
+                            <FormControlLabel
+                              value="clips"
+                              control={<Radio sx={{ color: '#43BEAC', '&.Mui-checked': { color: '#43BEAC' } }} />}
+                              label={
+                                <Box>
+                                  <Typography variant="subtitle2" sx={{ fontWeight: 600, color: '#1a1d21' }}>
+                                    {starterModules.clips.name}
+                                  </Typography>
+                                  <Typography variant="body2" sx={{ color: '#64748b', fontSize: '0.85rem' }}>
+                                    {starterModules.clips.description}
+                                  </Typography>
+                                </Box>
+                              }
+                            />
+                            <FormControlLabel
+                              value="live-shopping"
+                              control={<Radio sx={{ color: '#43BEAC', '&.Mui-checked': { color: '#43BEAC' } }} />}
+                              label={
+                                <Box>
+                                  <Typography variant="subtitle2" sx={{ fontWeight: 600, color: '#1a1d21' }}>
+                                    {starterModules['live-shopping'].name}
+                                  </Typography>
+                                  <Typography variant="body2" sx={{ color: '#64748b', fontSize: '0.85rem' }}>
+                                    {starterModules['live-shopping'].description}
+                                  </Typography>
+                                </Box>
+                              }
+                            />
+                          </RadioGroup>
+                          <Divider sx={{ my: 3 }} />
+                        </Box>
+                      )}
+
+                      {/* Core Features for Starter */}
+                      {plan.isStarterOption && plan.coreFeatures && (
+                        <Box sx={{ mb: 3 }}>
+                          <Typography variant="subtitle2" sx={{ 
+                            fontWeight: 700,
+                            color: '#1a1d21',
+                            mb: 2
+                          }}>
+                            Core features (in both modules):
+                          </Typography>
+                          <Stack spacing={2}>
+                            {plan.coreFeatures.map((feature, idx) => 
+                              renderFeatureWithTooltip(feature, idx, plan)
+                            )}
+                          </Stack>
+                          <Divider sx={{ my: 3 }} />
+                          <Typography variant="subtitle2" sx={{ 
+                            fontWeight: 700,
+                            color: '#1a1d21',
+                            mb: 2
+                          }}>
+                            {starterModules[starterModule].name} features:
+                          </Typography>
+                          <Stack spacing={2}>
+                            {starterModules[starterModule].features.map((feature, idx) => 
+                              renderFeatureWithTooltip(feature, idx, plan)
                             )}
                           </Stack>
                         </Box>
+                      )}
 
-                        {/* Detailed Features Collapse */}
-                        <Collapse in={expandedDetails}>
-                          <Box sx={{ mt: 4, pt: 4, borderTop: '1px solid #e2e8f0' }}>
-                            <Typography variant="subtitle2" sx={{ 
-                              fontWeight: 700, 
-                              mb: 3, 
-                              color: '#43BEAC',
-                              fontSize: '0.875rem',
-                              textTransform: 'uppercase',
-                              letterSpacing: 1
-                            }}>
-                              Zusätzliche Features:
-                            </Typography>
-                            <Box sx={{ minHeight: { xs: 'auto', md: '300px' } }}>
-                              <Stack spacing={2}>
-                                {plan.detailedFeatures?.map((feature, index) => (
-                                  <Stack key={index} direction="row" alignItems="flex-start" spacing={1.5}>
-                                    <Box sx={{
-                                      width: 14,
-                                      height: 14,
-                                      backgroundColor: '#43BEAC',
-                                      borderRadius: '50%',
-                                      flexShrink: 0,
-                                      mt: 0.25
-                                    }} />
-                                    <Stack direction="row" alignItems="flex-start" spacing={1} sx={{ flexGrow: 1 }}>
-                                      <Typography variant="body2" sx={{ 
-                                        color: '#64748b', 
-                                        fontSize: '0.875rem',
-                                        lineHeight: 1.4,
-                                        flexGrow: 1
-                                      }}>
-                                        {feature.text}
-                                      </Typography>
-                                      {feature.tooltip && (
-                                        <Tooltip 
-                                          title={feature.tooltip}
-                                          placement="top"
-                                          arrow
-                                          sx={{
-                                            '& .MuiTooltip-tooltip': {
-                                              backgroundColor: '#1a1d21',
-                                              color: '#ffffff',
-                                              fontSize: '0.875rem',
-                                              maxWidth: '300px',
-                                              padding: '12px',
-                                              borderRadius: '8px',
-                                              lineHeight: 1.4
-                                            },
-                                            '& .MuiTooltip-arrow': {
-                                              color: '#1a1d21'
-                                            }
-                                          }}
-                                        >
-                                          <InfoOutlined sx={{ 
-                                            color: '#64748b', 
-                                            fontSize: '14px',
-                                            cursor: 'help',
-                                            flexShrink: 0,
-                                            mt: 0.125,
-                                            '&:hover': {
-                                              color: '#43BEAC'
-                                            }
-                                          }} />
-                                        </Tooltip>
-                                      )}
-                                    </Stack>
-                                  </Stack>
-                                ))}
-                              </Stack>
-                            </Box>
-                          </Box>
-                        </Collapse>
-                      </Box>
+                      {/* Regular Features for Advanced/Enterprise */}
+                      {!plan.isStarterOption && plan.features && (
+                        <Stack spacing={2.5} sx={{ flexGrow: 1, mb: 4 }}>
+                          {plan.features.map((feature, idx) => 
+                            renderFeatureWithTooltip(feature, idx, plan)
+                          )}
+                        </Stack>
+                      )}
                     </CardContent>
 
+                    {/* CTA Button */}
                     <CardActions sx={{ p: { xs: 3, md: 4 }, pt: 0 }}>
                       <Button
-                        variant="contained"
+                        variant={plan.popular ? "contained" : "outlined"}
                         fullWidth
                         size="large"
-                        data-track-id={`pricing-${plan.id}-click`}
                         sx={{
-                          py: 2,
-                          backgroundColor: plan.popular ? '#43BEAC' : '#1e293b',
-                          color: '#ffffff',
-                          '&:hover': {
-                            backgroundColor: plan.popular ? '#369991' : '#0f172a',
-                            transform: 'translateY(-2px)',
-                            boxShadow: plan.popular 
-                              ? '0 12px 32px rgba(67, 190, 172, 0.4)' 
-                              : '0 12px 32px rgba(30, 41, 59, 0.4)'
-                          },
+                          py: 1.5,
                           fontWeight: 700,
+                          fontSize: '1rem',
                           textTransform: 'none',
-                          fontSize: '1.05rem',
-                          borderRadius: 3,
-                          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                          boxShadow: plan.popular 
-                            ? '0 4px 16px rgba(67, 190, 172, 0.2)' 
-                            : '0 4px 16px rgba(30, 41, 59, 0.1)'
+                          borderRadius: 2,
+                          ...(plan.popular ? {
+                            backgroundColor: '#43BEAC',
+                            '&:hover': {
+                              backgroundColor: '#059669',
+                              transform: 'translateY(-2px)',
+                              boxShadow: '0 8px 25px rgba(67, 190, 172, 0.3)'
+                            }
+                          } : {
+                            borderColor: '#43BEAC',
+                            color: '#43BEAC',
+                            '&:hover': {
+                              backgroundColor: '#43BEAC',
+                              color: '#ffffff',
+                              borderColor: '#43BEAC',
+                              transform: 'translateY(-2px)',
+                              boxShadow: '0 8px 25px rgba(67, 190, 172, 0.2)'
+                            }
+                          }),
+                          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
                         }}
                       >
-                        {plan.id === 'enterprise' ? 'Beratung vereinbaren' : 'Paket wählen'}
+                        {plan.monthlyPrice ? 'Start Now' : 'Contact Us'}
                       </Button>
                     </CardActions>
                   </Card>
@@ -661,34 +571,6 @@ const Plans = () => {
               </Box>
             ))}
           </Box>
-        </Box>
-
-        {/* Global Details Toggle - prominenter gestaltet */}
-        <Box sx={{ textAlign: 'center', mb: { xs: 8, md: 12 } }}>
-          <Button
-            variant="contained"
-            onClick={toggleDetails}
-            endIcon={expandedDetails ? <ExpandLess /> : <ExpandMore />}
-            sx={{
-              backgroundColor: '#43BEAC',
-              color: '#ffffff',
-              textTransform: 'none',
-              fontWeight: 700,
-              fontSize: '1.5rem',
-              py: 4,
-              px: 12,
-              borderRadius: 6,
-              boxShadow: '0 12px 32px rgba(67, 190, 172, 0.4)',
-              transition: 'all 0.3s ease',
-              '&:hover': {
-                backgroundColor: '#369991',
-                transform: 'translateY(-4px)',
-                boxShadow: '0 20px 50px rgba(67, 190, 172, 0.5)'
-              }
-            }}
-          >
-            {expandedDetails ? 'Details ausblenden' : 'Alle Details anzeigen'}
-          </Button>
         </Box>
 
         {/* Additional Information Section */}
@@ -708,7 +590,7 @@ const Plans = () => {
             textAlign: 'center',
             fontSize: { xs: '1.75rem', md: '2.25rem' }
           }}>
-            Zusätzliche Informationen
+            Additional Information
           </Typography>
           
           <Stack spacing={4}>
@@ -719,7 +601,7 @@ const Plans = () => {
                 fontSize: '1.05rem',
                 fontWeight: 500
               }}>
-                Alle Preise verstehen sich zzgl. der gesetzlichen Mehrwertsteuer.
+                All prices are subject to applicable VAT.
               </Typography>
             </Box>
             
@@ -734,7 +616,7 @@ const Plans = () => {
                 lineHeight: 1.6,
                 fontSize: '0.95rem'
               }}>
-                <sup>1</sup> Kostenlose Aufrufe pro Monat im jeweiligen Plan inkludiert. Zusätzliche Views werden zu 0,15 € pro Viewer berechnet und automatisch über die hinterlegte Zahlungsmethode gemäß Verbrauch abgebucht.
+                <sup>1</sup> Free views per month included in the respective plan. Additional views are charged at €0.15 per viewer and automatically debited via the stored payment method according to usage.
               </Typography>
             </Box>
             
@@ -745,7 +627,7 @@ const Plans = () => {
                 fontWeight: 600,
                 fontSize: '1rem'
               }}>
-                Individuelle Lösungen und maßgeschneiderte Pakete auf Anfrage verfügbar.
+                Individual solutions and custom packages available upon request.
               </Typography>
             </Box>
           </Stack>
