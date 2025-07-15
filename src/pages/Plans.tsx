@@ -143,9 +143,9 @@ const Plans = () => {
       isStarterOption: true,
       coreFeatures: [
         {
-          text: '1.000 inklusive Aufrufe/Monat¹',
+          text: '1.000 inklusive Views/Monat¹',
           textEN: '1,000 included views/month¹',
-          tooltip: 'Ein Aufruf wird gezählt, wenn ein Video/Stream länger als 5 Sekunden angeschaut wird',
+          tooltip: 'Ein View wird gezählt, wenn ein Video/Stream länger als 5 Sekunden angeschaut wird',
           tooltipEN: 'A view is counted when a video/stream is watched for more than 5 seconds'
         },
         {
@@ -189,8 +189,8 @@ const Plans = () => {
     {
       id: 'advanced',
       name: 'Advanced',
-      description: 'Die komplette Video-Commerce Lösung',
-      descriptionEN: 'The complete video commerce solution',
+      description: 'Alle Starter Features + die komplette Video-Commerce Lösung',
+      descriptionEN: 'All Starter Features + the complete video commerce solution',
       subtitle: 'Für Teams',
       subtitleEN: 'For Teams',
       monthlyPrice: 1195,
@@ -205,7 +205,7 @@ const Plans = () => {
           tooltipEN: 'Both modules: Live Shopping and Clips included'
         },
         {
-          text: '2.500 inklusive Aufrufe/Monat¹',
+          text: '2.500 inklusive Views/Monat¹',
           textEN: '2,500 included views/month¹',
           tooltip: 'Erweiterte Viewer-Kapazität für höhere Reichweite',
           tooltipEN: 'Extended viewer capacity for higher reach'
@@ -233,8 +233,8 @@ const Plans = () => {
     {
       id: 'enterprise',
       name: 'Enterprise',
-      description: 'Maßgeschneiderte Unternehmenslösung',
-      descriptionEN: 'Tailored enterprise solution',
+      description: 'Alle Advanced Features + maßgeschneiderte Unternehmenslösung',
+      descriptionEN: 'All Advanced Features + tailored enterprise solution',
       subtitle: 'Für Konzerne',
       subtitleEN: 'For Enterprises',
       monthlyPrice: null,
@@ -462,7 +462,7 @@ const Plans = () => {
             gap: { xs: 3, md: 4 },
             maxWidth: '1200px',
             mx: 'auto',
-            alignItems: 'start' // This ensures consistent starting points
+            alignItems: 'start'
           }}>
             {plans.map((plan, index) => (
               <Box key={plan.id} sx={{ display: 'flex' }}>
@@ -470,7 +470,7 @@ const Plans = () => {
                   <Card sx={{
                     ...getCardStyles(plan),
                     display: 'grid',
-                    gridTemplateRows: 'auto auto auto 1fr auto', // Fixed structure for all cards
+                    gridTemplateRows: 'auto auto auto 1fr auto',
                     width: '100%'
                   }}>
                     {plan.popular && (
@@ -495,7 +495,7 @@ const Plans = () => {
                       </Box>
                     )}
 
-                    {/* 1. Plan Header - Fixed Height Section */}
+                    {/* Plan Header */}
                     <Box sx={{ 
                       textAlign: 'center',
                       p: { xs: 3, md: 4 },
@@ -528,7 +528,8 @@ const Plans = () => {
                         color: '#64748b',
                         mb: 4,
                         lineHeight: 1.6,
-                        fontSize: '0.95rem'
+                        fontSize: plan.isStarterOption ? '0.95rem' : '1.05rem',
+                        fontWeight: plan.isStarterOption ? 400 : 600
                       }}>
                         {language === 'de' ? plan.description : plan.descriptionEN}
                       </Typography>
@@ -553,11 +554,11 @@ const Plans = () => {
                       )}
                     </Box>
 
-                    {/* 2. Module Selection / Previous Tier Info - Fixed Height Section */}
+                    {/* Module Selection / Previous Tier Info */}
                     <Box sx={{ 
                       px: { xs: 3, md: 4 },
                       pb: 2,
-                      minHeight: '140px', // Fixed height to align horizontally
+                      minHeight: '140px',
                       display: 'flex',
                       flexDirection: 'column',
                       justifyContent: 'flex-start'
@@ -634,10 +635,10 @@ const Plans = () => {
                       )}
                     </Box>
 
-                    {/* 3. Divider */}
+                    {/* Divider */}
                     <Divider sx={{ mx: { xs: 3, md: 4 } }} />
 
-                    {/* 4. Features Section - Flexible Height that grows */}
+                    {/* Features Section */}
                     <CardContent sx={{ 
                       p: { xs: 3, md: 4 }, 
                       pt: 3,
@@ -714,7 +715,7 @@ const Plans = () => {
                       )}
                     </CardContent>
 
-                    {/* 5. CTA Button - Fixed at Bottom */}
+                    {/* CTA Button */}
                     <CardActions sx={{ p: { xs: 3, md: 4 }, pt: 0 }}>
                       <Button
                         variant={plan.popular ? "contained" : "outlined"}
@@ -764,68 +765,52 @@ const Plans = () => {
         <Box sx={{ 
           maxWidth: '1000px', 
           mx: 'auto',
-          backgroundColor: '#ffffff',
-          borderRadius: 4,
-          p: { xs: 4, md: 8 },
-          boxShadow: '0 4px 24px rgba(0,0,0,0.06)',
-          border: '1px solid rgba(226, 232, 240, 0.8)'
+          textAlign: 'center'
         }}>
           <Typography variant="h4" sx={{ 
             fontWeight: 700, 
             mb: 6, 
             color: '#1a1d21',
-            textAlign: 'center',
             fontSize: { xs: '1.75rem', md: '2.25rem' }
           }}>
             {language === 'de' ? 'Zusätzliche Informationen' : 'Additional Information'}
           </Typography>
           
-          <Stack spacing={4}>
-            <Box>
-              <Typography variant="body1" sx={{ 
-                color: '#334155', 
-                lineHeight: 1.7,
-                fontSize: '1.05rem',
-                fontWeight: 500
-              }}>
-                {language === 'de' 
-                  ? 'Alle Preise verstehen sich zzgl. der gesetzlichen Mehrwertsteuer.'
-                  : 'All prices are subject to applicable VAT.'
-                }
-              </Typography>
-            </Box>
-            
-            <Box sx={{ 
-              backgroundColor: '#f8fafc', 
-              p: 4, 
-              borderRadius: 3,
-              border: '1px solid #e2e8f0'
+          <Stack spacing={3} sx={{ maxWidth: '800px', mx: 'auto' }}>
+            <Typography variant="body1" sx={{ 
+              color: '#334155', 
+              lineHeight: 1.7,
+              fontSize: '1.05rem',
+              fontWeight: 500
             }}>
-              <Typography variant="body2" sx={{ 
-                color: '#64748b', 
-                lineHeight: 1.6,
-                fontSize: '0.95rem'
-              }}>
-                <sup>1</sup> {language === 'de' 
-                  ? 'Kostenlose Aufrufe pro Monat im jeweiligen Plan enthalten. Zusätzliche Aufrufe werden mit 0,15€ pro Aufruf berechnet und automatisch über die hinterlegte Zahlungsmethode nutzungsbasiert abgerechnet.'
-                  : 'Free views per month included in the respective plan. Additional views are charged at €0.15 per view and automatically debited via the stored payment method according to usage.'
-                }
-              </Typography>
-            </Box>
+              {language === 'de' 
+                ? 'Alle Preise verstehen sich zzgl. der gesetzlichen Mehrwertsteuer.'
+                : 'All prices are subject to applicable VAT.'
+              }
+            </Typography>
             
-            <Box sx={{ pt: 4, borderTop: '1px solid #e2e8f0' }}>
-              <Typography variant="body1" sx={{ 
-                color: '#43BEAC', 
-                textAlign: 'center',
-                fontWeight: 600,
-                fontSize: '1rem'
-              }}>
-                {language === 'de' 
-                  ? 'Individuelle Lösungen und maßgeschneiderte Pakete auf Anfrage verfügbar.'
-                  : 'Individual solutions and custom packages available upon request.'
-                }
-              </Typography>
-            </Box>
+            <Typography variant="body1" sx={{ 
+              color: '#64748b', 
+              lineHeight: 1.6,
+              fontSize: '0.95rem'
+            }}>
+              <sup>1</sup> {language === 'de' 
+                ? 'Kostenlose Views pro Monat im jeweiligen Plan enthalten. Zusätzliche Views werden mit 0,10€ pro View berechnet und automatisch über die hinterlegte Zahlungsmethode nutzungsbasiert abgerechnet.'
+                : 'Free views per month included in the respective plan. Additional views are charged at €0.10 per view and automatically debited via the stored payment method according to usage.'
+              }
+            </Typography>
+            
+            <Typography variant="body1" sx={{ 
+              color: '#43BEAC', 
+              fontWeight: 600,
+              fontSize: '1rem',
+              mt: 2
+            }}>
+              {language === 'de' 
+                ? 'Individuelle Lösungen und maßgeschneiderte Pakete auf Anfrage verfügbar.'
+                : 'Individual solutions and custom packages available upon request.'
+              }
+            </Typography>
           </Stack>
         </Box>
       </Container>
