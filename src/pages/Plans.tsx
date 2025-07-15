@@ -61,7 +61,8 @@ const Plans = () => {
           gap: 4,
           maxWidth: '1400px',
           mx: 'auto',
-          mb: 8
+          mb: 8,
+          alignItems: 'stretch'
         }}>
           {plans.map((plan) => (
             <PlanCard

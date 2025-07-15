@@ -119,12 +119,7 @@ export const plans: Plan[] = [
     monthlyPrice: 1195,
     popular: true,
     isStarterOption: false,
-    baseFeatures,
     exclusiveFeatures: [
-      {
-        text: 'Vollständiges Video Commerce Paket (Live Shopping & Clips)',
-        textEN: 'Complete Video Commerce Package (Live Shopping & Clips)'
-      },
       {
         text: 'Erweiterter API-Zugriff',
         textEN: 'Extended API Access'
@@ -136,6 +131,10 @@ export const plans: Plan[] = [
       {
         text: 'Advanced Analytics mit Export-Funktion',
         textEN: 'Advanced Analytics with Export Function'
+      },
+      {
+        text: 'Premium Support (E-Mail & Chat)',
+        textEN: 'Premium Support (Email & Chat)'
       }
     ]
   },
@@ -149,7 +148,6 @@ export const plans: Plan[] = [
     monthlyPrice: null,
     popular: false,
     isStarterOption: false,
-    baseFeatures,
     exclusiveFeatures: [
       {
         text: 'KI-Bot Integration',

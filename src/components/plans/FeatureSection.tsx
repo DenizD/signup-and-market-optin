@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Box, Typography, Button, Stack, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
+import { Box, Typography, Button, Stack } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 
@@ -31,21 +31,21 @@ export const FeatureSection: React.FC<FeatureSectionProps> = ({
 
   return (
     <Box>
-      <Stack spacing={2}>
+      <Stack spacing={1.5}>
         {displayFeatures.map((feature, index) => (
           <Stack key={index} direction="row" alignItems="flex-start" spacing={1.5}>
             <Box sx={{
-              width: 20,
-              height: 20,
+              width: 16,
+              height: 16,
               borderRadius: '50%',
-              bgcolor: 'primary.50',
+              bgcolor: '#43BEAC',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               flexShrink: 0,
-              mt: 0.125
+              mt: 0.25
             }}>
-              <FontAwesomeIcon icon={faCheck} size="xs" color="#43BEAC" />
+              <FontAwesomeIcon icon={faCheck} size="2xs" color="white" />
             </Box>
             <Typography variant="body2" sx={{ 
               color: 'text.primary',

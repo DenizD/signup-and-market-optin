@@ -22,12 +22,11 @@ export const PlanCard: React.FC<PlanCardProps> = ({
   };
 
   return (
-    <Box sx={{ position: 'relative', display: 'flex' }}>
+    <Box sx={{ position: 'relative', height: '100%' }}>
       <Card sx={{
-        width: '100%',
-        display: 'grid',
-        gridTemplateRows: '220px 140px auto 1fr 80px',
-        minHeight: '800px',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
         transition: 'all 0.3s ease',
         '&:hover': {
           boxShadow: 4,
@@ -55,7 +54,7 @@ export const PlanCard: React.FC<PlanCardProps> = ({
           />
         )}
 
-        {/* Block 1: Header-Bereich (220px) */}
+        {/* Header */}
         <CardContent sx={{ p: 3, textAlign: 'center', borderBottom: '1px solid', borderColor: 'divider' }}>
           <Typography variant="caption" sx={{ 
             fontWeight: 600, 
@@ -83,59 +82,63 @@ export const PlanCard: React.FC<PlanCardProps> = ({
           )}
         </CardContent>
 
-        {/* Block 2: Modul/Info-Bereich (140px) */}
-        <CardContent sx={{ 
-          p: 3, 
-          borderBottom: '1px solid', 
-          borderColor: 'divider',
-          bgcolor: 'grey.50',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}>
-          {plan.isStarterOption ? (
+        {/* Module Selector oder Info */}
+        {plan.isStarterOption ? (
+          <CardContent sx={{ 
+            p: 3, 
+            borderBottom: '1px solid', 
+            borderColor: 'divider',
+            bgcolor: 'grey.50'
+          }}>
             <ModuleSelector
               selectedModule={starterModule}
               onModuleChange={onModuleChange}
               language={language}
             />
-          ) : (
-            <Box sx={{ textAlign: 'center' }}>
-              <Typography variant="body1" color="primary" sx={{ fontWeight: 600, mb: 0.5 }}>
-                {plan.id === 'advanced' 
-                  ? (language === 'de' ? 'Beinhaltet alle Starter-Features (Clips + Live Shopping) sowie:' : 'Includes all Starter features (Clips + Live Shopping) plus:')
-                  : (language === 'de' ? 'Beinhaltet alle Advanced-Features sowie individuell anpassbare Leistungen:' : 'Includes all Advanced features plus individually customizable services:')
-                }
-              </Typography>
-              <Typography variant="caption" color="text.secondary">
-                {plan.monthlyPrice && `${plan.monthlyPrice === 1195 ? '2.500' : '1.000'} ${language === 'de' ? 'Aufrufe/Monat inkl.' : 'views/month incl.'}`}
-              </Typography>
-            </Box>
-          )}
-        </CardContent>
-
-        {/* Block 3: Basis-Features (auto) */}
-        <CardContent sx={{ p: 3, borderBottom: '1px solid', borderColor: 'divider' }}>
-          <Typography variant="subtitle2" sx={{ 
-            fontWeight: 600, 
-            color: 'text.secondary', 
-            textTransform: 'uppercase', 
-            letterSpacing: 0.5,
-            mb: 2
+          </CardContent>
+        ) : (
+          <CardContent sx={{ 
+            p: 3, 
+            borderBottom: '1px solid', 
+            borderColor: 'divider',
+            bgcolor: 'grey.50',
+            textAlign: 'center'
           }}>
-            {language === 'de' ? 'Basis-Features' : 'Base Features'}
-          </Typography>
-          <FeatureSection
-            features={plan.baseFeatures || []}
-            language={language}
-            showAll={true}
-          />
-        </CardContent>
+            <Typography variant="body1" color="primary" sx={{ fontWeight: 600, mb: 0.5 }}>
+              {plan.id === 'advanced' 
+                ? (language === 'de' ? 'Beinhaltet alle Starter-Features (Clips + Live Shopping) sowie:' : 'Includes all Starter features (Clips + Live Shopping) plus:')
+                : (language === 'de' ? 'Beinhaltet alle Advanced-Features sowie individuell anpassbare Leistungen:' : 'Includes all Advanced features plus individually customizable services:')
+              }
+            </Typography>
+            <Typography variant="caption" color="text.secondary">
+              {plan.monthlyPrice && `${plan.monthlyPrice === 1195 ? '2.500' : '10.000'} ${language === 'de' ? 'Aufrufe/Monat inkl.' : 'views/month incl.'}`}
+            </Typography>
+          </CardContent>
+        )}
 
-        {/* Block 4: Spezielle Features (1fr - flexibel) */}
+        {/* Features */}
         <CardContent sx={{ p: 3, flex: 1 }}>
           {plan.isStarterOption ? (
             <Box>
+              {/* Basis Features für Starter */}
+              <Typography variant="subtitle2" sx={{ 
+                fontWeight: 600, 
+                color: 'text.secondary', 
+                textTransform: 'uppercase', 
+                letterSpacing: 0.5,
+                mb: 2
+              }}>
+                {language === 'de' ? 'Basis-Features' : 'Base Features'}
+              </Typography>
+              <FeatureSection
+                features={plan.baseFeatures || []}
+                language={language}
+                showAll={true}
+              />
+              
+              <Divider sx={{ my: 3 }} />
+              
+              {/* Modul Features für Starter */}
               <Typography variant="subtitle2" sx={{ 
                 fontWeight: 600, 
                 color: 'text.secondary', 
@@ -158,6 +161,7 @@ export const PlanCard: React.FC<PlanCardProps> = ({
             </Box>
           ) : (
             <Box>
+              {/* Nur exklusive Features für Advanced/Enterprise */}
               <Typography variant="subtitle2" sx={{ 
                 fontWeight: 600, 
                 color: 'text.secondary', 
@@ -165,7 +169,7 @@ export const PlanCard: React.FC<PlanCardProps> = ({
                 letterSpacing: 0.5,
                 mb: 2
               }}>
-                {language === 'de' ? 'Exklusive Features' : 'Exclusive Features'}
+                {language === 'de' ? 'Zusätzliche Features' : 'Additional Features'}
               </Typography>
               <FeatureSection
                 features={plan.exclusiveFeatures || []}
@@ -176,11 +180,11 @@ export const PlanCard: React.FC<PlanCardProps> = ({
           )}
         </CardContent>
 
-        {/* Block 5: CTA-Button (80px) */}
+        {/* CTA Button */}
         <CardContent sx={{ p: 3, pt: 2 }}>
           <Button
             variant={isPopular ? "contained" : "outlined"}
-            color={isPopular ? "primary" : "primary"}
+            color="primary"
             fullWidth
             size="large"
             sx={{
