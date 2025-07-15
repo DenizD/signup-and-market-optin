@@ -1,3 +1,4 @@
+
 import { Box, Container, Typography, Button, Card, CardContent, CardActions, Stack, Tooltip, Grow, RadioGroup, FormControlLabel, Radio, Divider } from '@mui/material';
 import { InfoOutlined, ExpandMore, ExpandLess } from '@mui/icons-material';
 import { useState } from 'react';
@@ -289,6 +290,7 @@ const Plans = () => {
   const getCardStyles = (plan: typeof plans[0]) => {
     const baseStyles = {
       height: '100%',
+      minHeight: '800px', // Minimum height for all cards
       display: 'flex',
       flexDirection: 'column',
       position: 'relative',
@@ -461,7 +463,7 @@ const Plans = () => {
             gap: { xs: 3, md: 4 },
             maxWidth: '1200px',
             mx: 'auto',
-            alignItems: 'start'
+            alignItems: 'stretch' // Ensure all cards stretch to same height
           }}>
             {plans.map((plan, index) => (
               <Box key={plan.id}>
@@ -489,9 +491,21 @@ const Plans = () => {
                       </Box>
                     )}
 
-                    <CardContent sx={{ p: { xs: 3, md: 4 }, flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-                      {/* Plan Header */}
-                      <Box sx={{ textAlign: 'center', mb: 4 }}>
+                    <CardContent sx={{ 
+                      p: { xs: 3, md: 4 }, 
+                      flexGrow: 1, 
+                      display: 'flex', 
+                      flexDirection: 'column',
+                      height: '100%'
+                    }}>
+                      {/* Plan Header - Fixed Height Section */}
+                      <Box sx={{ 
+                        textAlign: 'center', 
+                        mb: 4,
+                        minHeight: '200px', // Fixed height for header section
+                        display: 'flex',
+                        flexDirection: 'column'
+                      }}>
                         <Typography 
                           variant="overline" 
                           sx={{ 
@@ -520,7 +534,7 @@ const Plans = () => {
                           mb: 4,
                           lineHeight: 1.6,
                           fontSize: '0.95rem',
-                          minHeight: { xs: 'auto', md: '48px' },
+                          flexGrow: 1,
                           display: 'flex',
                           alignItems: 'center',
                           textAlign: 'center'
@@ -529,7 +543,7 @@ const Plans = () => {
                         </Typography>
 
                         {/* Pricing */}
-                        <Box sx={{ mb: 4 }}>
+                        <Box sx={{ mt: 'auto' }}>
                           <Typography 
                             variant="h3" 
                             sx={{ 
@@ -550,156 +564,167 @@ const Plans = () => {
                         </Box>
                       </Box>
 
-                      {/* Previous Tier Information for Advanced/Enterprise */}
-                      {!plan.isStarterOption && (
-                        <Box sx={{ 
-                          mb: 3, 
-                          p: 2, 
-                          backgroundColor: '#f8fafc', 
-                          borderRadius: 2, 
-                          border: '1px solid #e2e8f0' 
-                        }}>
-                          <Typography variant="subtitle2" sx={{ 
-                            fontWeight: 700,
-                            color: '#43BEAC',
-                            textAlign: 'center',
-                            fontSize: '0.9rem'
+                      {/* Module Selection / Previous Tier Info - Aligned Height Section */}
+                      <Box sx={{ 
+                        mb: 3,
+                        minHeight: '120px', // Fixed height for this section to align horizontally
+                        display: 'flex',
+                        flexDirection: 'column'
+                      }}>
+                        {plan.isStarterOption ? (
+                          <>
+                            <Typography variant="subtitle2" sx={{ 
+                              fontWeight: 700,
+                              color: '#1a1d21',
+                              mb: 2,
+                              textAlign: 'center'
+                            }}>
+                              {language === 'de' ? 'Wählen Sie Ihr Modul:' : 'Choose your module:'}
+                            </Typography>
+                            <RadioGroup
+                              value={starterModule}
+                              onChange={(e) => setStarterModule(e.target.value as 'clips' | 'live-shopping')}
+                              sx={{ 
+                                '& .MuiFormControlLabel-root': {
+                                  mx: 0,
+                                  mb: 1
+                                }
+                              }}
+                            >
+                              <FormControlLabel
+                                value="clips"
+                                control={<Radio sx={{ color: '#43BEAC', '&.Mui-checked': { color: '#43BEAC' } }} />}
+                                label={
+                                  <Box>
+                                    <Typography variant="subtitle2" sx={{ fontWeight: 600, color: '#1a1d21' }}>
+                                      {language === 'de' ? starterModules.clips.name : starterModules.clips.nameEN}
+                                    </Typography>
+                                    <Typography variant="body2" sx={{ color: '#64748b', fontSize: '0.85rem' }}>
+                                      {language === 'de' ? starterModules.clips.description : starterModules.clips.descriptionEN}
+                                    </Typography>
+                                  </Box>
+                                }
+                              />
+                              <FormControlLabel
+                                value="live-shopping"
+                                control={<Radio sx={{ color: '#43BEAC', '&.Mui-checked': { color: '#43BEAC' } }} />}
+                                label={
+                                  <Box>
+                                    <Typography variant="subtitle2" sx={{ fontWeight: 600, color: '#1a1d21' }}>
+                                      {language === 'de' ? starterModules['live-shopping'].name : starterModules['live-shopping'].nameEN}
+                                    </Typography>
+                                    <Typography variant="body2" sx={{ color: '#64748b', fontSize: '0.85rem' }}>
+                                      {language === 'de' ? starterModules['live-shopping'].description : starterModules['live-shopping'].descriptionEN}
+                                    </Typography>
+                                  </Box>
+                                }
+                              />
+                            </RadioGroup>
+                          </>
+                        ) : (
+                          <Box sx={{ 
+                            p: 2, 
+                            backgroundColor: '#f8fafc', 
+                            borderRadius: 2, 
+                            border: '1px solid #e2e8f0',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            minHeight: '80px'
                           }}>
-                            {plan.id === 'advanced' 
-                              ? (language === 'de' ? 'Alle Starter Features enthalten' : 'All Starter features included')
-                              : (language === 'de' ? 'Alle Advanced Features enthalten' : 'All Advanced features included')
-                            }
-                          </Typography>
-                        </Box>
-                      )}
+                            <Typography variant="subtitle2" sx={{ 
+                              fontWeight: 700,
+                              color: '#43BEAC',
+                              textAlign: 'center',
+                              fontSize: '0.9rem'
+                            }}>
+                              {plan.id === 'advanced' 
+                                ? (language === 'de' ? 'Alle Starter Features enthalten' : 'All Starter features included')
+                                : (language === 'de' ? 'Alle Advanced Features enthalten' : 'All Advanced features included')
+                              }
+                            </Typography>
+                          </Box>
+                        )}
+                      </Box>
 
-                      {/* Starter Module Selection */}
-                      {plan.isStarterOption && (
-                        <Box sx={{ mb: 4 }}>
-                          <Typography variant="subtitle2" sx={{ 
-                            fontWeight: 700,
-                            color: '#1a1d21',
-                            mb: 2,
-                            textAlign: 'center'
-                          }}>
-                            {language === 'de' ? 'Wählen Sie Ihr Modul:' : 'Choose your module:'}
-                          </Typography>
-                          <RadioGroup
-                            value={starterModule}
-                            onChange={(e) => setStarterModule(e.target.value as 'clips' | 'live-shopping')}
-                            sx={{ 
-                              '& .MuiFormControlLabel-root': {
-                                mx: 0,
-                                mb: 1
-                              }
-                            }}
-                          >
-                            <FormControlLabel
-                              value="clips"
-                              control={<Radio sx={{ color: '#43BEAC', '&.Mui-checked': { color: '#43BEAC' } }} />}
-                              label={
-                                <Box>
-                                  <Typography variant="subtitle2" sx={{ fontWeight: 600, color: '#1a1d21' }}>
-                                    {language === 'de' ? starterModules.clips.name : starterModules.clips.nameEN}
-                                  </Typography>
-                                  <Typography variant="body2" sx={{ color: '#64748b', fontSize: '0.85rem' }}>
-                                    {language === 'de' ? starterModules.clips.description : starterModules.clips.descriptionEN}
-                                  </Typography>
-                                </Box>
-                              }
-                            />
-                            <FormControlLabel
-                              value="live-shopping"
-                              control={<Radio sx={{ color: '#43BEAC', '&.Mui-checked': { color: '#43BEAC' } }} />}
-                              label={
-                                <Box>
-                                  <Typography variant="subtitle2" sx={{ fontWeight: 600, color: '#1a1d21' }}>
-                                    {language === 'de' ? starterModules['live-shopping'].name : starterModules['live-shopping'].nameEN}
-                                  </Typography>
-                                  <Typography variant="body2" sx={{ color: '#64748b', fontSize: '0.85rem' }}>
-                                    {language === 'de' ? starterModules['live-shopping'].description : starterModules['live-shopping'].descriptionEN}
-                                  </Typography>
-                                </Box>
-                              }
-                            />
-                          </RadioGroup>
-                          <Divider sx={{ my: 3 }} />
-                        </Box>
-                      )}
+                      <Divider sx={{ mb: 3 }} />
 
-                      {/* Core Features for Starter */}
-                      {plan.isStarterOption && plan.coreFeatures && (
-                        <Box sx={{ mb: 3 }}>
-                          <Typography variant="subtitle2" sx={{ 
-                            fontWeight: 700,
-                            color: '#1a1d21',
-                            mb: 2
-                          }}>
-                            {language === 'de' 
-                              ? 'Basis-Features (in beiden Modulen):'
-                              : 'Core features (in both modules):'
-                            }
-                          </Typography>
-                          <Stack spacing={2}>
-                            {plan.coreFeatures.map((feature, idx) => 
+                      {/* Features Section - Flexible Height */}
+                      <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+                        {/* Core Features for Starter */}
+                        {plan.isStarterOption && plan.coreFeatures && (
+                          <Box sx={{ mb: 3 }}>
+                            <Typography variant="subtitle2" sx={{ 
+                              fontWeight: 700,
+                              color: '#1a1d21',
+                              mb: 2
+                            }}>
+                              {language === 'de' 
+                                ? 'Basis-Features (in beiden Modulen):'
+                                : 'Core features (in both modules):'
+                              }
+                            </Typography>
+                            <Stack spacing={2}>
+                              {plan.coreFeatures.map((feature, idx) => 
+                                renderFeatureWithTooltip(feature, idx, plan)
+                              )}
+                            </Stack>
+                            
+                            <Divider sx={{ my: 3 }} />
+                            
+                            {/* Collapsible Additional Features */}
+                            <Collapsible 
+                              open={expandedFeatures[`starter-${starterModule}`]} 
+                              onOpenChange={() => toggleFeatures(`starter-${starterModule}`)}
+                            >
+                              <CollapsibleTrigger asChild>
+                                <Button
+                                  variant="text"
+                                  fullWidth
+                                  sx={{
+                                    justifyContent: 'space-between',
+                                    color: '#43BEAC',
+                                    fontWeight: 600,
+                                    mb: 2,
+                                    textTransform: 'none',
+                                    '&:hover': {
+                                      backgroundColor: 'rgba(67, 190, 172, 0.05)'
+                                    }
+                                  }}
+                                >
+                                  <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+                                    {language === 'de' 
+                                      ? `Zusätzliche ${starterModules[starterModule].name} Features`
+                                      : `Additional ${starterModules[starterModule].nameEN} features`
+                                    }
+                                  </Typography>
+                                  {expandedFeatures[`starter-${starterModule}`] ? <ExpandLess /> : <ExpandMore />}
+                                </Button>
+                              </CollapsibleTrigger>
+                              <CollapsibleContent>
+                                <Stack spacing={2}>
+                                  {starterModules[starterModule].features.map((feature, idx) => 
+                                    renderFeatureWithTooltip(feature, idx, plan)
+                                  )}
+                                </Stack>
+                              </CollapsibleContent>
+                            </Collapsible>
+                          </Box>
+                        )}
+
+                        {/* Regular Features for Advanced/Enterprise */}
+                        {!plan.isStarterOption && plan.features && (
+                          <Stack spacing={2.5} sx={{ flexGrow: 1 }}>
+                            {plan.features.map((feature, idx) => 
                               renderFeatureWithTooltip(feature, idx, plan)
                             )}
                           </Stack>
-                          
-                          <Divider sx={{ my: 3 }} />
-                          
-                          {/* Collapsible Additional Features */}
-                          <Collapsible 
-                            open={expandedFeatures[`starter-${starterModule}`]} 
-                            onOpenChange={() => toggleFeatures(`starter-${starterModule}`)}
-                          >
-                            <CollapsibleTrigger asChild>
-                              <Button
-                                variant="text"
-                                fullWidth
-                                sx={{
-                                  justifyContent: 'space-between',
-                                  color: '#43BEAC',
-                                  fontWeight: 600,
-                                  mb: 2,
-                                  textTransform: 'none',
-                                  '&:hover': {
-                                    backgroundColor: 'rgba(67, 190, 172, 0.05)'
-                                  }
-                                }}
-                              >
-                                <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
-                                  {language === 'de' 
-                                    ? `Zusätzliche ${starterModules[starterModule].name} Features`
-                                    : `Additional ${starterModules[starterModule].nameEN} features`
-                                  }
-                                </Typography>
-                                {expandedFeatures[`starter-${starterModule}`] ? <ExpandLess /> : <ExpandMore />}
-                              </Button>
-                            </CollapsibleTrigger>
-                            <CollapsibleContent>
-                              <Stack spacing={2}>
-                                {starterModules[starterModule].features.map((feature, idx) => 
-                                  renderFeatureWithTooltip(feature, idx, plan)
-                                )}
-                              </Stack>
-                            </CollapsibleContent>
-                          </Collapsible>
-                        </Box>
-                      )}
-
-                      {/* Regular Features for Advanced/Enterprise */}
-                      {!plan.isStarterOption && plan.features && (
-                        <Stack spacing={2.5} sx={{ flexGrow: 1, mb: 4 }}>
-                          {plan.features.map((feature, idx) => 
-                            renderFeatureWithTooltip(feature, idx, plan)
-                          )}
-                        </Stack>
-                      )}
+                        )}
+                      </Box>
                     </CardContent>
 
-                    {/* CTA Button */}
-                    <CardActions sx={{ p: { xs: 3, md: 4 }, pt: 0 }}>
+                    {/* CTA Button - Fixed at Bottom */}
+                    <CardActions sx={{ p: { xs: 3, md: 4 }, pt: 0, mt: 'auto' }}>
                       <Button
                         variant={plan.popular ? "contained" : "outlined"}
                         fullWidth
