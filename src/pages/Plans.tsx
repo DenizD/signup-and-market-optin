@@ -1,3 +1,4 @@
+
 import { Box, Container, Typography, Button, Card, CardContent, CardActions, Stack, Tooltip, Grow, RadioGroup, FormControlLabel, Radio, Divider } from '@mui/material';
 import { InfoOutlined } from '@mui/icons-material';
 import { useState } from 'react';
@@ -10,45 +11,95 @@ const Plans = () => {
   const starterModules = {
     clips: {
       name: 'Clips Module',
+      nameDE: 'Clips Modul',
       description: 'Perfect for shoppable video content and product presentations',
+      descriptionDE: 'Perfekt für shoppable Video-Inhalte und Produktpräsentationen',
       features: [
         {
           text: 'Shoppable Clips Module',
-          tooltip: 'Create and manage interactive video clips with direct purchase options'
+          textDE: 'Shoppable Clips Modul',
+          tooltip: 'Create and manage interactive video clips with direct purchase options',
+          tooltipDE: 'Erstelle und verwalte interaktive Video-Clips mit direkten Kaufoptionen'
         },
         {
           text: 'Video Import & Management',
-          tooltip: 'Import and manage videos (max. 1 GB/video)'
+          textDE: 'Video Import & Verwaltung',
+          tooltip: 'Import and manage videos (max. 1 GB/video)',
+          tooltipDE: 'Import und Verwaltung von Videos (max. 1 GB/Video)'
         },
         {
           text: 'Product Thumbnail Display',
-          tooltip: 'Featured product display on video covers'
+          textDE: 'Produkt-Thumbnail Anzeige',
+          tooltip: 'Featured product display on video covers',
+          tooltipDE: 'Hervorgehobene Produktanzeige auf Video-Covern'
         },
         {
           text: 'Thumbnail Generator',
-          tooltip: 'Automatic creation of 15 random preview images'
+          textDE: 'Thumbnail Generator',
+          tooltip: 'Automatic creation of 15 random preview images',
+          tooltipDE: 'Automatische Erstellung von 15 zufälligen Vorschaubildern'
+        },
+        {
+          text: 'Smart Product Tagging',
+          textDE: 'Intelligente Produkt-Tags',
+          tooltip: 'AI-powered automatic product recognition and tagging in videos',
+          tooltipDE: 'KI-gestützte automatische Produkterkennung und -markierung in Videos'
+        },
+        {
+          text: 'Interactive Hotspots',
+          textDE: 'Interaktive Hotspots',
+          tooltip: 'Clickable product points within videos for instant shopping',
+          tooltipDE: 'Klickbare Produktpunkte in Videos für sofortiges Shopping'
         }
       ]
     },
     'live-shopping': {
       name: 'Live Shopping Module',
+      nameDE: 'Live Shopping Modul',
       description: 'Ideal for live streams with direct sales opportunities',
+      descriptionDE: 'Ideal für Live-Streams mit direkten Verkaufsmöglichkeiten',
       features: [
         {
           text: 'Live Shopping Module',
-          tooltip: 'Complete live streaming solution with e-commerce integration'
+          textDE: 'Live Shopping Modul',
+          tooltip: 'Complete live streaming solution with e-commerce integration',
+          tooltipDE: 'Komplette Live-Streaming-Lösung mit E-Commerce-Integration'
         },
         {
           text: 'Broadcasting App & RTMP',
-          tooltip: 'Web app and professional streaming with external cameras'
+          textDE: 'Broadcasting App & RTMP',
+          tooltip: 'Web app and professional streaming with external cameras',
+          tooltipDE: 'Web-App und professionelles Streaming mit externen Kameras'
         },
         {
           text: 'Live Chat & Moderation',
-          tooltip: 'Interactive chat functions with moderation tools'
+          textDE: 'Live Chat & Moderation',
+          tooltip: 'Interactive chat functions with moderation tools',
+          tooltipDE: 'Interaktive Chat-Funktionen mit Moderations-Tools'
         },
         {
           text: 'Social Media Multistreaming',
-          tooltip: 'Simultaneous streaming to one social media platform'
+          textDE: 'Social Media Multistreaming',
+          tooltip: 'Simultaneous streaming to one social media platform',
+          tooltipDE: 'Gleichzeitiges Streaming auf eine Social Media Plattform'
+        },
+        {
+          text: 'Real-time Product Showcase',
+          textDE: 'Echtzeit Produkt-Showcase',
+          tooltip: 'Live product demonstrations with instant purchase options',
+          tooltipDE: 'Live Produktvorführungen mit sofortigen Kaufoptionen'
+        },
+        {
+          text: 'Audience Interaction Tools',
+          textDE: 'Publikums-Interaktions-Tools',
+          tooltip: 'Polls, Q&A sessions, and viewer engagement features',
+          tooltipDE: 'Umfragen, Q&A-Sessions und Zuschauer-Engagement-Features'
+        },
+        {
+          text: 'Stream Recording & Replay',
+          textDE: 'Stream-Aufzeichnung & Wiedergabe',
+          tooltip: 'Automatic recording and replay functionality for missed shows',
+          tooltipDE: 'Automatische Aufzeichnung und Wiedergabe-Funktion für verpasste Shows'
         }
       ]
     }
@@ -58,8 +109,11 @@ const Plans = () => {
     {
       id: 'starter',
       name: 'Starter',
+      nameDE: 'Starter',
       description: 'Your entry into video commerce - choose your focus',
+      descriptionDE: 'Ihr Einstieg in Video Commerce - wählen Sie Ihren Schwerpunkt',
       subtitle: 'Entry Package',
+      subtitleDE: 'Einstiegspaket',
       monthlyPrice: 495,
       popular: false,
       color: 'default' as const,
@@ -67,111 +121,187 @@ const Plans = () => {
       coreFeatures: [
         {
           text: '1,000 included views/month¹',
-          tooltip: 'A viewer is counted when a video/stream is watched for more than 5 seconds'
+          textDE: '1.000 inklusive Views/Monat¹',
+          tooltip: 'A viewer is counted when a video/stream is watched for more than 5 seconds',
+          tooltipDE: 'Ein Viewer wird gezählt, wenn ein Video/Stream länger als 5 Sekunden angeschaut wird'
         },
         {
           text: 'Flexible Video Player (Picture-in-Picture)',
-          tooltip: 'Resizable, movable mini-window for optimal user experience'
+          textDE: 'Flexibler Video Player (Bild-in-Bild)',
+          tooltip: 'Resizable, movable mini-window for optimal user experience',
+          tooltipDE: 'Größenveränderbares, bewegliches Mini-Fenster für optimale Nutzererfahrung'
         },
         {
           text: 'Media Library & Playlists with Tagging',
-          tooltip: 'Central management of all content without code changes'
+          textDE: 'Medien-Bibliothek & Playlists mit Tagging',
+          tooltip: 'Central management of all content without code changes',
+          tooltipDE: 'Zentrale Verwaltung aller Inhalte ohne Code-Änderungen'
         },
         {
           text: 'Endless Play & Swipe',
-          tooltip: 'Uninterrupted scrolling and playback of content'
+          textDE: 'Endless Play & Swipe',
+          tooltip: 'Uninterrupted scrolling and playback of content',
+          tooltipDE: 'Ununterbrochenes Scrollen und Abspielen von Inhalten'
         },
         {
           text: 'Simple Integration (1-Code)',
-          tooltip: 'Integration through a single code snippet'
+          textDE: 'Einfache Integration (1-Code)',
+          tooltip: 'Integration through a single code snippet',
+          tooltipDE: 'Integration durch einen einzigen Code-Schnipsel'
         },
         {
           text: 'Self-Branding',
-          tooltip: 'Customization to your brand guidelines'
+          textDE: 'Eigenes Branding',
+          tooltip: 'Customization to your brand guidelines',
+          tooltipDE: 'Anpassung an Ihre Marken-Richtlinien'
         },
         {
           text: 'Basic Support (Ticket System)',
-          tooltip: 'Technical support via our ticket system'
+          textDE: 'Basis Support (Ticket System)',
+          tooltip: 'Technical support via our ticket system',
+          tooltipDE: 'Technischer Support über unser Ticket-System'
         }
       ]
     },
     {
       id: 'advanced',
       name: 'Advanced',
+      nameDE: 'Advanced',
       description: 'The complete video commerce solution for professional applications',
+      descriptionDE: 'Die komplette Video Commerce Lösung für professionelle Anwendungen',
       subtitle: 'Complete Solution',
+      subtitleDE: 'Komplettlösung',
       monthlyPrice: 1195,
       popular: true,
       color: 'primary' as const,
       isStarterOption: false,
+      includesPrevious: 'Everything from Starter plus',
+      includesPreviousDE: 'Alles aus Starter plus',
       features: [
         {
-          text: 'Complete Video Commerce Package',
-          tooltip: 'All modules: Live Shopping AND Clips included'
+          text: 'Both Modules: Live Shopping AND Clips',
+          textDE: 'Beide Module: Live Shopping UND Clips',
+          tooltip: 'Complete access to both Live Shopping and Clips modules with all features',
+          tooltipDE: 'Vollzugriff auf beide Module Live Shopping und Clips mit allen Features'
         },
         {
           text: '2,500 included views/month¹',
-          tooltip: 'Extended viewer capacity for higher reach'
+          textDE: '2.500 inklusive Views/Monat¹',
+          tooltip: 'Extended viewer capacity for higher reach',
+          tooltipDE: 'Erweiterte Viewer-Kapazität für höhere Reichweite'
         },
         {
           text: 'Advanced API Integration',
-          tooltip: 'Full access to all API functions for seamless system integration'
+          textDE: 'Erweiterte API Integration',
+          tooltip: 'Full access to all API functions for seamless system integration',
+          tooltipDE: 'Vollzugriff auf alle API-Funktionen für nahtlose System-Integration'
         },
         {
           text: 'Product Detail Page Integration',
-          tooltip: 'Automatic video snippets on product pages'
+          textDE: 'Produktdetailseiten Integration',
+          tooltip: 'Automatic video snippets on product pages',
+          tooltipDE: 'Automatische Video-Snippets auf Produktseiten'
         },
         {
           text: 'Custom Embed Codes',
-          tooltip: 'Individual embedding codes for special requirements'
+          textDE: 'Custom Embed Codes',
+          tooltip: 'Individual embedding codes for special requirements',
+          tooltipDE: 'Individuelle Einbettungs-Codes für spezielle Anforderungen'
         },
         {
           text: 'Detailed Analytics & Reports',
-          tooltip: 'Comprehensive dashboard with KPI analysis for shows and clips'
+          textDE: 'Detaillierte Analytics & Reports',
+          tooltip: 'Comprehensive dashboard with KPI analysis for shows and clips',
+          tooltipDE: 'Umfassendes Dashboard mit KPI-Analyse für Shows und Clips'
+        },
+        {
+          text: 'Multi-Platform Broadcasting',
+          textDE: 'Multi-Plattform Broadcasting',
+          tooltip: 'Stream simultaneously to multiple social media platforms',
+          tooltipDE: 'Stream gleichzeitig auf mehrere Social Media Plattformen'
+        },
+        {
+          text: 'Advanced Moderation Tools',
+          textDE: 'Erweiterte Moderations-Tools',
+          tooltip: 'Professional moderation features for large-scale events',
+          tooltipDE: 'Professionelle Moderations-Features für große Events'
         },
         {
           text: 'Priority Support',
-          tooltip: 'Preferred technical support with shorter response times'
+          textDE: 'Priority Support',
+          tooltip: 'Preferred technical support with shorter response times',
+          tooltipDE: 'Bevorzugter technischer Support mit kürzeren Antwortzeiten'
         }
       ]
     },
     {
       id: 'enterprise',
       name: 'Enterprise',
+      nameDE: 'Enterprise',
       description: 'Custom enterprise solution with AI and unlimited possibilities',
+      descriptionDE: 'Maßgeschneiderte Enterprise-Lösung mit KI und unbegrenzten Möglichkeiten',
       subtitle: 'Enterprise Solution',
+      subtitleDE: 'Enterprise Lösung',
       monthlyPrice: null,
       popular: false,
       color: 'secondary' as const,
       isStarterOption: false,
+      includesPrevious: 'Everything from Advanced plus',
+      includesPreviousDE: 'Alles aus Advanced plus',
       features: [
         {
           text: 'AI Bot Integration & Shopping Assistant',
-          tooltip: 'AI-based bot for moderation and personalized shopping support'
+          textDE: 'KI Bot Integration & Shopping Assistent',
+          tooltip: 'AI-based bot for moderation and personalized shopping support',
+          tooltipDE: 'KI-basierter Bot für Moderation und personalisierten Shopping-Support'
         },
         {
           text: 'Unlimited Views & Accounts',
-          tooltip: 'No limits on viewers or user count'
+          textDE: 'Unbegrenzte Views & Accounts',
+          tooltip: 'No limits on viewers or user count',
+          tooltipDE: 'Keine Limits bei Viewern oder Nutzeranzahl'
         },
         {
           text: 'Multi-Company Management',
-          tooltip: 'Manage multiple companies and markets in one platform'
+          textDE: 'Multi-Company Management',
+          tooltip: 'Manage multiple companies and markets in one platform',
+          tooltipDE: 'Verwalten Sie mehrere Unternehmen und Märkte in einer Plattform'
         },
         {
           text: 'Personal Success Manager',
-          tooltip: 'Dedicated expert for onboarding and continuous optimization'
+          textDE: 'Persönlicher Success Manager',
+          tooltip: 'Dedicated expert for onboarding and continuous optimization',
+          tooltipDE: 'Dedicated Experte für Onboarding und kontinuierliche Optimierung'
         },
         {
           text: '24/7 Enterprise Support',
-          tooltip: 'Premium support around the clock with guaranteed response times'
+          textDE: '24/7 Enterprise Support',
+          tooltip: 'Premium support around the clock with guaranteed response times',
+          tooltipDE: 'Premium Support rund um die Uhr mit garantierten Antwortzeiten'
         },
         {
           text: 'Individual Development & Training',
-          tooltip: 'Custom features and comprehensive team training'
+          textDE: 'Individuelle Entwicklung & Schulungen',
+          tooltip: 'Custom features and comprehensive team training',
+          tooltipDE: 'Maßgeschneiderte Features und umfassende Team-Schulungen'
         },
         {
           text: 'White-Label Solutions',
-          tooltip: 'Complete customization to your brand and corporate identity'
+          textDE: 'White-Label Lösungen',
+          tooltip: 'Complete customization to your brand and corporate identity',
+          tooltipDE: 'Vollständige Anpassung an Ihre Marke und Corporate Identity'
+        },
+        {
+          text: 'Advanced AI Analytics',
+          textDE: 'Erweiterte KI Analytics',
+          tooltip: 'AI-powered insights and predictive analytics for optimal performance',
+          tooltipDE: 'KI-gestützte Insights und prädiktive Analytics für optimale Performance'
+        },
+        {
+          text: 'Custom API Development',
+          textDE: 'Custom API Entwicklung',
+          tooltip: 'Bespoke API solutions tailored to your specific business needs',
+          tooltipDE: 'Maßgeschneiderte API-Lösungen für Ihre spezifischen Geschäftsanforderungen'
         }
       ]
     }
@@ -219,7 +349,7 @@ const Plans = () => {
     return baseStyles;
   };
 
-  const renderFeatureWithTooltip = (feature: { text: string; tooltip?: string }, index: number, plan: typeof plans[0]) => (
+  const renderFeatureWithTooltip = (feature: { text: string; textDE?: string; tooltip?: string; tooltipDE?: string }, index: number, plan: typeof plans[0]) => (
     <Stack key={index} direction="row" alignItems="flex-start" spacing={2}>
       <Box sx={{
         backgroundColor: plan.popular ? '#E8FDF3' : '#f1f5f9',
@@ -434,6 +564,26 @@ const Plans = () => {
                           )}
                         </Box>
                       </Box>
+
+                      {/* Previous Tier Information */}
+                      {plan.includesPrevious && (
+                        <Box sx={{ 
+                          mb: 3, 
+                          p: 2, 
+                          backgroundColor: '#f8fafc', 
+                          borderRadius: 2, 
+                          border: '1px solid #e2e8f0' 
+                        }}>
+                          <Typography variant="subtitle2" sx={{ 
+                            fontWeight: 700,
+                            color: '#43BEAC',
+                            textAlign: 'center',
+                            fontSize: '0.9rem'
+                          }}>
+                            {plan.includesPrevious}
+                          </Typography>
+                        </Box>
+                      )}
 
                       {/* Starter Module Selection */}
                       {plan.isStarterOption && (
