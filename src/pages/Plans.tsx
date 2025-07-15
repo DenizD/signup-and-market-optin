@@ -1,12 +1,23 @@
-
 import { Box, Container, Typography, Button, Card, CardContent, CardActions, Stack, Tooltip, Grow, RadioGroup, FormControlLabel, Radio, Divider } from '@mui/material';
-import { InfoOutlined } from '@mui/icons-material';
+import { InfoOutlined, ExpandMore, ExpandLess } from '@mui/icons-material';
 import { useState } from 'react';
 import { useTranslations } from '@/hooks/useTranslations';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 const Plans = () => {
   const { t, language } = useTranslations();
   const [starterModule, setStarterModule] = useState<'clips' | 'live-shopping'>('clips');
+  const [expandedFeatures, setExpandedFeatures] = useState<{[key: string]: boolean}>({
+    'starter-clips': false,
+    'starter-live-shopping': false,
+  });
+
+  const toggleFeatures = (planId: string) => {
+    setExpandedFeatures(prev => ({
+      ...prev,
+      [planId]: !prev[planId]
+    }));
+  };
 
   const starterModules = {
     clips: {
@@ -185,8 +196,6 @@ const Plans = () => {
       popular: true,
       color: 'primary' as const,
       isStarterOption: false,
-      includesPrevious: 'Alles aus Starter +',
-      includesPreviousEN: 'All from Starter +',
       features: [
         {
           text: 'Vollständiges Video Commerce Paket (Live Shopping & Clips)',
@@ -231,8 +240,6 @@ const Plans = () => {
       popular: false,
       color: 'secondary' as const,
       isStarterOption: false,
-      includesPrevious: 'Alles aus Advanced plus:',
-      includesPreviousEN: 'All from Advanced plus:',
       features: [
         {
           text: 'KI-Bot Integration',
@@ -454,7 +461,7 @@ const Plans = () => {
             gap: { xs: 3, md: 4 },
             maxWidth: '1200px',
             mx: 'auto',
-            alignItems: 'stretch'
+            alignItems: 'start'
           }}>
             {plans.map((plan, index) => (
               <Box key={plan.id}>
@@ -513,7 +520,7 @@ const Plans = () => {
                           mb: 4,
                           lineHeight: 1.6,
                           fontSize: '0.95rem',
-                          minHeight: { xs: 'auto', md: '60px' },
+                          minHeight: { xs: 'auto', md: '48px' },
                           display: 'flex',
                           alignItems: 'center',
                           textAlign: 'center'
@@ -543,8 +550,8 @@ const Plans = () => {
                         </Box>
                       </Box>
 
-                      {/* Previous Tier Information */}
-                      {plan.includesPrevious && (
+                      {/* Previous Tier Information for Advanced/Enterprise */}
+                      {!plan.isStarterOption && (
                         <Box sx={{ 
                           mb: 3, 
                           p: 2, 
@@ -558,7 +565,10 @@ const Plans = () => {
                             textAlign: 'center',
                             fontSize: '0.9rem'
                           }}>
-                            {language === 'de' ? plan.includesPrevious : plan.includesPreviousEN}
+                            {plan.id === 'advanced' 
+                              ? (language === 'de' ? 'Alle Starter Features enthalten' : 'All Starter features included')
+                              : (language === 'de' ? 'Alle Advanced Features enthalten' : 'All Advanced features included')
+                            }
                           </Typography>
                         </Box>
                       )}
@@ -635,22 +645,46 @@ const Plans = () => {
                               renderFeatureWithTooltip(feature, idx, plan)
                             )}
                           </Stack>
+                          
                           <Divider sx={{ my: 3 }} />
-                          <Typography variant="subtitle2" sx={{ 
-                            fontWeight: 700,
-                            color: '#1a1d21',
-                            mb: 2
-                          }}>
-                            {language === 'de' 
-                              ? `Zusätzliche ${starterModules[starterModule].name} Features:`
-                              : `Additional ${starterModules[starterModule].nameEN} features:`
-                            }
-                          </Typography>
-                          <Stack spacing={2}>
-                            {starterModules[starterModule].features.map((feature, idx) => 
-                              renderFeatureWithTooltip(feature, idx, plan)
-                            )}
-                          </Stack>
+                          
+                          {/* Collapsible Additional Features */}
+                          <Collapsible 
+                            open={expandedFeatures[`starter-${starterModule}`]} 
+                            onOpenChange={() => toggleFeatures(`starter-${starterModule}`)}
+                          >
+                            <CollapsibleTrigger asChild>
+                              <Button
+                                variant="text"
+                                fullWidth
+                                sx={{
+                                  justifyContent: 'space-between',
+                                  color: '#43BEAC',
+                                  fontWeight: 600,
+                                  mb: 2,
+                                  textTransform: 'none',
+                                  '&:hover': {
+                                    backgroundColor: 'rgba(67, 190, 172, 0.05)'
+                                  }
+                                }}
+                              >
+                                <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+                                  {language === 'de' 
+                                    ? `Zusätzliche ${starterModules[starterModule].name} Features`
+                                    : `Additional ${starterModules[starterModule].nameEN} features`
+                                  }
+                                </Typography>
+                                {expandedFeatures[`starter-${starterModule}`] ? <ExpandLess /> : <ExpandMore />}
+                              </Button>
+                            </CollapsibleTrigger>
+                            <CollapsibleContent>
+                              <Stack spacing={2}>
+                                {starterModules[starterModule].features.map((feature, idx) => 
+                                  renderFeatureWithTooltip(feature, idx, plan)
+                                )}
+                              </Stack>
+                            </CollapsibleContent>
+                          </Collapsible>
                         </Box>
                       )}
 
