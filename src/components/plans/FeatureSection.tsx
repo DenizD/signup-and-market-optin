@@ -1,7 +1,8 @@
 
 import React from 'react';
-import { Button } from '@/components/ui/button';
-import { ChevronDown, ChevronUp, Check } from 'lucide-react';
+import { Box, Typography, Button, Stack, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck, faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 
 interface Feature {
   text: string;
@@ -29,34 +30,62 @@ export const FeatureSection: React.FC<FeatureSectionProps> = ({
   const hasMore = features.length > maxInitial;
 
   return (
-    <div className="space-y-3">
-      {displayFeatures.map((feature, index) => (
-        <div key={index} className="flex items-start gap-3">
-          <div className="flex-shrink-0 w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center mt-0.5">
-            <Check className="w-3 h-3 text-primary" />
-          </div>
-          <span className="text-sm text-foreground leading-relaxed">
-            {language === 'de' ? feature.text : (feature.textEN || feature.text)}
-          </span>
-        </div>
-      ))}
+    <Box>
+      <Stack spacing={2}>
+        {displayFeatures.map((feature, index) => (
+          <Stack key={index} direction="row" alignItems="flex-start" spacing={1.5}>
+            <Box sx={{
+              width: 20,
+              height: 20,
+              borderRadius: '50%',
+              bgcolor: 'primary.50',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexShrink: 0,
+              mt: 0.125
+            }}>
+              <FontAwesomeIcon icon={faCheck} size="xs" color="#43BEAC" />
+            </Box>
+            <Typography variant="body2" sx={{ 
+              color: 'text.primary',
+              lineHeight: 1.5,
+              fontFamily: 'Inter, sans-serif'
+            }}>
+              {language === 'de' ? feature.text : (feature.textEN || feature.text)}
+            </Typography>
+          </Stack>
+        ))}
+      </Stack>
       
       {hasMore && onToggle && (
         <Button
-          variant="ghost"
-          size="sm"
+          variant="text"
+          size="small"
           onClick={onToggle}
-          className="w-full mt-3 text-primary hover:text-primary hover:bg-primary/5"
+          fullWidth
+          sx={{
+            mt: 2,
+            color: 'primary.main',
+            '&:hover': {
+              bgcolor: 'primary.50'
+            },
+            textTransform: 'none',
+            fontWeight: 500
+          }}
+          startIcon={
+            <FontAwesomeIcon 
+              icon={showAll ? faChevronUp : faChevronDown} 
+              size="sm" 
+            />
+          }
         >
-          <span className="mr-2">
-            {showAll 
-              ? (language === 'de' ? 'Weniger anzeigen' : 'Show less')
-              : (language === 'de' ? 'Mehr anzeigen' : 'Show more')
-            }
-          </span>
-          {showAll ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+          {showAll 
+            ? (language === 'de' ? 'Weniger anzeigen' : 'Show less')
+            : (language === 'de' ? 'Mehr anzeigen' : 'Show more')
+          }
         </Button>
       )}
-    </div>
+    </Box>
   );
 };

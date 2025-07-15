@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Container } from '@mui/material';
+import { Container, Typography, Box, Stack } from '@mui/material';
 import { useTranslations } from '@/hooks/useTranslations';
 import { PlanCard } from '@/components/plans/PlanCard';
 import { plans } from '@/components/plans/plansData';
@@ -18,29 +18,51 @@ const Plans = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background py-16">
+    <Box sx={{ 
+      minHeight: '100vh',
+      background: 'linear-gradient(135deg, #ffffff 0%, #f8f9fa 50%, #ffffff 100%)',
+      py: 8
+    }}>
       <Container maxWidth="xl">
         {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
+        <Box sx={{ textAlign: 'center', mb: 6 }}>
+          <Typography 
+            variant="h3" 
+            component="h1" 
+            sx={{ 
+              fontWeight: 700,
+              mb: 2,
+              background: 'linear-gradient(135deg, #252A2E 0%, #37474F 100%)',
+              backgroundClip: 'text',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent'
+            }}
+          >
             {language === 'de' ? 'Entdecken Sie unsere Pläne' : 'Discover our Plans'}
-          </h1>
-          <p className="text-xl text-muted-foreground mb-2 max-w-2xl mx-auto">
+          </Typography>
+          <Typography variant="h6" color="text.secondary" sx={{ mb: 1, maxWidth: '600px', mx: 'auto' }}>
             {language === 'de' 
               ? 'Wählen Sie den perfekten Plan für Ihr Unternehmen und starten Sie noch heute'
               : 'Choose the perfect plan for your business and get started today'
             }
-          </p>
-          <p className="text-muted-foreground">
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
             {language === 'de' 
               ? 'Alle Pakete enthalten kostenlose Updates'
               : 'All packages include free updates'
             }
-          </p>
-        </div>
+          </Typography>
+        </Box>
 
         {/* Plans Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto mb-16">
+        <Box sx={{
+          display: 'grid',
+          gridTemplateColumns: { xs: '1fr', lg: 'repeat(3, 1fr)' },
+          gap: 4,
+          maxWidth: '1400px',
+          mx: 'auto',
+          mb: 8
+        }}>
           {plans.map((plan) => (
             <PlanCard
               key={plan.id}
@@ -53,43 +75,58 @@ const Plans = () => {
               onToggleFeatures={toggleFeatures}
             />
           ))}
-        </div>
+        </Box>
 
         {/* Additional Information */}
-        <div className="max-w-4xl mx-auto bg-card border rounded-lg p-8">
-          <h2 className="text-2xl font-bold mb-6 text-center">
+        <Box sx={{
+          maxWidth: '800px',
+          mx: 'auto',
+          bgcolor: 'background.paper',
+          border: '1px solid',
+          borderColor: 'divider',
+          borderRadius: 2,
+          p: 4,
+          boxShadow: 1
+        }}>
+          <Typography variant="h5" component="h2" sx={{ mb: 3, textAlign: 'center', fontWeight: 600 }}>
             {language === 'de' ? 'Zusätzliche Informationen' : 'Additional Information'}
-          </h2>
+          </Typography>
           
-          <div className="space-y-6">
-            <p className="text-foreground font-medium">
+          <Stack spacing={3}>
+            <Typography variant="body1" sx={{ fontWeight: 500 }}>
               {language === 'de' 
                 ? 'Alle Preise verstehen sich zzgl. der gesetzlichen Mehrwertsteuer.'
                 : 'All prices are subject to applicable VAT.'
               }
-            </p>
+            </Typography>
             
-            <div className="bg-muted/50 p-4 rounded-lg border">
-              <p className="text-sm text-muted-foreground">
+            <Box sx={{
+              bgcolor: 'grey.50',
+              p: 2,
+              borderRadius: 1,
+              border: '1px solid',
+              borderColor: 'grey.200'
+            }}>
+              <Typography variant="body2" color="text.secondary">
                 <sup>1</sup> {language === 'de' 
                   ? 'Kostenlose Aufrufe pro Monat im jeweiligen Plan enthalten. Zusätzliche Aufrufe werden mit 0,15€ pro Aufruf berechnet und automatisch über die hinterlegte Zahlungsmethode nutzungsbasiert abgerechnet.'
                   : 'Free views per month included in the respective plan. Additional views are charged at €0.15 per view and automatically debited via the stored payment method according to usage.'
                 }
-              </p>
-            </div>
+              </Typography>
+            </Box>
             
-            <div className="text-center pt-4 border-t">
-              <p className="text-primary font-semibold">
+            <Box sx={{ textAlign: 'center', pt: 2, borderTop: '1px solid', borderColor: 'divider' }}>
+              <Typography variant="body1" color="primary" sx={{ fontWeight: 600 }}>
                 {language === 'de' 
                   ? 'Individuelle Lösungen und maßgeschneiderte Pakete auf Anfrage verfügbar.'
                   : 'Individual solutions and custom packages available upon request.'
                 }
-              </p>
-            </div>
-          </div>
-        </div>
+              </Typography>
+            </Box>
+          </Stack>
+        </Box>
       </Container>
-    </div>
+    </Box>
   );
 };
 

@@ -1,6 +1,8 @@
 
 import React from 'react';
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Box, Typography, ToggleButtonGroup, ToggleButton, Stack } from '@mui/material';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faVideo, faBroadcastTower } from '@fortawesome/free-solid-svg-icons';
 
 interface ModuleSelectorProps {
   selectedModule: 'clips' | 'live-shopping';
@@ -13,35 +15,81 @@ export const ModuleSelector: React.FC<ModuleSelectorProps> = ({
   onModuleChange,
   language
 }) => {
+  const handleChange = (
+    event: React.MouseEvent<HTMLElement>,
+    newModule: 'clips' | 'live-shopping' | null,
+  ) => {
+    if (newModule !== null) {
+      onModuleChange(newModule);
+    }
+  };
+
   return (
-    <div className="w-full">
-      <div className="text-xs font-semibold text-center mb-3 text-muted-foreground">
+    <Box sx={{ width: '100%' }}>
+      <Typography variant="caption" sx={{ 
+        display: 'block', 
+        textAlign: 'center', 
+        mb: 2, 
+        fontWeight: 600,
+        color: 'text.secondary'
+      }}>
+        {language === 'de' ? 'Wählen Sie Ihr Starter-Modul:' : 'Choose your Starter module:'}
+      </Typography>
+      <Typography variant="caption" sx={{ 
+        display: 'block', 
+        textAlign: 'center', 
+        mb: 2, 
+        color: 'text.secondary'
+      }}>
         1.000 {language === 'de' ? 'Aufrufe/Monat inkl.' : 'views/month incl.'}
-      </div>
-      <Tabs value={selectedModule} onValueChange={(value) => onModuleChange(value as 'clips' | 'live-shopping')}>
-        <TabsList className="grid w-full grid-cols-2 h-16">
-          <TabsTrigger value="clips" className="text-xs p-2">
-            <div className="text-center">
-              <div className="font-semibold">
+      </Typography>
+      <ToggleButtonGroup
+        value={selectedModule}
+        exclusive
+        onChange={handleChange}
+        aria-label="module selection"
+        fullWidth
+        sx={{
+          '& .MuiToggleButton-root': {
+            border: '1px solid',
+            borderColor: 'divider',
+            '&.Mui-selected': {
+              bgcolor: 'primary.main',
+              color: 'primary.contrastText',
+              '&:hover': {
+                bgcolor: 'primary.dark',
+              }
+            }
+          }
+        }}
+      >
+        <ToggleButton value="clips" sx={{ py: 1.5 }}>
+          <Stack direction="row" alignItems="center" spacing={1}>
+            <FontAwesomeIcon icon={faVideo} size="sm" />
+            <Box>
+              <Typography variant="body2" sx={{ fontWeight: 600 }}>
                 {language === 'de' ? 'Clips' : 'Clips'}
-              </div>
-              <div className="text-xs opacity-75">
+              </Typography>
+              <Typography variant="caption" sx={{ opacity: 0.7 }}>
                 {language === 'de' ? 'Highlights' : 'Highlights'}
-              </div>
-            </div>
-          </TabsTrigger>
-          <TabsTrigger value="live-shopping" className="text-xs p-2">
-            <div className="text-center">
-              <div className="font-semibold">
+              </Typography>
+            </Box>
+          </Stack>
+        </ToggleButton>
+        <ToggleButton value="live-shopping" sx={{ py: 1.5 }}>
+          <Stack direction="row" alignItems="center" spacing={1}>
+            <FontAwesomeIcon icon={faBroadcastTower} size="sm" />
+            <Box>
+              <Typography variant="body2" sx={{ fontWeight: 600 }}>
                 {language === 'de' ? 'Live Shopping' : 'Live Shopping'}
-              </div>
-              <div className="text-xs opacity-75">
+              </Typography>
+              <Typography variant="caption" sx={{ opacity: 0.7 }}>
                 {language === 'de' ? 'Livestreams' : 'Livestreams'}
-              </div>
-            </div>
-          </TabsTrigger>
-        </TabsList>
-      </Tabs>
-    </div>
+              </Typography>
+            </Box>
+          </Stack>
+        </ToggleButton>
+      </ToggleButtonGroup>
+    </Box>
   );
 };

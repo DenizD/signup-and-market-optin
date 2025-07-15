@@ -1,8 +1,8 @@
 
 import React from 'react';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, Typography, Button, Box, Stack, Chip, Divider } from '@mui/material';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { PlanCardProps } from './types';
 import { ModuleSelector } from './ModuleSelector';
 import { FeatureSection } from './FeatureSection';
@@ -22,43 +22,77 @@ export const PlanCard: React.FC<PlanCardProps> = ({
   };
 
   return (
-    <div className="relative flex">
-      <Card className={`
-        w-full grid grid-rows-[200px_120px_auto_1fr_80px] 
-        transition-all duration-300 hover:shadow-lg
-        ${isPopular 
-          ? 'border-2 border-primary shadow-lg bg-primary/5' 
-          : 'border border-border hover:border-primary/20'
-        }
-      `}>
+    <Box sx={{ position: 'relative', display: 'flex' }}>
+      <Card sx={{
+        width: '100%',
+        display: 'grid',
+        gridTemplateRows: '220px 140px auto 1fr 80px',
+        minHeight: '800px',
+        transition: 'all 0.3s ease',
+        '&:hover': {
+          boxShadow: 4,
+          transform: 'translateY(-4px)'
+        },
+        border: isPopular ? '2px solid' : '1px solid',
+        borderColor: isPopular ? 'primary.main' : 'divider',
+        bgcolor: isPopular ? 'primary.50' : 'background.paper',
+        position: 'relative'
+      }}>
         {/* Popular Badge */}
         {isPopular && (
-          <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-primary text-primary-foreground">
-            {language === 'de' ? 'EMPFOHLEN' : 'RECOMMENDED'}
-          </Badge>
+          <Chip
+            label={language === 'de' ? 'EMPFOHLEN' : 'RECOMMENDED'}
+            color="primary"
+            size="small"
+            sx={{
+              position: 'absolute',
+              top: -12,
+              left: '50%',
+              transform: 'translateX(-50%)',
+              fontWeight: 600,
+              zIndex: 1
+            }}
+          />
         )}
 
-        {/* Block 1: Tariff Overview (Fixed Height: 200px) */}
-        <div className="p-6 text-center border-b">
-          <div className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-2">
+        {/* Block 1: Header-Bereich (220px) */}
+        <CardContent sx={{ p: 3, textAlign: 'center', borderBottom: '1px solid', borderColor: 'divider' }}>
+          <Typography variant="caption" sx={{ 
+            fontWeight: 600, 
+            color: 'text.secondary', 
+            textTransform: 'uppercase', 
+            letterSpacing: 1,
+            mb: 1,
+            display: 'block'
+          }}>
             {language === 'de' ? plan.subtitle : plan.subtitleEN}
-          </div>
-          <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
-          <p className="text-muted-foreground text-sm mb-4">
+          </Typography>
+          <Typography variant="h4" component="h3" sx={{ fontWeight: 700, mb: 1 }}>
+            {plan.name}
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 2, minHeight: '40px' }}>
             {language === 'de' ? plan.description : plan.descriptionEN}
-          </p>
-          <div className="text-3xl font-bold text-primary mb-1">
+          </Typography>
+          <Typography variant="h3" color="primary" sx={{ fontWeight: 700, mb: 0.5 }}>
             {formatPrice(plan.monthlyPrice)}
-          </div>
+          </Typography>
           {plan.monthlyPrice && (
-            <div className="text-sm text-muted-foreground">
+            <Typography variant="body2" color="text.secondary">
               {language === 'de' ? 'pro Monat' : 'per month'}
-            </div>
+            </Typography>
           )}
-        </div>
+        </CardContent>
 
-        {/* Block 2: Module/Info Area (Fixed Height: 120px) */}
-        <div className="px-6 py-4 border-b bg-muted/20 flex items-center justify-center">
+        {/* Block 2: Modul/Info-Bereich (140px) */}
+        <CardContent sx={{ 
+          p: 3, 
+          borderBottom: '1px solid', 
+          borderColor: 'divider',
+          bgcolor: 'grey.50',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
           {plan.isStarterOption ? (
             <ModuleSelector
               selectedModule={starterModule}
@@ -66,42 +100,54 @@ export const PlanCard: React.FC<PlanCardProps> = ({
               language={language}
             />
           ) : (
-            <div className="text-center">
-              <div className="text-sm font-semibold text-primary">
+            <Box sx={{ textAlign: 'center' }}>
+              <Typography variant="body1" color="primary" sx={{ fontWeight: 600, mb: 0.5 }}>
                 {plan.id === 'advanced' 
-                  ? (language === 'de' ? 'Alle Starter Features enthalten' : 'All Starter features included')
-                  : (language === 'de' ? 'Alle Advanced Features enthalten' : 'All Advanced features included')
+                  ? (language === 'de' ? 'Beinhaltet alle Starter-Features (Clips + Live Shopping) sowie:' : 'Includes all Starter features (Clips + Live Shopping) plus:')
+                  : (language === 'de' ? 'Beinhaltet alle Advanced-Features sowie individuell anpassbare Leistungen:' : 'Includes all Advanced features plus individually customizable services:')
                 }
-              </div>
-              <div className="text-xs text-muted-foreground mt-1">
+              </Typography>
+              <Typography variant="caption" color="text.secondary">
                 {plan.monthlyPrice && `${plan.monthlyPrice === 1195 ? '2.500' : '1.000'} ${language === 'de' ? 'Aufrufe/Monat inkl.' : 'views/month incl.'}`}
-              </div>
-            </div>
+              </Typography>
+            </Box>
           )}
-        </div>
+        </CardContent>
 
-        {/* Block 3: Basis Features (Auto Height) */}
-        <div className="px-6 py-4 border-b">
-          <h4 className="font-semibold text-sm mb-3 text-muted-foreground uppercase tracking-wide">
+        {/* Block 3: Basis-Features (auto) */}
+        <CardContent sx={{ p: 3, borderBottom: '1px solid', borderColor: 'divider' }}>
+          <Typography variant="subtitle2" sx={{ 
+            fontWeight: 600, 
+            color: 'text.secondary', 
+            textTransform: 'uppercase', 
+            letterSpacing: 0.5,
+            mb: 2
+          }}>
             {language === 'de' ? 'Basis-Features' : 'Base Features'}
-          </h4>
+          </Typography>
           <FeatureSection
             features={plan.baseFeatures || []}
             language={language}
             showAll={true}
           />
-        </div>
+        </CardContent>
 
-        {/* Block 4: Specific Features (Flexible Height) */}
-        <div className="px-6 py-4 flex-1">
+        {/* Block 4: Spezielle Features (1fr - flexibel) */}
+        <CardContent sx={{ p: 3, flex: 1 }}>
           {plan.isStarterOption ? (
-            <div>
-              <h4 className="font-semibold text-sm mb-3 text-muted-foreground uppercase tracking-wide">
+            <Box>
+              <Typography variant="subtitle2" sx={{ 
+                fontWeight: 600, 
+                color: 'text.secondary', 
+                textTransform: 'uppercase', 
+                letterSpacing: 0.5,
+                mb: 2
+              }}>
                 {language === 'de' 
                   ? `${starterModule === 'clips' ? 'Clips' : 'Live Shopping'} Features`
                   : `${starterModule === 'clips' ? 'Clips' : 'Live Shopping'} Features`
                 }
-              </h4>
+              </Typography>
               <FeatureSection
                 features={plan.moduleFeatures?.[starterModule] || []}
                 language={language}
@@ -109,37 +155,53 @@ export const PlanCard: React.FC<PlanCardProps> = ({
                 onToggle={() => onToggleFeatures(`starter-${starterModule}`)}
                 maxInitial={5}
               />
-            </div>
+            </Box>
           ) : (
-            <div>
-              <h4 className="font-semibold text-sm mb-3 text-muted-foreground uppercase tracking-wide">
+            <Box>
+              <Typography variant="subtitle2" sx={{ 
+                fontWeight: 600, 
+                color: 'text.secondary', 
+                textTransform: 'uppercase', 
+                letterSpacing: 0.5,
+                mb: 2
+              }}>
                 {language === 'de' ? 'Exklusive Features' : 'Exclusive Features'}
-              </h4>
+              </Typography>
               <FeatureSection
                 features={plan.exclusiveFeatures || []}
                 language={language}
                 showAll={true}
               />
-            </div>
+            </Box>
           )}
-        </div>
+        </CardContent>
 
-        {/* Block 5: CTA Button (Fixed Height: 80px) */}
-        <div className="p-6 pt-4">
+        {/* Block 5: CTA-Button (80px) */}
+        <CardContent sx={{ p: 3, pt: 2 }}>
           <Button
-            className={`w-full h-12 font-semibold ${
-              isPopular 
-                ? 'bg-primary hover:bg-primary/90 text-primary-foreground' 
-                : 'variant-outline border-primary text-primary hover:bg-primary hover:text-primary-foreground'
-            }`}
+            variant={isPopular ? "contained" : "outlined"}
+            color={isPopular ? "primary" : "primary"}
+            fullWidth
+            size="large"
+            sx={{
+              height: '48px',
+              fontWeight: 600,
+              fontSize: '1rem',
+              ...(isPopular && {
+                bgcolor: '#43BEAC',
+                '&:hover': {
+                  bgcolor: '#3AA89B'
+                }
+              })
+            }}
           >
             {plan.monthlyPrice 
               ? (language === 'de' ? 'Jetzt starten' : 'Start Now')
               : (language === 'de' ? 'Kontakt aufnehmen' : 'Contact Us')
             }
           </Button>
-        </div>
+        </CardContent>
       </Card>
-    </div>
+    </Box>
   );
 };
